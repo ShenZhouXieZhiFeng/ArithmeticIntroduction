@@ -1,0 +1,28 @@
+
+public class paixu {
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	//3,5,1,2,6
+	//
+	public static void insert(int[] arr) {
+		int t;
+		int v;
+		for (int i = 1; i < arr.length; i++) {
+			t = arr[i];
+			for (int j = i; j >= 0; j--) {
+				if (arr[j] > t) {
+					arr[i] = arr[j];
+					v = j;
+				}
+			}
+		}
+	}
+
+}
