@@ -6,11 +6,30 @@ public class paixu {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int[] arr = {1,7,1,4,8,2,9};
-		insert(arr);
+		int[] arr = {1,7,4,1,8,2,9,16,9,23,56};
+//		insert(arr);
+		selected(arr);
 		for (int i = 0; i < arr.length; i++) {
 			System.out.println(arr[i]);
 		}
+	}
+	
+	//选择排序
+	//假设当前要排序的数（n）最小，从n+1开始比较，如果n+1的数小于n的数，就将两者进行交换
+	//核心是选择二字，从后面的数依次的选择出最小的数，放置到当前要排序的位置上
+	public static void selected(int[] arr) {
+		int len = 0;
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = i + 1; j < arr.length; j++) {
+				if(arr[j] < arr[i]){
+					int temp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = temp;
+					len++;
+				}
+			}
+		}
+		System.out.println(len);
 	}
 	
 	//插入排序
