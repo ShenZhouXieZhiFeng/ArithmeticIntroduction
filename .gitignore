@@ -12,3 +12,10 @@
 *.txt
 *.xml
 *.dat
+.metadata/.log
+.metadata/.plugins/org.eclipse.core.resources/.projects/Level0/.markers
+*.snap
+*.tree
+*.resources
+*.xmi
+.metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
