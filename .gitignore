@@ -1,7 +1,6 @@
 
-.metadata
-.metadata/.log
-.metadata/.log
+.metadata/*
+*.log
 .metadata/.plugins/org.eclipse.core.resources/.projects/Level0/.markers.snap
 *.index
 *.snap
@@ -19,3 +18,4 @@
 *.resources
 *.xmi
 .metadata/.plugins/org.eclipse.jdt.core/nonChainingJarsCache
+*.xmi
