@@ -4,16 +4,16 @@ public class paixu {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		int[] arr = {1,7,4,8,2,9};
-//		insert(arr);
-//		selected(arr);
-		maopao(arr);
-		for (int i = 0; i < arr.length; i++) {
-			System.out.println(arr[i]);
-		}
-	}
+//	public static void main(String[] args) {
+//		// TODO Auto-generated method stub
+//		int[] arr = {1,7,4,8,2,9};
+////		insert(arr);
+////		selected(arr);
+//		maopao(arr);
+//		for (int i = 0; i < arr.length; i++) {
+//			System.out.println(arr[i]);
+//		}
+//	}
 	
 	//1,7,4,8,2,9
 	public static void guibing(int[] arr) {
@@ -79,7 +79,6 @@ public class paixu {
 		} while (swaped);//如果本次循环没有发生数据交换，说明后续的数据都是按照规则排列的，没有必要再进行循环
 //		System.out.println(v);
 	}
-	
 	
 	//选择排序
 	//假设当前要排序的数（n）最小，从n+1开始比较，如果n+1的数小于n的数，就将两者进行交换
