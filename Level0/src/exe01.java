@@ -20,14 +20,46 @@ public class exe01 {
 		
 //		System.out.println(countOnes(1));
 		
-		ListNode node1 = new ListNode(1);
-		ListNode node2 = new ListNode(2);
-		ListNode node3 = new ListNode(3);
-		node1.next = node2;
-		node2.next = node3;
-//		node1.print();
-		ListNode node4 = reverse2(node1);
-		node4.print();
+//		ListNode node1 = new ListNode(1);
+//		ListNode node2 = new ListNode(2);
+//		ListNode node3 = new ListNode(3);
+//		node1.next = node2;
+//		node2.next = node3;
+////		node1.print();
+//		ListNode node4 = reverse2(node1);
+//		node4.print();
+		
+//		int[] arr = {9,1,2,4,5,6,7};
+//		System.out.println(findMin(arr));
+		
+		
+	}
+	
+	public static TreeNode buildTree(int[] preorder, int[] inorder) {
+		TreeNode tn = new TreeNode(0);
+		return tn;
+    }
+	public static class TreeNode {
+	    public int val;
+	    public TreeNode left, right;
+	    public TreeNode(int val) {
+	    	this.val = val;
+	    	this.left = this.right = null;
+	    }
+	}
+	
+	//问题我没理解，但是在lincode平台通过了
+//	假设一个旋转排序的数组其起始位置是未知的（比如0 1 2 4 5 6 7 可能变成是4 5 6 7 0 1 2）。
+//	你需要找到其中最小的元素。
+//	你可以假设数组中不存在重复的元素。
+	public static int findMin(int[] nums) {
+		int min = nums[0];
+		for (int i = 1; i < nums.length; i++) {
+			if (nums[i] < min) {
+				min = nums[i];
+			}
+		}
+		return min;
 	}
 	
 	public static ListNode reverse2(ListNode head){
