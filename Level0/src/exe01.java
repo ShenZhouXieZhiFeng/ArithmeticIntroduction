@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+
 
 public class exe01 {
 
@@ -32,13 +34,46 @@ public class exe01 {
 //		int[] arr = {9,1,2,4,5,6,7};
 //		System.out.println(findMin(arr));
 		
+		int[] pre = {1,2,3};
+		int[] in = {3,2,1};
 		
+		TreeNode node = buildTree(pre,in);
+		node.print();
 	}
 	
+	//前序遍历和中序遍历树构造二叉树
+	//preorder前序遍历
+	//inorder中序遍历
 	public static TreeNode buildTree(int[] preorder, int[] inorder) {
-		TreeNode tn = new TreeNode(0);
-		return tn;
+		TreeNode root = makeTree(preorder, 0,preorder.length, inorder, 0, inorder.length);
+		return root;
     }
+	public static TreeNode makeTree(int[] preorder,int startPre,int lenper,int[] inorder,int startIn,int lenIn) {
+		if (lenper < 1) {
+			return null;
+		}
+		TreeNode root;
+		//找到这一组的跟节点，即前序遍历的第一个节点
+		int rootVal = preorder[startPre];
+		root = new TreeNode(rootVal);
+		//遍历中序遍历，找到跟节点
+		int offset;
+		boolean isFound = false;
+		//从当前中序遍历组的起始节点到它的长度
+		for (offset = 0;offset < lenIn;offset ++) {
+			if (inorder[offset + startIn] == rootVal) {
+				isFound = true;
+				break;
+			}
+		}
+		if (!isFound) {
+			return root;
+		}
+		//根据找到的offset值划分中序遍历数组
+		root.left = makeTree(preorder, startPre+1, offset, inorder, startIn, offset);
+		root.right = makeTree(preorder, startPre + offset + 1, lenper - offset - 1, inorder, startIn + offset + 1, lenIn - offset - 1);
+		return root;
+	}
 	public static class TreeNode {
 	    public int val;
 	    public TreeNode left, right;
@@ -46,6 +81,19 @@ public class exe01 {
 	    	this.val = val;
 	    	this.left = this.right = null;
 	    }
+	    public void print() {
+			System.out.println(val);
+			if (left != null) {
+				left.print();
+			}else {
+				System.out.println("#");
+			}
+			if (right != null) {
+				right.print();
+			}else {
+				System.out.println("#");
+			}
+		}
 	}
 	
 	//问题我没理解，但是在lincode平台通过了
