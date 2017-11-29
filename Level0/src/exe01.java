@@ -40,29 +40,75 @@ public class exe01 {
 //		TreeNode node = buildTree(pre,in);
 //		node.print();
 		
-		int[] nums = {16,17,4,3,12,11};
+		int[] nums = {16,17,4,3,5,2};
 		arrayReplaceWithGreatestFromRight(nums);
 		for (int i = 0; i < nums.length; i++) {
 			System.out.println(nums[i]);
 		}
+		
+//		MyQueue queue = new MyQueue();
+//		queue.push(1);
+//		System.out.println(queue.pop());
+//		queue.push(2);
+//		queue.push(3);
+//		System.out.println(queue.top());
+//		System.out.println(queue.pop());
+	}
+	
+	public class MyQueue {
+		List<Integer> nums;
+	    public MyQueue() {
+	    	nums = new ArrayList<Integer>();
+	    }
+
+	    /*
+	     * @param element: An integer 压入栈底
+	     * @return: nothing
+	     */
+	    public void push(int element) {
+	        // write your code here
+	    	nums.add(element);
+	    }
+
+	    /*
+	     * @return: An integer 删除队顶元素并返回
+	     */
+	    public int pop() {
+	    	if (nums.size() <= 0) {
+				return -1;
+			}
+	    	int v = nums.get(0);
+	    	nums.remove(0);
+	    	return v;
+	    }
+
+	    /*
+	     * @return: An integer 返回队顶元素
+	     */
+	    public int top() {
+	        // write your code here
+	    	if (nums.size() <= 0) {
+				return -1;
+			}
+	    	return nums.get(0);
+	    }
 	}
 	
 //	给一整数数组, 用当前元素之后数组中的最大元素来替换当前元素(右侧的最大元素). 
 //	因为最后一个元素的右边没有元素了, 所以用 -1 来替换这个值. 
 //	举个例子, 如果数组为 [16,17,4,3,5,2], 那么它就需要修改为 [17,5,5,5,2,-1].
 	public static void arrayReplaceWithGreatestFromRight(int[] nums) {
-        for (int i = 0; i < nums.length; i++) {
-        	if (i == nums.length - 1) {
-				nums[i] = -1;
-			}else {
-				nums[i] = nums[i+1];
-				for (int j = i + 1; j < nums.length; j++) {
-					if (nums[j] > nums[i]) {
-						nums[i] = nums[j];
-					}
+		if(nums.length <= 0)
+			return;
+        for (int i = 0; i < nums.length - 1; i++) {
+        	nums[i] = nums[i+1];
+			for (int j = i + 2; j < nums.length; j++) {
+				if (nums[j] > nums[i]) {
+					nums[i] = nums[j];
 				}
 			}
 		}
+        nums[nums.length - 1] = -1;
     }
 	
 	
