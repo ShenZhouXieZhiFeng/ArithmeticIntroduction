@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.HashSet;
 
 
@@ -42,7 +41,7 @@ public class shudu {
 				if (str.indexOf(s) >= 0 && !s.equals(".")) {
 					return false;
 				}
-				str.append(s);
+				//str.append(1);
 			}
 			str.delete(0, str.length());
 		}
@@ -53,7 +52,7 @@ public class shudu {
 				if (str.indexOf(s) >= 0 && !s.equals(".")) {
 					return false;
 				}
-				str.append(s);
+				//str.append(s);
 			}
 			str.delete(0, str.length());
 		}
@@ -68,7 +67,7 @@ public class shudu {
 						System.out.println(xx + "|" + yy);
 						return false;
 					}
-					str.append(s);
+					//str.append(s);
                 }
 				str.delete(0, str.length());
 			}

@@ -34,12 +34,38 @@ public class exe01 {
 //		int[] arr = {9,1,2,4,5,6,7};
 //		System.out.println(findMin(arr));
 		
-		int[] pre = {1,2,3};
-		int[] in = {3,2,1};
+//		int[] pre = {1,2,3};
+//		int[] in = {3,2,1};
+//		
+//		TreeNode node = buildTree(pre,in);
+//		node.print();
 		
-		TreeNode node = buildTree(pre,in);
-		node.print();
+		int[] nums = {16,17,4,3,5,2};
+		arrayReplaceWithGreatestFromRight(nums);
+		for (int i = 0; i < nums.length; i++) {
+			System.out.println(nums[i]);
+		}
 	}
+	
+//	给一整数数组, 用当前元素之后数组中的最大元素来替换当前元素(右侧的最大元素). 
+//	因为最后一个元素的右边没有元素了, 所以用 -1 来替换这个值. 
+//	举个例子, 如果数组为 [16,17,4,3,5,2], 那么它就需要修改为 [17,5,5,5,2,-1].
+	public static void arrayReplaceWithGreatestFromRight(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+        	if (i == nums.length - 1) {
+				nums[i] = -1;
+			}else {
+				nums[i] = nums[i+1];
+				for (int j = i + 1; j < nums.length; j++) {
+					if (nums[j] > nums[i+1]) {
+						nums[i] = nums[j];
+					}
+				}
+			}
+		}
+    }
+	
+	
 	
 	//前序遍历和中序遍历树构造二叉树
 	//preorder前序遍历
