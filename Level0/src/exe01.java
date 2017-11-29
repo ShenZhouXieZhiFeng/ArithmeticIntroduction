@@ -40,7 +40,7 @@ public class exe01 {
 //		TreeNode node = buildTree(pre,in);
 //		node.print();
 		
-		int[] nums = {16,17,4,3,5,2};
+		int[] nums = {16,17,4,3,12,11};
 		arrayReplaceWithGreatestFromRight(nums);
 		for (int i = 0; i < nums.length; i++) {
 			System.out.println(nums[i]);
@@ -57,7 +57,7 @@ public class exe01 {
 			}else {
 				nums[i] = nums[i+1];
 				for (int j = i + 1; j < nums.length; j++) {
-					if (nums[j] > nums[i+1]) {
+					if (nums[j] > nums[i]) {
 						nums[i] = nums[j];
 					}
 				}
