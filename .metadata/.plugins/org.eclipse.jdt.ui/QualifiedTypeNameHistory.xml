@@ -8,11 +8,12 @@
 <fullyQualifiedTypeName name="java.lang.Character"/>
 <fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.sun.org.apache.xalan.internal.xsltc.compiler.StringLengthCall"/>
-<fullyQualifiedTypeName name="exe01.ListNode"/>
 <fullyQualifiedTypeName name="exe01.TreeNode"/>
 <fullyQualifiedTypeName name="javax.annotation.PostConstruct"/>
 <fullyQualifiedTypeName name="java.lang.StringBuilder"/>
 <fullyQualifiedTypeName name="javax.swing.ToolTipManager.insideTimerAction"/>
+<fullyQualifiedTypeName name="java.util.Stack"/>
+<fullyQualifiedTypeName name="exe01.ListNode"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>

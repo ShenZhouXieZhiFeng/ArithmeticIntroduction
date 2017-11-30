@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 import javax.annotation.PostConstruct;
 
@@ -40,11 +41,11 @@ public class exe01 {
 //		TreeNode node = buildTree(pre,in);
 //		node.print();
 		
-		int[] nums = {16,17,4,3,5,2};
-		arrayReplaceWithGreatestFromRight(nums);
-		for (int i = 0; i < nums.length; i++) {
-			System.out.println(nums[i]);
-		}
+//		int[] nums = {16,17,4,3,5,2};
+//		arrayReplaceWithGreatestFromRight(nums);
+//		for (int i = 0; i < nums.length; i++) {
+//			System.out.println(nums[i]);
+//		}
 		
 //		MyQueue queue = new MyQueue();
 //		queue.push(1);
@@ -53,7 +54,36 @@ public class exe01 {
 //		queue.push(3);
 //		System.out.println(queue.top());
 //		System.out.println(queue.pop());
+		
 	}
+	
+	//***二叉树遍历
+	//给定一个二叉树，找出所有路径中各节点相加总和等于给定 目标值 的路径。
+	//一个有效的路径，指的是从根节点到叶节点的路径。
+	public List<List<Integer>> binaryTreePathSum(TreeNode root, int target) {
+		List<List<Integer>> result = new ArrayList<List<Integer>>();
+        if(null == root) return result;
+        Stack<Integer> stack = new Stack<Integer>();
+        binaryTreePathSum(result, stack, root, 0, target);
+        return result;
+    }
+	public void binaryTreePathSum(List<List<Integer>> result, Stack<Integer> stack, TreeNode root, int sum, int target) {
+		sum += root.val;
+		stack.push(root.val);
+		if(sum == target && root.left == null && root.right == null){
+			List<Integer> list = new ArrayList<Integer>(stack);
+			result.add(list);
+			stack.pop();
+			return;
+		}else{
+			if (root.left != null) {
+				binaryTreePathSum(result,stack,root.left,sum,target);
+			}else if(root.right != null){
+				binaryTreePathSum(result,stack,root.right,sum,target);
+			}
+			stack.pop();
+		}
+    }
 	
 	public class MyQueue {
 		List<Integer> nums;
