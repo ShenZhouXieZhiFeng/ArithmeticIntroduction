@@ -13,7 +13,7 @@ public class exe01 {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) {
+	//public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		//System.out.println(que01(47));
 //		char[] str = new char[100];
@@ -57,33 +57,122 @@ public class exe01 {
 //		queue.push(3);
 //		System.out.println(queue.top());
 //		System.out.println(queue.pop());
-		ListNode node1 = new ListNode(1);
-		ListNode node2 = new ListNode(2);
-		ListNode node3 = new ListNode(3);
-		ListNode node4 = new ListNode(2);
-		node1.next = node2;
-		node2.next = node3;
-		node3.next = node4;
-		ListNode res = removeElements(node1,2);
-		res.print();
+//		ListNode node1 = new ListNode(1);
+//		ListNode node2 = new ListNode(2);
+//		ListNode node3 = new ListNode(3);
+//		ListNode node4 = new ListNode(2);
+//		node1.next = node2;
+//		node2.next = node3;
+//		node3.next = node4;
+//		ListNode res = removeElements(node1,2);
+//		res.print();
+//		int[] a = {5,3,4,1,2};
+//		sortIntegers(a);
+//		for (int i = 0; i < a.length; i++) {
+//			System.out.println(a[i]);
+//		}
+//		TreeNode root = new TreeNode(1);
+//		TreeNode root1 = new TreeNode(-5);
+//		TreeNode root2 = new TreeNode(2);
+//		TreeNode root3 = new TreeNode(0);
+//		TreeNode root4 = new TreeNode(3);
+//		TreeNode root5 = new TreeNode(-4);
+//		TreeNode root6 = new TreeNode(-5);
+//		root.left = root1;
+//		root.right = root2;
+//		root1.left = root3;
+//		root1.right = root4;
+//		root2.left = root5;
+//		root2.right = root6;
+//		
+//		TreeNode max = maxNode(root);
+//		System.out.println(max.val);
+	//}
+	
+	public class Rectangle {
+		
+		public float width,height;
+		
+		public Rectangle(float _wid,float _hei){
+			width = _wid;
+			height = _hei;
+		}
+		
+		public int getArea(){
+			return (int)(width * height);
+		}
 	}
+	
+	//在二叉树中寻找值最大的节点并返回。
+	public static TreeNode maxNode(TreeNode root) {
+        if(root == null)
+        	return root;
+        TreeNode max = root;
+        max = findMax(root,max);
+        return max;
+    }
+	public static TreeNode findMax(TreeNode root,TreeNode max){
+		if(root == null)
+			return max;
+		if (root.val > max.val) {
+			max = root;
+		}
+		if(root.left != null){
+			max = findMax(root.left,max);
+		}
+		if(root.right != null){
+			max = findMax(root.right,max);
+		}
+		return max;
+	}
+	
+	public int countNodes(ListNode head) {
+	        int len = 0;
+	        while(head != null){
+	        	len ++;
+	        	head = head.next;
+	        }
+	        return len;
+    }
+	
+	public static void sortIntegers(int[] A) {
+		//冒泡
+		for (int i = 0; i < A.length; i++) {
+			for (int j = 0; j < A.length-i-1; j++) {
+				if (A[j] > A[j+1]) {
+					int t = A[j];
+					A[j] = A[j+1];
+					A[j+1] = t;
+				}
+			}
+		}
+		//选择排序
+//        for (int i = 0; i < A.length; i++) {
+//			for (int j = i + 1; j < A.length; j++) {
+//				if (A[i] > A[j]) {
+//					int t = A[i];
+//					A[i] = A[j];
+//					A[j] = t;
+//				}
+//			}
+//		}
+    }
 	
 	//删除链表中等于给定值val的所有节点。
 	public static ListNode removeElements(ListNode head, int val) {
-		if (head == null) {
+		if(head == null)
 			return head;
-		}
 		ListNode p = head,q = head.next;
-		while(q!=null){
+		while(q != null){
 			if(q.val == val){
 				p.next = q.next;
 				q = q.next;
-			}else {
-				p = p.next;
-				q = q.next; 
+			}else{
+				p = q;
+				q = q.next;
 			}
 		}
-		if(head.val==val)   head=head.next;
+		if(head.val == val) head = head.next;
 		return head;
     }
 	
