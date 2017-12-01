@@ -1,8 +1,11 @@
+import java.awt.print.Printable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
 import javax.annotation.PostConstruct;
+
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Node;
 
 
 public class exe01 {
@@ -54,8 +57,35 @@ public class exe01 {
 //		queue.push(3);
 //		System.out.println(queue.top());
 //		System.out.println(queue.pop());
-		
+		ListNode node1 = new ListNode(1);
+		ListNode node2 = new ListNode(2);
+		ListNode node3 = new ListNode(3);
+		ListNode node4 = new ListNode(2);
+		node1.next = node2;
+		node2.next = node3;
+		node3.next = node4;
+		ListNode res = removeElements(node1,2);
+		res.print();
 	}
+	
+	//删除链表中等于给定值val的所有节点。
+	public static ListNode removeElements(ListNode head, int val) {
+		if (head == null) {
+			return head;
+		}
+		ListNode p = head,q = head.next;
+		while(q!=null){
+			if(q.val == val){
+				p.next = q.next;
+				q = q.next;
+			}else {
+				p = p.next;
+				q = q.next; 
+			}
+		}
+		if(head.val==val)   head=head.next;
+		return head;
+    }
 	
 	//***二叉树遍历
 	//给定一个二叉树，找出所有路径中各节点相加总和等于给定 目标值 的路径。
