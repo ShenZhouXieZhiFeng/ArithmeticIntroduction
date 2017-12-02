@@ -8,14 +8,134 @@ namespace LeetCode
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            Console.WriteLine(RomanToInt("MCMXCVI"));//1996
-           
-        }
+        //static void Main(string[] args)
+        //{
+        //    ListNode v1 = new ListNode(1);
+        //    ListNode v2 = new ListNode(2);
+        //    ListNode v3 = new ListNode(3);
+        //    ListNode v4 = new ListNode(4);
+
+        //    ListNode l1 = new ListNode(1);//1 1 3
+        //    l1.next = v1;
+        //    v1.next = v3;
+        //    ListNode l2 = new ListNode(2);//2 2 4
+        //    l2.next = v2;
+        //    v2.next = v4;
+
+        //    ListNode res = MergeTwoLists(l1, l2);
+
+        //    Console.WriteLine(1);
+        //}
 
 
         #region easy
+
+        //合并链表
+        //Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
+        public static ListNode MergeTwoLists(ListNode l1, ListNode l2)
+        {
+            if (l1 == null)
+                return l2;
+            if (l2 == null)
+                return l1;
+            ListNode merge = null;
+            if (l1.val < l2.val)
+            {
+                merge = l1;
+                merge.next = MergeTwoLists(l1.next, l2);
+            }
+            else {
+                merge = l2;
+                merge.next = MergeTwoLists(l1, l2.next);
+            }
+            return merge;
+        }
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int x) { val = x; }
+        }
+
+        //Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+        //The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+        public static bool IsValid(string s)
+        {
+            if (s == null || s == "")
+                return false;
+            Dictionary<char, char> dic = new Dictionary<char, char>();
+            dic.Add('(', ')');
+            dic.Add('{', '}');
+            dic.Add('[', ']');
+            Stack<char> stack = new Stack<char>();
+            stack.Push(s[0]);
+            for (int i = 1; i < s.Length; i ++) {
+                if (stack.Count == 0)
+                {
+                    stack.Push(s[i]);
+                }
+                else{
+                    if (dic.ContainsKey(stack.Peek()) && s[i] == dic[stack.Peek()])
+                    {
+                        stack.Pop();
+                    }
+                    else
+                    {
+                        stack.Push(s[i]);
+                    }
+                }
+            }
+            if (stack.Count == 0) {
+                return true;
+            }
+            return false;
+        }
+        public static bool IsValid2(string s) {
+            Stack<char> stack = new Stack<char>();
+            foreach(char c in s.ToCharArray()) {
+                if (c == '(')
+                    stack.Push(')');
+                else if (c == '{')
+                    stack.Push('}');
+                else if (c == '[')
+                    stack.Push(']');
+                else if (stack.Count == 0 || stack.Pop() != c)
+                    return false;
+            }
+            if (stack.Count == 0)
+                return true;
+            return false;
+        }
+
+        //Write a function to find the longest common prefix string amongst an array of strings.
+        //最长公共前缀
+        //假设第一个字符串是公共最长前缀，第二个和第二个比较，从第0个字符开始比较，取出相同的字符返回
+        //依次比较
+        public static string LongestCommonPrefix(string[] strs)
+        {
+            if (strs == null || strs.Length <= 0) {
+                return "";
+            }
+            string res = strs[0];
+            for (int i = 1; i < strs.Length; i++)
+            {
+                if (res.Length < 0)
+                    break;
+                res = getleast(res, strs[i]);
+            }
+            return res;
+        }
+        public static string getleast(string res, string target)
+        {
+            StringBuilder sb = new StringBuilder();
+            int loop = res.Length > target.Length ? target.Length : res.Length;
+            for (int i = 0; i < loop; i++) {
+                if (res[i] == target[i])
+                    sb.Append(res[i]);
+                else break;
+            }
+            return sb.ToString();
+        }
 
         //Given a roman numeral, convert it to an integer.
         //Input is guaranteed to be within the range from 1 to 3999.

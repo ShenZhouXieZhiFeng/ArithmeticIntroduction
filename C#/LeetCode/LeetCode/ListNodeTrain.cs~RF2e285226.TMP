@@ -1,0 +1,65 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LeetCode
+{
+    /// <summary>
+    /// 单链表训练
+    /// </summary>
+    class ListNodeTrain
+    {
+        static void Main(string[] args)
+        {
+            int[] arr = { 1, 2, 3, 4, 5 };
+            LinkList ll = new LinkList(arr);
+            ll.Print();
+        }
+
+        /// <summary>
+        /// 链表操作类
+        /// </summary>
+        public class LinkList {
+            private ListNode first;
+            /// <summary>
+            /// 建立只有头指针的单链表
+            /// </summary>
+            public LinkList() {
+                first = null;
+            }
+            /// <summary>
+            /// 顺序打印链表
+            /// </summary>
+            public void Print()
+            {
+                ListNode t = first;
+                while (t != null) {
+                    Console.Write(t.val);
+                    t = t.next;
+                }
+            }
+            /// <summary>
+            /// 将数组转换乘单链表
+            /// </summary>
+            /// <param name="a"></param>
+            public LinkList(int[] a) {
+                if (a == null || a.Length <= 0)
+                    return;
+                first = new ListNode(a[0]);
+                ListNode temp = first;
+                for (int i = 1; i < a.Length; i++) {
+                    temp.next = new ListNode(a[i]);
+                    temp = temp.next;
+                }
+            }
+        }
+        public class ListNode
+        {
+            public int val;
+            public ListNode next;
+            public ListNode(int x) { val = x; }
+        }
+    }
+}
