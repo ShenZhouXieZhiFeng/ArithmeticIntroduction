@@ -1,0 +1,1 @@
+G:\Work\Project\Github\ArithmeticIntroduction\C#\LeetCode\LeetCode\bin\Debug\LeetCode.exe.config
