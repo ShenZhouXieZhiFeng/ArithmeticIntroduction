@@ -7,15 +7,15 @@ namespace LeetCode
     /// </summary>
     class ListNodeTrain
     {
-        static void Main(string[] args)
-        {
-            int[] arr = { 5,4,3,2,1 };
-            LinkList ll = new LinkList(arr);
-            //ll.Insert(2, 6);
-            ll.Reversal();
-            ll.Print();
-            //Console.WriteLine(ll.Get(2));
-        }
+        //static void Main(string[] args)
+        //{
+        //    int[] arr = { 5,4,3,2,1 };
+        //    LinkList ll = new LinkList(arr);
+        //    //ll.Insert(2, 6);
+        //    ll.Reversal();
+        //    ll.Print();
+        //    //Console.WriteLine(ll.Get(2));
+        //}
         /// <summary>
         /// 链表操作类
         /// </summary>

@@ -8,27 +8,85 @@ namespace LeetCode
 {
     class Program
     {
-        //static void Main(string[] args)
-        //{
-        //    ListNode v1 = new ListNode(1);
-        //    ListNode v2 = new ListNode(2);
-        //    ListNode v3 = new ListNode(3);
-        //    ListNode v4 = new ListNode(4);
+        static void Main(string[] args)
+        {
+            //ListNode v1 = new ListNode(1);
+            //ListNode v2 = new ListNode(2);
+            //ListNode v3 = new ListNode(3);
+            //ListNode v4 = new ListNode(4);
 
-        //    ListNode l1 = new ListNode(1);//1 1 3
-        //    l1.next = v1;
-        //    v1.next = v3;
-        //    ListNode l2 = new ListNode(2);//2 2 4
-        //    l2.next = v2;
-        //    v2.next = v4;
+            //ListNode l1 = new ListNode(1);//1 1 3
+            //l1.next = v1;
+            //v1.next = v3;
+            //ListNode l2 = new ListNode(2);//2 2 4
+            //l2.next = v2;
+            //v2.next = v4;
 
-        //    ListNode res = MergeTwoLists(l1, l2);
+            //ListNode res = MergeTwoLists(l1, l2);
 
-        //    Console.WriteLine(1);
-        //}
+            //Console.WriteLine(1);
+            List<int> res = (List<int>)SelfDividingNumbers(9,11);
+            foreach (int v in res) {
+                Console.WriteLine(v);
+            }
+        }
 
 
         #region easy
+
+        //A self-dividing number is a number that is divisible by every digit it contains.
+        //For example, 128 is a self-dividing number because 128 % 1 == 0, 128 % 2 == 0, and 128 % 8 == 0.
+        //Also, a self-dividing number is not allowed to contain the digit zero.
+        //Given a lower and upper number bound, output a list of every possible self dividing number, including the bounds if possible.
+        public static IList<int> SelfDividingNumbers(int left, int right)
+        {
+            IList<int> res = new List<int>();
+            if (left > right)
+                return res;
+            for (int i = left; i <= right; i++) {
+                int t = i % 10;
+                int d = i / 10;
+                bool f = true;
+                do
+                {
+                    if (t == 0 || i % t != 0)
+                    {
+                        f = false;
+                        break;
+                    }
+                    t = d % 10;
+                    d = d / 10;
+                } while (t != 0 || d != 0);
+                if (f)
+                    res.Add(i);
+            }
+            return res;
+        }
+        public static IList<int> SelfDividingNumbers2(int left, int right) {
+            IList<int> res = new List<int>();
+            for (int i = left; i < right; i++) {
+                int j = i;
+                for (; j > 0; j /= 0) {
+                    if ((j % 10) == 0 || (i % (j % 10) != 0)) {
+                        break;
+                    }
+                }
+                if (j == 0)
+                    res.Add(i);
+            }
+            return res;
+        }
+
+        //The Hamming distance between two integers is the number of positions at which the corresponding bits are different.
+        //Given two integers x and y, calculate the Hamming distance.
+        public static int HammingDistance(int x, int y)
+        {
+            int res = 0, exc = x ^ y;//异或
+            for (int i = 0; i < 32; i++) {
+                res += (exc >> i) & 1;
+            }
+            return res;
+        }
 
         //合并链表
         //Merge two sorted linked lists and return it as a new list. The new list should be made by splicing together the nodes of the first two lists.
