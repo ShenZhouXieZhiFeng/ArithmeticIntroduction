@@ -10,29 +10,80 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            //ListNode v1 = new ListNode(1);
-            //ListNode v2 = new ListNode(2);
-            //ListNode v3 = new ListNode(3);
-            //ListNode v4 = new ListNode(4);
-
-            //ListNode l1 = new ListNode(1);//1 1 3
-            //l1.next = v1;
-            //v1.next = v3;
-            //ListNode l2 = new ListNode(2);//2 2 4
-            //l2.next = v2;
-            //v2.next = v4;
-
-            //ListNode res = MergeTwoLists(l1, l2);
-
-            //Console.WriteLine(1);
-            List<int> res = (List<int>)SelfDividingNumbers(9,11);
-            foreach (int v in res) {
-                Console.WriteLine(v);
-            }
+            
         }
 
-
         #region easy
+
+        #region 20171203
+
+        //Given an array of 2n integers, your task is to group these integers into n pairs of integer, say(a1, b1), (a2, b2), ..., (an, bn) which makes sum of min(ai, bi) for all i from 1 to n as large as possible.
+        public static int ArrayPairSum(int[] nums)
+        {
+            if (nums == null || nums.Length < 0 || nums.Length % 2 != 0)
+                return 0;
+            int sum = 0;
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length;) {
+                sum += nums[i];
+                i += 2;
+            }
+            return sum;
+        }
+
+        //合并两个二叉树的相应节点
+        //Given two binary trees and imagine that when you put one of them to cover the other, some nodes of the two trees are overlapped while the others are not.
+        public static TreeNode MergeTrees(TreeNode t1, TreeNode t2)
+        {
+            if (t1 == null && t2 == null)
+                return null;
+            if (t1 == null && t2 != null)
+                return t2;
+            if (t1 != null && t2 == null)
+                return t1;
+            t1.val += t2.val;
+            t1.left = MergeTrees(t1.left, t2.left);
+            t1.right = MergeTrees(t1.right, t2.right);
+            return t1;
+        }
+        public class TreeNode
+        {
+              public int val;
+              public TreeNode left;
+              public TreeNode right;
+              public TreeNode(int x) { val = x; }
+        }
+           
+        //Initially, there is a Robot at position(0, 0). Given a sequence of its moves, judge if this robot makes a circle, which means it moves back to the original place.
+            //The move sequence is represented by a string. And each move is represent by a character. The valid robot moves are R (Right), L(Left), U(Up) and D(down). The output should be true or false representing whether the robot makes a circle.
+        public static bool JudgeCircle(string moves)
+        {
+            int up = 0, left = 0;
+            foreach (char c in moves.ToCharArray()) {
+                if (c == 'U')
+                {
+                    up++;
+                }
+                else if (c == 'D')
+                {
+                    up--;
+                }
+                else if (c == 'L')
+                {
+                    left++;
+                }
+                else if (c == 'R') {
+                    left--;
+                }
+            }
+            if (up != 0 || left != 0)
+                return false;
+            return true;
+        }
+
+        #endregion
+
+        #region 20171202
 
         //A self-dividing number is a number that is divisible by every digit it contains.
         //For example, 128 is a self-dividing number because 128 % 1 == 0, 128 % 2 == 0, and 128 % 8 == 0.
@@ -115,6 +166,10 @@ namespace LeetCode
             public ListNode(int x) { val = x; }
         }
 
+        #endregion
+
+        #region 20171201
+
         //Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
         //The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
         public static bool IsValid(string s)
@@ -194,6 +249,10 @@ namespace LeetCode
             }
             return sb.ToString();
         }
+
+        #endregion
+
+        #region 20171130
 
         //Given a roman numeral, convert it to an integer.
         //Input is guaranteed to be within the range from 1 to 3999.
@@ -303,5 +362,6 @@ namespace LeetCode
         }
         #endregion
 
+        #endregion
     }
 }
