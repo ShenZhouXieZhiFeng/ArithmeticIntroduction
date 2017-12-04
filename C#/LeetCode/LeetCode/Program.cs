@@ -10,10 +10,42 @@ namespace LeetCode
     {
         static void Main(string[] args)
         {
-            
+            int[] nums = { 1, 1, 2 };
+            removeDuplicates(nums);
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                Console.WriteLine(nums[i]);
+            }
         }
 
         #region easy
+
+        #region 20171204
+
+        //Given a sorted array, remove the duplicates in-place such that each element appear only once and return the new length.
+        //Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+        public static int removeDuplicates(int[] A)
+        {
+            int len = A.Length;
+            if (len == 0)
+                return 0;
+            int count = 1;
+            for (int i = 1; i < len; i++)
+            {
+                if (A[i] == A[i - 1])
+                {
+                    continue;
+                }
+                else
+                {
+                    A[count] = A[i];
+                    count++;
+                }
+            }
+            return count;
+        }
+        #endregion 
 
         #region 20171203
 

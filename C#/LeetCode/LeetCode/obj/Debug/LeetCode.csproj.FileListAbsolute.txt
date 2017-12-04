@@ -4,3 +4,9 @@ G:\Work\Project\Github\ArithmeticIntroduction\C#\LeetCode\LeetCode\bin\Debug\Lee
 G:\Work\Project\Github\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.csprojResolveAssemblyReference.cache
 G:\Work\Project\Github\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.exe
 G:\Work\Project\Github\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.pdb
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\bin\Debug\LeetCode.exe.config
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.exe
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.pdb
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\obj\Debug\LeetCode.csprojResolveAssemblyReference.cache
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\bin\Debug\LeetCode.exe
+D:\XieZhiFeng\UnityProject\GitHub\ArithmeticIntroduction\C#\LeetCode\LeetCode\bin\Debug\LeetCode.pdb
