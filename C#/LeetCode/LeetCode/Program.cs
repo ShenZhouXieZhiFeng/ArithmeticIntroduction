@@ -11,7 +11,7 @@ namespace LeetCode
         static void Main(string[] args)
         {
             int[] nums = { 1, 1, 2 };
-            removeDuplicates(nums);
+            RemoveElement(nums,1);
 
             for (int i = 0; i < nums.Length; i++)
             {
@@ -22,6 +22,32 @@ namespace LeetCode
         #region easy
 
         #region 20171204
+
+
+
+        //Implement strStr().
+        //Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+        public static int StrStr(string haystack, string needle)
+        {
+            if (haystack == null)
+                return -1;
+            return haystack.IndexOf(needle);
+        }
+
+        //Given an array and a value, remove all instances of that value in-place and return the new length.
+        //Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
+        //The order of elements can be changed. It doesn't matter what you leave beyond the new length.
+        public static int RemoveElement(int[] nums, int val)
+        {
+            int len = nums.Length;
+            int count = 0;
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] != val) {
+                    nums[count++] = nums[i];
+                }
+            }
+            return count;
+        }
 
         //Given a sorted array, remove the duplicates in-place such that each element appear only once and return the new length.
         //Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
