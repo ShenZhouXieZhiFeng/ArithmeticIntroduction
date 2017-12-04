@@ -8,22 +8,116 @@ namespace LeetCode
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            int[] nums = { 1, 1, 2 };
-            RemoveElement(nums,1);
+        //static void Main(string[] args)
+        //{
+            //int[] nums = { 1, 1, 2 };
+            //RemoveElement(nums,1);
 
-            for (int i = 0; i < nums.Length; i++)
-            {
-                Console.WriteLine(nums[i]);
-            }
-        }
+            //for (int i = 0; i < nums.Length; i++)
+            //{
+            //    Console.WriteLine(nums[i]);
+            //}
+            //string[] word = { "qwer", "aqw" };
+            //string[] res = FindWords(word);
+            //Console.WriteLine(res[0]);
+
+            //printf(ReverseString("qwert"));
+
+        //}
+
 
         #region easy
 
         #region 20171204
 
+        //Write a function that takes a string as input and returns the string reversed.
+        public static string ReverseString(string s)
+        {
+            if (s == null)
+                return s;
+            char[] arr = s.ToCharArray();
+            int len = arr.Length;
+            for (int i = 0; i < arr.Length/2; i++) {
+                char t = arr[i];
+                arr[i] = arr[len - 1 - i];
+                arr[len - 1 - i] = t;
+            }
+            return new string(arr);
+        }
 
+        //Given a List of words, return the words that can be typed using letters of alphabet on only one row's of American keyboard like the image below.
+        public static string[] FindWords(string[] words)
+        {
+            if (words == null || words.Length == 0)
+                return words;
+            string fir = "qwertyuiop";//1
+            string sec = "asdfghjkl";//2
+            string thr = "zxcvbnm";//3
+            List<string> res = new List<string>();
+            for (int i = 0; i < words.Length; i++) {
+                char[] arr = words[i].ToLower().ToCharArray();
+                int flag = 0;
+                for (int j = 0; j < arr.Length; j++) {
+                    if (fir.Contains(arr[j]))
+                    {
+                        if (flag != 0 && flag != 1) {
+                            flag = -1;
+                            break;
+
+                        }
+                        else
+                            flag = 1;
+                    }
+                    else if (sec.Contains(arr[j])) {
+                        if (flag != 0 && flag != 2) {
+                            flag = -1;
+                            break;
+                        }
+                        else
+                            flag = 2;
+                    }
+                    else if (thr.Contains(arr[j]))
+                    {
+                        if (flag != 0 && flag != 3) {
+                            flag = -1;
+                            break;
+                        }
+                        else
+                            flag = 3;
+                    }
+                }
+                if (flag != -1 && flag != 0) {
+                    res.Add(words[i]);
+                }
+            }
+            return res.ToArray();
+        }
+
+        //Given a string, you need to reverse the order of characters in each word within a sentence while still preserving whitespace and initial word order.
+        public static string ReverseWords(string s)
+        {
+            if (s == null)
+                return s;
+            string[] strArr = s.Split(' ');
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < strArr.Length; i++) {
+                for (int j = strArr[i].Length - 1; j >= 0; j--) {
+                    sb.Append(strArr[i][j]);
+                }
+                if (i != strArr.Length - 1) {
+                    sb.Append(' ');
+                }
+            }
+            return sb.ToString();
+        }
+
+        // 求一个数的补数(未做)
+        //Given a positive integer, output its complement number. The complement strategy is to flip the bits of its binary representation.
+        public static int FindComplement(int num)
+        {
+            int res = 0;
+            return res;
+        }
 
         //Implement strStr().
         //Return the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
@@ -417,6 +511,16 @@ namespace LeetCode
                 }
             }
             return res;
+        }
+        #endregion
+
+        #region tools
+        public static void printf(int v) {
+            Console.WriteLine(v);
+        }
+        public static void printf(string v)
+        {
+            Console.WriteLine(v);
         }
         #endregion
 
