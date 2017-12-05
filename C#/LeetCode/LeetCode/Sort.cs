@@ -12,16 +12,16 @@ namespace LeetCode
     class Sort
     {
 
-        static void Main(string[] args) {
-            int[] arr = { 5, 7, 1, 8, 4 };
-            //maopao(arr);
-            //xuanzhe(arr);
-            //charu(arr);
-            quick(arr,0,arr.Length-1);
-            for (int i = 0; i < arr.Length; i++) {
-                Console.Write(arr[i]);
-            }
-        }
+        //static void Main(string[] args) {
+        //    int[] arr = { 5, 7, 1, 8, 4 };
+        //    //maopao(arr);
+        //    //xuanzhe(arr);
+        //    //charu(arr);
+        //    quick(arr,0,arr.Length-1);
+        //    for (int i = 0; i < arr.Length; i++) {
+        //        Console.Write(arr[i]);
+        //    }
+        //}
 
         // 快速
         public static void quick(int[] arr,int left,int right) {
