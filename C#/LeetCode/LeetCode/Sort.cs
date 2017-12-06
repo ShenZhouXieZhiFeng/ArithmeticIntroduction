@@ -12,36 +12,40 @@ namespace LeetCode
     class Sort
     {
 
-        //static void Main(string[] args) {
+        //static void Main(string[] args)
+        //{
         //    int[] arr = { 5, 7, 1, 8, 4 };
         //    //maopao(arr);
         //    //xuanzhe(arr);
         //    //charu(arr);
-        //    quick(arr,0,arr.Length-1);
-        //    for (int i = 0; i < arr.Length; i++) {
+        //    quick(arr, 0, arr.Length - 1);
+        //    for (int i = 0; i < arr.Length; i++)
+        //    {
         //        Console.Write(arr[i]);
         //    }
         //}
 
         // 快速
-        public static void quick(int[] arr,int left,int right) {
-            if (left <= right) {
+        public static void quick(int[] arr, int left, int right) {
+            if (left < right) {
                 int key = arr[left];
                 int low = left;
                 int high = right;
-                while (low != high) {
-                    //右扫描
-                    while (high > low && arr[high] >= key)
+                while (low < high) {
+                    //右
+                    while (high > low && arr[high] > key) {
                         high--;
+                    }
                     arr[low] = arr[high];
-                    //左扫描 
-                    while (low < high && arr[low] <= key)
-                        low ++;
+                    //左
+                    while (low < high && arr[low] < key) {
+                        low++;
+                    }
                     arr[high] = arr[low];
                 }
-                arr[high] = key;
-                quick(arr, left, low-1);
-                quick(arr, high+1, right);
+                arr[low] = key;
+                quick(arr, left, low);
+                quick(arr, low + 1, right);
             }
         }
 

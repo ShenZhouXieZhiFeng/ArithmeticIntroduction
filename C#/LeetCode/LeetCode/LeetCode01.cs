@@ -14,9 +14,65 @@ namespace LeetCode
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
-            string[] ops = { "5", "-2", "4", "C", "D", "9", "+", "+" };
-            CalPoints(ops);
+            //string[] ops = { "5", "-2", "4", "C", "D", "9", "+", "+" };
+            //CalPoints(ops);
+            int[,] can = { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 1, 1, 0, 0 } };
+            IslandPerimeter(can);
         }
+
+        #region 20171206
+
+        //463. Island Perimeter
+        public static int IslandPerimeter(int[,] grid)
+        {
+            if (grid == null)
+                return 0;
+            int count = 0;
+            int row = grid.GetLength(0);
+            int col = grid.GetLength(1);
+            for (int i = 0; i < row; i++) {
+                for (int j = 0; j < col; j++) {
+                    if (grid[i, j] == 1) {
+                        count += 4;
+                        if (i < row - 1) {
+                            if (grid[i + 1, j] == 1)
+                                count -= 1;
+                        }
+                        if (i > 0) {
+                            if (grid[i - 1, j] == 1)
+                                count -= 1;
+                        }
+                        if (j < col - 1) {
+                            if (grid[i, j + 1] == 1)
+                                count -= 1;
+                        }
+                        if (j > 0) {
+                            if (grid[i, j - 1] == 1)
+                                count -= 1;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+
+        //***
+        //Given an integer array with even length, where different numbers in this array represent different kinds of candies.
+        //Each number means one candy of the corresponding kind. 
+        //You need to distribute these candies equally in number to brother and sister.
+        //Return the maximum number of kinds of candies the sister could gain.
+        public static int DistributeCandies(int[] candies)
+        {
+            int[] arr = candies.OrderBy(x => x).ToArray();
+            int count = 1;
+            for (int i = 1; i < candies.Length; i++) {
+                if (arr[i] != arr[i - 1])
+                    count++;
+            }
+            return count > candies.Length / 2 ? candies.Length / 2 : count;
+        }
+
+        #endregion
 
         #region 20171205
 
