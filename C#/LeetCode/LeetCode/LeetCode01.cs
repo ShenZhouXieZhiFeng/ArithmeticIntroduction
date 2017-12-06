@@ -16,11 +16,71 @@ namespace LeetCode
             //Console.WriteLine(1);
             //string[] ops = { "5", "-2", "4", "C", "D", "9", "+", "+" };
             //CalPoints(ops);
-            int[,] can = { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 1, 1, 0, 0 } };
-            IslandPerimeter(can);
+            //int[,] can = { { 0, 1, 0, 0 }, { 1, 1, 1, 0 }, { 0, 1, 0, 0 }, { 1, 1, 0, 0 } };
+            //IslandPerimeter(can);
+            int[] a = { 4, 1, 2 };
+            int[] b = { 1, 3, 4, 2 };
+            NextGreaterElement(a, b);
         }
 
         #region 20171206
+
+        //***
+        //遍历队列，将同层次的值的平均值求出
+        //Given a non-empty binary tree, return the average value of the nodes on each level in the form of an array.
+        public static IList<double> AverageOfLevels(TreeNode root)
+        {
+            List<double> res = new List<double>();
+            if (root == null)
+                return res;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            TreeNode t;
+            while (queue.Count > 0) {
+                int n = queue.Count;
+                double sum = 0;
+                for (int i = 0; i < n; i++) {
+                    t = queue.Dequeue();
+                    sum += t.val;
+                    if (t.left != null) queue.Enqueue(t.left);
+                    if (t.right != null) queue.Enqueue(t.right);
+                }
+                res.Add(sum/n);
+            }
+            return res;
+        }
+
+        //496. Next Greater Element I
+        public static int[] NextGreaterElement(int[] findNums, int[] nums)
+        {
+            if (findNums == null || nums == null) {
+                return findNums == null ? nums : findNums;
+            }
+            int len = findNums.Length;
+            int[] res = new int[len];
+            for (int i = 0; i < len; i++) {
+                bool f = false;
+                int val = -1;
+                for (int j = 0; j < nums.Length; j++) {
+                    if (!f)
+                    {
+                        if (nums[j] == findNums[i])
+                        {
+                            f = true;
+                        }
+                    }
+                    else {
+                        if (nums[j] > findNums[i]) {
+                            val = nums[j];
+                        }
+                    }
+                    if (val != -1)
+                        break;
+                }
+                res[i] = val;
+            }
+            return res;
+        }
 
         //463. Island Perimeter
         public static int IslandPerimeter(int[,] grid)
