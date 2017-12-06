@@ -189,6 +189,22 @@ namespace LeetCode
                 head.next = null;
                 return reHead;
             }
+
+            public static ListNode ReverseList2(ListNode head)
+            {
+                if (head == null || head.next == null)
+                    return head;
+                ListNode cur = head.next, next = null;
+                head.next = null;
+                while (cur != null)
+                {
+                    next = cur.next;
+                    cur.next = head;
+                    head = cur;
+                    cur = next;
+                }
+                return head;
+            }
         }
         public class ListNode
         {
