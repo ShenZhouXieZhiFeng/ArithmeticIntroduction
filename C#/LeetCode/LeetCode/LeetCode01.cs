@@ -47,11 +47,79 @@ namespace LeetCode
             //int[] nums = { 1, 0, 1, 1 };
             //FindMaxConsecutiveOnes(nums);
 
-            int[] p = { 1,0,1,1 };
-            ContainsNearbyDuplicate(p,1);
+            //int[] p = { 33,0,33,33 };
+            //ContainsNearbyDuplicate(p,1);
+
+            IsPowerOfThree(1);
+
+
+            ListNode head = new ListNode(0);
+            //建立一个指向head的箭头
+            ListNode t = head;
+            while (t != null) {
+                //dosomething
+                t = t.next;
+            }
         }
 
+        #region Medium
+
+        //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+        public static IList<IList<int>> PathSum(TreeNode root, int sum)
+        {
+            IList<IList<int>> res = new List<IList<int>>();
+            if (root == null)
+                return res;
+            findPath(res, root, new Stack<int>(), sum);
+            return res;
+        }
+        public static void findPath(IList<IList<int>> list,TreeNode node,Stack<int> stack,int sum) {
+            if (node == null)
+                return;
+            stack.Push(node.val);
+            if (node.left == null && node.right == null && stack.Sum() == sum) {
+                List<int> n = stack.ToList();
+                n.Reverse();
+                list.Add(n);
+            }
+            if (node.left != null) {
+                findPath(list, node.left, stack, sum);
+                //重要操作，出栈
+                stack.Pop();
+            }
+            if (node.right != null) {
+                findPath(list, node.right, stack, sum);
+                stack.Pop();
+            }
+        }
+
+        #endregion
+
         #region 20171207
+
+        //521. Longest Uncommon Subsequence I
+        public static int FindLUSlength(string a, string b)
+        {
+            if (a == b)
+                return - 1;
+            if (a.Contains(b))
+                return a.Length;
+            if (b.Contains(a))
+                return b.Length;
+            return a.Length > b.Length ? a.Length : b.Length;
+        }
+
+        //Given an integer, write a function to determine if it is a power of three.
+        public static bool IsPowerOfThree(int n)
+        {
+            //return (n > 0 && 1162261467 % n == 0);
+            if (n < 1) return false;
+            while (n % 3 == 0)
+            {
+                n /= 3;
+            }
+            return n == 1;
+        }
 
         //***
         //Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
@@ -61,16 +129,15 @@ namespace LeetCode
             Dictionary<int, int> map = new Dictionary<int, int>();
             for (int i = 0; i < nums.Length; i++)
             {
-                if (map.ContainsKey(nums[i]))
+                int cur = nums[i];
+                if (map.ContainsKey(cur))
                 {
-                    int j = map[nums[i]];
-                    if (i - j <= k) return true;
+                    int j = map[cur];
+                    if (i - j <= k)
+                        return true;
                 }
-                else
-                {
-                    map.Remove(nums[i]);
-                    map.Add(nums[i], i);
-                }
+                map.Remove(cur);
+                map.Add(cur, i);
             }
             return false;
         }
