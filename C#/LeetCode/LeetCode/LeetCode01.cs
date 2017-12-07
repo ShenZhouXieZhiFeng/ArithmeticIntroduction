@@ -47,11 +47,49 @@ namespace LeetCode
             //int[] nums = { 1, 0, 1, 1 };
             //FindMaxConsecutiveOnes(nums);
 
-            int[] p = { 1, 2 };
-            MaxProfit(p);
+            int[] p = { 1,0,1,1 };
+            ContainsNearbyDuplicate(p,1);
         }
 
         #region 20171207
+
+        //***
+        //Given an array of integers and an integer k, find out whether there are two distinct indices i and j in the array such that nums[i] = nums[j] and the absolute difference between i and j is at most k.
+        public static bool ContainsNearbyDuplicate(int[] nums, int k)
+        {
+            if (nums == null || nums.Length < 1) return false;
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (map.ContainsKey(nums[i]))
+                {
+                    int j = map[nums[i]];
+                    if (i - j <= k) return true;
+                }
+                else
+                {
+                    map.Remove(nums[i]);
+                    map.Add(nums[i], i);
+                }
+            }
+            return false;
+        }
+
+        //Given an array of integers, find if the array contains any duplicates. Your function should return true if any value appears at least twice in the array, and it should return false if every element is distinct.
+        public static bool ContainsDuplicate(int[] nums)
+        {
+            if (nums == null)
+                return false;
+            HashSet<int> set = new HashSet<int>(nums);
+            return set.Count == nums.Length ? false : true;
+        }
+
+        //***
+        //605. Can Place Flowers
+        public static bool CanPlaceFlowers(int[] flowerbed, int n)
+        {
+            return true;
+        }
 
         //Say you have an array for which the ith element is the price of a given stock on day i.
         //If you were only permitted to complete at most one transaction(ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
