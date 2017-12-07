@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="BinaryTreeTrain.cs" />
     <Compile Include="DataModes.cs" />
+    <Compile Include="DynamicProgramming.cs" />
     <Compile Include="LeetCode01.cs" />
     <Compile Include="ListNodeTrain.cs" />
     <Compile Include="Program.cs" />

@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        static void Main(string[] args)
-        {
+        //static void Main(string[] args)
+        //{
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -50,17 +50,17 @@ namespace LeetCode
             //int[] p = { 33,0,33,33 };
             //ContainsNearbyDuplicate(p,1);
 
-            IsPowerOfThree(1);
+        //    IsPowerOfThree(1);
 
 
-            ListNode head = new ListNode(0);
-            //建立一个指向head的箭头
-            ListNode t = head;
-            while (t != null) {
-                //dosomething
-                t = t.next;
-            }
-        }
+        //    ListNode head = new ListNode(0);
+        //    //建立一个指向head的箭头
+        //    ListNode t = head;
+        //    while (t != null) {
+        //        //dosomething
+        //        t = t.next;
+        //    }
+        //}
 
         #region Medium
 
