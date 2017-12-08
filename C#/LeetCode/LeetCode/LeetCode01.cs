@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        //static void Main(string[] args)
-        //{
+        static void Main(string[] args)
+        {
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -50,21 +50,26 @@ namespace LeetCode
             //int[] p = { 33,0,33,33 };
             //ContainsNearbyDuplicate(p,1);
 
-        //    IsPowerOfThree(1);
+            //    IsPowerOfThree(1);
 
 
-        //    ListNode head = new ListNode(0);
-        //    //建立一个指向head的箭头
-        //    ListNode t = head;
-        //    while (t != null) {
-        //        //dosomething
-        //        t = t.next;
-        //    }
-        //}
+            //    ListNode head = new ListNode(0);
+            //    //建立一个指向head的箭头
+            //    ListNode t = head;
+            //    while (t != null) {
+            //        //dosomething
+            //        t = t.next;
+            //}
+
+            int[] arr = { 1, 0, 1, 0, 2, 3 };
+            int[] res = moveZero2(arr);
+
+            Console.ReadLine();
+        }
 
         #region Medium
 
-        //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+            //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
         public static IList<IList<int>> PathSum(TreeNode root, int sum)
         {
             IList<IList<int>> res = new List<IList<int>>();
@@ -91,6 +96,75 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171208
+
+        //将数组中的0移动到数组末尾,解法1最直观，效率不好
+        public static int[] moveZero0(int[] arr) {
+            int k = arr.Length;
+            for (int i = 0; i < arr.Length; i++) {
+                if (arr[i] == 0) {
+                    int j = k - 1;
+                    while (j > i) {
+                        if (arr[j] != 0)
+                        {
+                            arr[i] = arr[j];
+                            arr[j] = 0;
+                            k--;
+                            break;
+                        }
+                        else {
+                            k--;
+                            j--;
+                        }
+                    }
+                }
+            }
+            return arr;
+        }
+
+        public static int[] moveZero1(int[] arr)
+        {
+            int zero = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    zero++;
+                }
+                else {
+                    arr[i - zero] = arr[i];
+                }
+            }
+            for (int i = arr.Length - 1; i > arr.Length - 1 - zero; i--) {
+                arr[i] = 0;
+            }
+            return arr;
+        }
+
+        public static int[] moveZero2(int[] arr)
+        {
+            int m = 0,n = 0;
+            for (int i = 0; i < arr.Length; i++)
+            {
+                if (arr[i] == 0)
+                {
+                    n++;
+                }
+                else
+                {
+                    if (m != n) {
+                        arr[m] = arr[n];
+                        arr[n] = 0;
+                    }
+                    m++;
+                    n++;
+                }
+            }
+            return arr;
         }
 
         #endregion
