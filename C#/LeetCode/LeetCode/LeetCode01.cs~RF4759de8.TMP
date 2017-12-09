@@ -64,14 +64,7 @@ namespace LeetCode
             //int[] arr = { 1, 0, 1, 0, 2, 3 };
             //int[] res = moveZero2(arr);
 
-            //            Console.Write(AddBinary("10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101",
-            //"110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011"));
-
-            //Console.Write(AddDigits(129));
-
-            Console.Write(AddStrings("55", "55"));
-
-            Console.ReadLine();
+            //Console.ReadLine();
         }
 
         #region Medium
@@ -109,41 +102,6 @@ namespace LeetCode
 
         #region 20171209
 
-        //Given two non-negative integers num1 and num2 represented as string, return the sum of num1 and num2.
-        public static string AddStrings(string num1, string num2)
-        {
-            StringBuilder sb = new StringBuilder();
-            int carry = 0;
-            for (int i = num1.Length - 1, j = num2.Length - 1; carry == 1|| i >= 0 || j >= 0; i--, j--)
-            {
-                int x = i < 0 ? 0 : num1[i] - '0';
-                int y = j < 0 ? 0 : num2[j] - '0';
-                sb.Append((x + y + carry) % 10);
-                carry = (x + y + carry) / 10;
-            }
-            char[] res = sb.ToString().ToCharArray();
-            Array.Reverse(res);
-            return new string(res);
-        }
-
-        //计算一个数各位相加知道和<10
-        public static int AddDigits(int num)
-        {
-            if (num < 10)
-                return num;
-            int sum = 0;
-            while (num >= 10) {
-                sum += num % 10;
-                num = num / 10;
-                if (num < 10)
-                {
-                    num += sum;
-                    sum = 0;
-                }
-            }
-            return num;
-        }
-
         //Given two binary strings, return their sum (also a binary string).
         //For example,
         //a = "11"
@@ -151,29 +109,10 @@ namespace LeetCode
         //Return "100".
         public static string AddBinary(string a, string b)
         {
-            double a_10 = 0,b_10 = 0;
-            int indexa = 0;
-            for (int i = a.Length-1; i >= 0; i--) {
-                int v = a[i] == '1' ? 1 : 0;
-                a_10 +=  v * (Math.Pow(2, indexa++));
+            int sum = 0;
+            for (int i = 0; i < a.Length; i++) {
+                sum += a[i] - '0';
             }
-            double indexb = 0;
-            for (int i = b.Length - 1; i >= 0; i--)
-            {
-                int v = b[i] == '1' ? 1 : 0;
-                b_10 += v * (Math.Pow(2, indexb++));
-            }
-            StringBuilder sb = new StringBuilder();
-            double res = a_10 + b_10;
-            int ni = 0;
-            while (res != 0)
-            {
-                ni = (int)res % 2;
-                sb.Append(ni);
-                res = res / 2;
-            }
-            Console.WriteLine(sb.Length);
-            return sb.ToString();
         }
 
         //***
