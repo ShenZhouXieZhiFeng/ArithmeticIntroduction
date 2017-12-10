@@ -1,15 +1,12 @@
-// IntroductionDesign.cpp : 定义控制台应用程序的入口点。
-//
-
 #include "stdafx.h"
-#include <iostream>
-using namespace std;
+//#include <iostream>
+//using namespace std;
 
-int main()
-{
-	cout << 1 << endl;
-
-	system("pause");
-    return 0;
-}
-
+//int main()
+//{
+//	int arr[] = { 1,2,3,4,5 };
+//
+//	cout << binSearch(arr, 5, 3) << endl;
+//	system("pause");
+//    return 0;
+//}
