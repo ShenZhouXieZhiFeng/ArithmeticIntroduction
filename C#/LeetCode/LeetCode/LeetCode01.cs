@@ -69,7 +69,9 @@ namespace LeetCode
 
             //Console.Write(AddDigits(129));
 
-            Console.Write(AddStrings("55", "55"));
+            //Console.Write(AddStrings("55", "55"));
+
+            Console.Write(CanWinNim(20));
 
             Console.ReadLine();
         }
@@ -103,6 +105,59 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171210
+
+        //Given an array of integers, every element appears twice except for one. Find that single one.
+        //超时解
+        public static int SingleNumber(int[] nums)
+        {
+            if (nums.Length == 0)
+                return nums[0];
+            for (int i = 0; i < nums.Length; i++) {
+                bool f = false;
+                for (int j = 0; j < nums.Length; j++) {
+                    if (nums[i] == nums[j] && i != j) {
+                        f = true;
+                        break;
+                    }
+                }
+                if (!f)
+                    return nums[i];
+            }
+            return 0;
+        }
+        //两个相同的数进行^（异或操作结果为0）
+        public static int SingleNumber2(int[] nums)
+        {
+            if (nums.Length == 1)
+                return nums[0];
+            int res = nums[0];
+            for (int i = 1; i < nums.Length; i++) {
+                res ^= nums[i];
+            }
+            return res;
+        }
+        //利用其他数据结构HashSet
+        public static int SingleNumber3(int[] nums)
+        {
+            HashSet<int> set = new HashSet<int>();
+            foreach (int v in nums) {
+                if (set.Contains(v))
+                    set.Remove(v);
+                else
+                    set.Add(v);
+            }
+            return set.First();
+        }
+
+        //292. Nim Game
+        public static bool CanWinNim(int n)
+        {
+            return n % 4 != 0;
         }
 
         #endregion
