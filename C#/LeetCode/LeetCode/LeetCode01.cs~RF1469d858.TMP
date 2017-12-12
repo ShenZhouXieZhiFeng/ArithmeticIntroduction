@@ -80,13 +80,11 @@ namespace LeetCode
             TreeNode r3 = new TreeNode(3);
             TreeNode r4 = new TreeNode(4);
             TreeNode r5 = new TreeNode(5);
-            TreeNode r6 = new TreeNode(6);
             r1.left = r2;
-            r2.left = r4;
             r1.right = r3;
-            r3.right = r5;
-            r5.right = r6;
-            Console.Write(MaxDepth(r1));
+            r2.left = r4;
+            r4.right = r5;
+            MaxDepth(r1);
 
             Console.ReadLine();
         }
@@ -129,33 +127,28 @@ namespace LeetCode
         //寻找最大深度
         //Given a binary tree, find its maximum depth.
         //The maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
-        public static int MaxDepth(TreeNode root) {
-            maxD = 0;
+        public static int MaxDepth(TreeNode root)
+        {
             if (root == null)
                 return 0;
-            if (root.left == null && root.right == null)
-                return 1;
-            recursion(root, 1);
+            recursion(root, 0);
             return maxD;
         }
         public static int maxD = 0;
-        public static void recursion(TreeNode root, int count)
-        {
-            if (root.left == null && root.right == null)
-            {
+        public static void recursion(TreeNode root,int count) {
+            if (root.left == null && root.right == null) {
                 if (maxD < count)
                     maxD = count;
                 return;
             }
+            count--;
             if (root.left != null)
             {
-                count++;
                 recursion(root.left, count);
                 count--;
             }
             if (root.right != null)
             {
-                count++;
                 recursion(root.right, count);
                 count--;
             }
@@ -163,18 +156,18 @@ namespace LeetCode
 
         //Given a positive integer, check whether it has alternating bits: namely, if two adjacent bits will always have different values.
         public static bool HasAlternatingBits(int n)
-            {
-                int t = n & 1;//取得最后一位(t == 0->last = 1)
+        {
+            int t = n & 1;//取得最后一位(t == 0->last = 1)
+            n = n >> 1;
+            while (n != 0) {
+                int tt = n & 1;
+                if (t == (n & tt))
+                    return false;
+                t = tt;
                 n = n >> 1;
-                while (n != 0) {
-                    int tt = n & 1;
-                    if (t == (n & tt))
-                        return false;
-                    t = tt;
-                    n = n >> 1;
-                }
-                return true;
             }
+            return true;
+        }
 
         #endregion
 
