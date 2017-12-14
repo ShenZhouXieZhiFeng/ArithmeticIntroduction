@@ -91,10 +91,9 @@ namespace LeetCode
             //char[] arr = { 'c', 'f', 'j' };
             //Console.Write(NextGreatestLetter(arr, 'a'));
 
-            //Console.Write(CountBinarySubstrings("00110011"));
+            Console.Write(CountBinarySubstrings("00110"));
 
-            int[] nums = { 1,2,3,3,2,6 };
-            FindDisappearedNumbers2(nums);
+            //Console.Write("0011".Substring(2, 1));
 
             Console.ReadLine();
         }
@@ -134,64 +133,6 @@ namespace LeetCode
 
         #region 20171214
 
-        //Given an array of integers where 1 ≤ a[i] ≤ n (n = size of array), some elements appear twice and others appear once.
-        //Find all the elements of[1, n] inclusive that do not appear in this array.
-        //Could you do it without extra space and in O(n) runtime? You may assume the returned list does not count as extra space.
-        public static IList<int> FindDisappearedNumbers(int[] nums)
-        {
-            IList<int> res = new List<int>();
-            if (nums == null || nums.Length == 0)
-                return res;
-            HashSet<int> set = new HashSet<int>(nums);
-            for (int i = 1; i <= nums.Length; i++) {
-                if (!set.Contains(i))
-                    res.Add(i);
-            }
-            return res;
-        }
-        public static IList<int> FindDisappearedNumbers2(int[] nums)
-        {
-            IList<int> ret = new List<int>();
-
-            for (int i = 0; i < nums.Length; i++)
-            {
-                int val = Math.Abs(nums[i]) - 1;
-                if (nums[val] > 0)
-                {
-                    nums[val] = -nums[val];
-                }
-            }
-
-            for (int i = 0; i < nums.Length; i++)
-            {
-                if (nums[i] > 0)
-                {
-                    ret.Add(i + 1);
-                }
-            }
-            return ret;
-        }
-
-        public static int CountBinarySubstrings2(string s)
-        {
-            int res = 0;
-            List<int> list = new List<int>();
-            char last = s[0];
-            int count = 1;
-            for (int i = 1; i < s.Length; i++) {
-                if (s[i] == s[i - 1]) count++;
-                else {
-                    list.Add(count);
-                    count = 1;
-                }
-            }
-            list.Add(count);
-            for (int i = 1; i < list.Count; i++) {
-                res += Math.Min(list[i], list[i - 1]);
-            }
-            return res;
-        }
-
         //Give a string s, count the number of non-empty (contiguous) substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively.
         public static int CountBinarySubstrings(string s)
         {
@@ -201,24 +142,22 @@ namespace LeetCode
             char[] cs = s.ToCharArray();
             string list = "";
             list += cs[0];
-            int temp1 = 1;
-            int temp2 = 1;
+            int temp = 1;
             for (int i = 1; i < cs.Length; i++) {
                 char c = cs[i];
                 if (c != list.Last())
                 {
-                    temp2 = temp1;
-                    temp1 = 1;
+                    temp = 1;
                     count++;
                     list += c;
                 }
                 else {
-                    temp1++;
+                    temp++;
                     list += c;
-                    if (list.Length >= temp1 * 2 && temp2 >= temp1) {
-                        string s1 = list.Substring(list.Length - temp1, temp1);
-                        string s2 = list.Substring(list.Length - temp1 - temp1, temp1);
-                        if (s1 != s2)
+                    if (list.Length >= temp * 2) {
+                        string s1 = list.Substring(list.Length - temp, temp);
+                        string s2 = list.Substring(list.Length - temp - temp, temp);
+                        if (s1 == s2)
                             count++;
                     }
                 }
