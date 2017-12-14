@@ -75,18 +75,21 @@ namespace LeetCode
 
             //Console.Write(HasAlternatingBits(6));
 
-            TreeNode r1 = new TreeNode(1);
-            TreeNode r2 = new TreeNode(2);
-            TreeNode r3 = new TreeNode(3);
-            TreeNode r4 = new TreeNode(4);
-            TreeNode r5 = new TreeNode(5);
-            TreeNode r6 = new TreeNode(6);
-            r1.left = r2;
-            r2.left = r4;
-            r1.right = r3;
-            r3.right = r5;
-            r5.right = r6;
-            Console.Write(MaxDepth(r1));
+            //TreeNode r1 = new TreeNode(1);
+            //TreeNode r2 = new TreeNode(2);
+            //TreeNode r3 = new TreeNode(3);
+            //TreeNode r4 = new TreeNode(4);
+            //TreeNode r5 = new TreeNode(5);
+            //TreeNode r6 = new TreeNode(6);
+            //r1.left = r2;
+            //r2.left = r4;
+            //r1.right = r3;
+            //r3.right = r5;
+            //r5.right = r6;
+            //Console.Write(MaxDepth(r1));
+
+            char[] arr = { 'c', 'f', 'j' };
+            Console.Write(NextGreatestLetter(arr, 'a'));
 
             Console.ReadLine();
         }
@@ -120,6 +123,44 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171214
+
+        // 翻转二叉树
+        public static TreeNode InvertTree(TreeNode root)
+        {
+            if (root == null)
+                return root;
+            TreeNode t = root.left;
+            root.left = InvertTree(root.right);
+            root.right = InvertTree(t);
+            return root;
+        }
+
+        //Given a list of sorted characters letters containing only lowercase letters, and given a target letter target, find the smallest element in the list that is larger than the given target.
+        public static char NextGreatestLetter(char[] letters, char target)
+        {
+            if (letters == null || letters.Length == 0)
+                return target;
+            char res = '0';
+            char min = letters[0];
+            foreach (char c in letters) {
+                if (res == '0')
+                {
+                    if (c > target)
+                        res = c;
+                }
+                else {
+                    if (c < res && c > target)
+                        res = c;
+                }
+            }
+            if (res == '0')
+                return letters[0];
+            return res;
         }
 
         #endregion
