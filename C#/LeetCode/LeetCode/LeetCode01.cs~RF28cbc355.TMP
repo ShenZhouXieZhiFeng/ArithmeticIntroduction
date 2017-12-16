@@ -98,13 +98,8 @@ namespace LeetCode
 
             //Console.Write(FindTheDifference("abcde", "abcdef"));
 
-            //int[] nums = { 1, 0, 3, 0, 2, 6 };
-            //MoveZeroes(nums);
-
-            //int[,] grid = { { 0, 1 }, { 1, 1 } };
-            //Console.Write(MaxAreaOfIsland(grid)); 
-
-            Console.Write(TitleToNumber("ABA"));
+            int[] nums = { 1, 0, 3, 0, 2, 6 };
+            MoveZeroes(nums);
 
             Console.ReadLine();
         }
@@ -144,82 +139,17 @@ namespace LeetCode
 
         #region 20171216
 
-        //171. Excel Sheet Column Number
-        public static int TitleToNumber(string s)
+        public static int MaxAreaOfIsland(int[,] grid)
         {
-            if (s == null)
-                return 0;
-            int sum = 0;
-            int index = 0;
-            for (int i = s.Length - 1; i >= 0; i--) {
-                sum += (s[i] - 'A' + 1) * (int)Math.Pow(26, index);
-                index++;
-            }
-            return sum;
-        }
-
-        // 查找最大岛屿
-        public static int MaxAreaOfIsland2(int[,] grid)
-        {
-            int max = 0;
             for (int i = 0; i < grid.GetLength(0); i++) {
                 for (int j = 0; j < grid.GetLength(1); j++) {
-                    if (grid[i,j] == 1)
-                        max = Math.Max(max, areaOfIsland2(grid, i, j));
+
                 }
-            }
-            return max;
-        }
-        public static int areaOfIsland2(int[,] grid, int x, int y) {
-            if (x >= 0 && x < grid.GetLength(0) && y >= 0 && y < grid.GetLength(1)
-                && grid[x, y] == 1) {
-                grid[x, y] = 0;
-                return 1 + areaOfIsland2(grid, x + 1, y)
-                    + areaOfIsland2(grid, x - 1, y)
-                    + areaOfIsland2(grid, x, y + 1)
-                    + areaOfIsland2(grid, x, y - 1);
             }
             return 0;
         }
+        public static search0(int[,] grid,int x,int y) {
 
-        // 查找最大岛屿
-        public static int MaxAreaOfIsland(int[,] grid)
-        {
-            if (grid == null)
-                return 0;
-            List<int> len = new List<int>();
-            for (int i = 0; i < grid.GetLength(0); i++) {
-                for (int j = 0; j < grid.GetLength(1); j++) {
-                    if (grid[i, j] == 1) {
-                        len.Add(0);
-                        search0(grid, i, j, len);
-                    }
-                }
-            }
-            len.Sort();
-            if (len.Count == 0) {
-                return 0;
-            }
-            return len[len.Count-1];
-        }
-        public static void search0(int[,] grid,int x,int y,List<int> len) {
-            if (grid[x, y] == 0) {
-                return;
-            }
-            grid[x, y] = 0;
-            len[len.Count-1]++;
-            if (x + 1 < grid.GetLength(0)) {
-                search0(grid, x + 1, y, len);
-            }
-            if (x - 1 >= 0) {
-                search0(grid, x - 1, y, len);
-            }
-            if (y + 1 < grid.GetLength(1)) {
-                search0(grid, x, y + 1, len);
-            }
-            if (y - 1 >= 0) {
-                search0(grid, x, y - 1, len);
-            }
         }
 
         #endregion
