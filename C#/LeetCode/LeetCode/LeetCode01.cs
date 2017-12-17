@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        static void Main(string[] args)
-        {
+        //static void Main(string[] args)
+        //{
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -104,10 +104,13 @@ namespace LeetCode
             //int[,] grid = { { 0, 1 }, { 1, 1 } };
             //Console.Write(MaxAreaOfIsland(grid)); 
 
-            Console.Write(TitleToNumber("ABA"));
+            //Console.Write(TitleToNumber("ABA"));
 
-            Console.ReadLine();
-        }
+        //    string[] words = { "stripe", "step","steps","stepple"};
+        //    Console.Write(ShortestCompletingWord("1s3 PSt", words));
+
+        //    Console.ReadLine();
+        //}
 
         #region Medium
 
@@ -138,6 +141,41 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171217
+
+        //748. Shortest Completing Word
+        public static string ShortestCompletingWord(string licensePlate, string[] words)
+        {
+            licensePlate = licensePlate.ToLower();
+            int[] sTable = new int[26];
+            foreach (char c in licensePlate) {
+                if (c >= 'a' && c <= 'z')
+                    sTable[c - 'a']++;
+            }
+            string res = null;
+            foreach (string str in words) {
+                if (compareSring(sTable, str)) {
+                    if (res == null)
+                        res = str;
+                    else if (res.Length > str.Length)
+                        res = str;
+                }
+            }
+            return res;
+        }
+        public static bool compareSring(int[] sTable,string s2) {
+            int[] temp = new int[26];
+            foreach (char c in s2) {
+                temp[c - 'a']++;
+            }
+            for (int i = 0; i < 26; i++) {
+                if (sTable[i] != 0 && sTable[i] > temp[i]) return false;
+            }
+            return true;
         }
 
         #endregion
