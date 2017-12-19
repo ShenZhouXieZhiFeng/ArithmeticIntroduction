@@ -17,7 +17,17 @@ namespace LeetCode
             //Console.Write(checkStr01("awqs f"));
             //Console.Write(reverseStr("12345"));
             //Console.Write(checkStr02("qwer", "rewq"));
-            Console.Write(changeStr_ans01("aaabbbcc"));
+            //Console.Write(changeStr_ans01("aaabbbcc"));
+            ListNode h1 = new ListNode(1);
+            ListNode h2 = new ListNode(2);
+            ListNode h3 = new ListNode(3);
+            ListNode h4 = new ListNode(2);
+            h1.next = h2;
+            h2.next = h3;
+            h3.next = h4;
+            //removeRepetion(h1);
+
+            Console.Write(findLastIndexVal2(h1, 2));
 
             Console.ReadLine();
         }
@@ -44,10 +54,6 @@ namespace LeetCode
             }
             return true;
         }
-        //使用位运算解题
-        //public static bool checkStr01_an02(string str) {
-
-        //}
 
         // 翻转一个字符串
         public static string reverseStr(string str) {
@@ -127,6 +133,93 @@ namespace LeetCode
             }
             return mstr + last + count;
         }
+
+        // 去除链表中的重复元素
+        public static void removeRepetion(ListNode head) {
+            HashSet<int> set = new HashSet<int>();
+
+            ListNode t1 = head;
+            ListNode t2 = head.next;
+            set.Add(t1.val);
+            while (t2 != null) {
+                if (set.Contains(t2.val))
+                {
+                    t1.next = t2.next;
+                    t1 = t1.next;
+                    if (t1 != null)
+                        t2 = t1.next;
+                    else
+                        t2 = null;
+                }
+                else {
+                    set.Add(t2.val);
+                    t1 = t1.next;
+                    t2 = t2.next;
+                }
+            }
+        }
+        //更简单的方式
+        public static void removeRepetion2(ListNode head)
+        {
+            HashSet<int> set = new HashSet<int>();
+            ListNode temp = head;
+            ListNode t = null;
+            while (temp != null) {
+                if (set.Contains(temp.val))
+                {
+                    t.next = temp.next;
+                }
+                else {
+                    set.Add(temp.val);
+                    t = temp;
+                }
+                temp = temp.next;
+            }
+        }
+        //不使用缓冲区
+        public static void removeRepetion3(ListNode head) {
+            ListNode t1 = head;
+            while (t1 != null) {
+                ListNode t2 = t1;
+                while (t2.next != null) {
+                    if (t2.next.val == t1.val)
+                    {
+                        t2.next = t2.next.next;
+                    }
+                    else {
+                        t2 = t2.next;
+                    }
+                }
+            }
+        }
+
+        //找出链表倒数第k个节点
+        //递归方式
+        public static int findLastIndexVal(ListNode n,int k) {
+            if (n == null)
+                return 0;
+            int sum = findLastIndexVal(n.next, k) + 1;
+            if (sum == k) {
+                Console.Write(n.val);
+            }
+            return sum;
+        }
+        //迭代
+        public static int findLastIndexVal2(ListNode n, int k) {
+            ListNode t1 = n;
+            ListNode t2 = n;
+            int count = 0;
+            while (t2 != null) {
+                if (count >= k) {
+                    t1 = t1.next;
+                }
+                //让t2先走k步
+                t2 = t2.next;
+                count++;
+            }
+            return t1.val;
+        }
+
 
     }
 }
