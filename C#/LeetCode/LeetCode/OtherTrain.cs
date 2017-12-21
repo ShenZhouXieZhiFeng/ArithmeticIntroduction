@@ -12,24 +12,68 @@ namespace LeetCode
     class OtherTrain
     {
 
-        static void Main(string[] args)
-        {
-            //Console.Write(checkStr01("awqs f"));
-            //Console.Write(reverseStr("12345"));
-            //Console.Write(checkStr02("qwer", "rewq"));
-            //Console.Write(changeStr_ans01("aaabbbcc"));
-            ListNode h1 = new ListNode(1);
-            ListNode h2 = new ListNode(2);
-            ListNode h3 = new ListNode(3);
-            ListNode h4 = new ListNode(2);
-            h1.next = h2;
-            h2.next = h3;
-            h3.next = h4;
-            //removeRepetion(h1);
+        //static void Main(string[] args)
+        //{
+        //    //Console.Write(checkStr01("awqs f"));
+        //    //Console.Write(reverseStr("12345"));
+        //    //Console.Write(checkStr02("qwer", "rewq"));
+        //    //Console.Write(changeStr_ans01("aaabbbcc"));
+        //    ListNode h1 = new ListNode(4);
+        //    ListNode h2 = new ListNode(5);
+        //    ListNode h3 = new ListNode(2);
+        //    ListNode h4 = new ListNode(1);
+        //    h1.next = h2;
+        //    h2.next = h3;
+        //    h3.next = h4;
+        //    ////removeRepetion(h1);
+        //    //Console.Write(findLastIndexVal2(h1, 2));
+        //    h1 = divisionListNode(h1, 3);
 
-            Console.Write(findLastIndexVal2(h1, 2));
+        //    Console.ReadLine();
+        //}
 
-            Console.ReadLine();
+        //以val为基准将链表分割成两部分，所有小于x的节点排在大于或等于x的节点之前
+        public static ListNode divisionListNode(ListNode head,int val) {
+            ListNode beforeStart = null;
+            ListNode beforeEnd = null;
+            ListNode afterStart = null;
+            ListNode afterEnd = null;
+
+            while (head != null) {
+                ListNode next = head.next;
+                head.next = null;
+                if (head.val < val)
+                {
+                    if (beforeStart == null)
+                    {
+                        beforeStart = head;
+                        beforeEnd = head;
+                    }
+                    else
+                    {
+                        beforeEnd.next = head;
+                        beforeEnd = head;
+                    }
+                }
+                else {
+                    if (afterStart == null)
+                    {
+                        afterStart = head;
+                        afterEnd = afterStart;
+                    }
+                    else {
+                        afterEnd.next = head;
+                        afterEnd = head;
+                    }
+                }
+                head = next;
+            }
+            if (beforeStart != null)
+            {
+                beforeEnd.next = afterStart;
+                return beforeStart;
+            }
+            return head;
         }
 
         // 检查一个字符串的所有字符是否全部都不同

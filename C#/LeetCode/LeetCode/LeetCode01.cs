@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        //static void Main(string[] args)
-        //{
+        static void Main(string[] args)
+        {
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -106,15 +106,27 @@ namespace LeetCode
 
             //Console.Write(TitleToNumber("ABA"));
 
-        //    string[] words = { "stripe", "step","steps","stepple"};
-        //    Console.Write(ShortestCompletingWord("1s3 PSt", words));
+            //    string[] words = { "stripe", "step","steps","stepple"};
+            //    Console.Write(ShortestCompletingWord("1s3 PSt", words));
 
-        //    Console.ReadLine();
-        //}
+            //TreeNode node = new TreeNode(5);
+            //TreeNode node2 = new TreeNode(2);
+            //TreeNode node3 = new TreeNode(13);
+            //node.left = node2;
+            //node.right = node3;
+            //int[] nums = { 5, 2, 13 };
+            //TreeNode node = TreeNode.CreateTreeByArr(nums);
+
+            //ConvertBST2(node);
+
+            int[] res = ConstructRectangle(6);
+
+            Console.ReadLine();
+        }
 
         #region Medium
 
-            //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
+        //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
         public static IList<IList<int>> PathSum(TreeNode root, int sum)
         {
             IList<IList<int>> res = new List<IList<int>>();
@@ -141,6 +153,65 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171221
+
+
+        //492. Construct the Rectangle
+        public static int[] ConstructRectangle(int area)
+        {
+            int l = area;
+            int w = 1;
+            while (w < l) {
+                w++;
+                if (area % w == 0) {
+                    l = area / w;
+                }
+            }
+            int[] res = { w,l };
+            return res;
+        }
+
+        //538. Convert BST to Greater Tree 从右边开始遍历
+        public static TreeNode ConvertBST(TreeNode root)
+        {
+            recursionBST(root);
+            return root;
+        }
+        public static int sum = 0;
+        public static void recursionBST (TreeNode root)
+        {
+            if (root == null) {
+                return;
+            }
+            recursionBST(root.right);
+            sum += root.val;
+            root.val = sum;
+            recursionBST(root.left);
+        }
+
+        //538. Convert BST to Greater Tree 迭代求法
+        public static TreeNode ConvertBST2(TreeNode root)
+        {
+            if (root == null)
+                return root;
+            int sum = 0;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            TreeNode t = root;
+            while (t != null || stack.Count != 0) {
+                 while (t != null) {
+                    stack.Push(t);
+                    t = t.right;
+                }
+                t = stack.Pop();
+                t.val += sum;
+                sum = t.val;
+                t = t.left;
+            }
+            return root;
         }
 
         #endregion
