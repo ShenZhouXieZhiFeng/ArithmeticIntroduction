@@ -119,7 +119,11 @@ namespace LeetCode
 
             //ConvertBST2(node);
 
-            int[] res = ConstructRectangle(6);
+            //int[] res = ConstructRectangle(6);
+
+            //int[] nums = { 0,0,1,1 };
+            //Console.Write(MinCostClimbingStairs2(nums));
+            ClimbStairs(4);
 
             Console.ReadLine();
         }
@@ -153,6 +157,56 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+
+        #region 20171222
+
+        //70. Climbing Stairs
+        public static int ClimbStairs(int n)
+        {
+            int[] tc = new int[n];
+            if (n <= 3 )
+                return n;
+            tc[0] = 0;
+            tc[1] = 1;
+            tc[2] = 2;
+            for (int i = 3; i < n; i ++) {
+                tc[i] = (tc[i - 1]) + (tc[i - 2]);
+            }
+            return tc[tc.Length - 1] + tc[tc.Length-2];
+        }
+
+        //746. Min Cost Climbing Stairs爬楼梯问题, //递归解法
+        public static int MinCostClimbingStairs(int[] cost)
+        {
+            return recur(0, cost);
+        }
+        public static int recur(int index,int[] cost) {
+            if (index >= cost.Length)
+                return 0;
+            int val = cost[index];
+            return Math.Min(recur(index + 1, cost) + val, recur(index + 2,cost) + val);
+        }
+        //动态规划解法
+        public static int MinCostClimbingStairs2(int[] cost)
+        {
+            int cost_i_1 = 0;
+            int cost_i_2 = 0;
+
+            int len = cost.Length;
+            int tc = 0;
+
+            if (len == 1 || len == 0)
+                return 0;
+            for (int i = 2; i <= len; i++) {
+                tc = Math.Min(cost[i - 1] + cost_i_1, cost[i - 2] + cost_i_2);
+                cost_i_2 = cost_i_1;
+                cost_i_1 = tc;
+            }
+            return tc;
         }
 
         #endregion
