@@ -64,9 +64,6 @@ namespace LeetCode
             //int[] arr = { 1, 0, 1, 0, 2, 3 };
             //int[] res = moveZero2(arr);
 
-            //            Console.Write(AddBinary("10100000100100110110010000010101111011011001101110111111111101000000101111001110001111100001101",
-            //"110101001011101110001111100110001010100001101011101010000011011011001011101111001100000011011110011"));
-
             //Console.Write(AddDigits(129));
 
             //Console.Write(AddStrings("55", "55"));
@@ -123,12 +120,44 @@ namespace LeetCode
 
             //int[] nums = { 0,0,1,1 };
             //Console.Write(MinCostClimbingStairs2(nums));
-            ClimbStairs(4);
+            //ClimbStairs(4);
+            //    int[] arr = { 4, 3, 7, 5, 6 };
+            //    TreeNode root = TreeNode.CreateTreeByArr(arr);
+            //    TreeNode res = findNearstFar(root, 5, 6);
+            //    int val = res == null ? 0 : res.val;
+            //    Console.Write(res);
+            //MajorityElement(nums);
+
+            Console.Write(FirstUniqChar("cc"));
 
             Console.ReadLine();
         }
 
         #region Medium
+
+    // 查找最近公共父节点,二叉树查找树（有序）
+    public static TreeNode findNearstFar2(TreeNode root, int a, int b)
+        {
+            if (root == null)
+                return root;
+            if (a > root.val && b > root.val)
+                return findNearstFar2(root.right, a, b);
+            else if (a < root.val && b < root.val)
+                return findNearstFar2(root.left, a, b);
+            return root;
+        }
+
+        // 查找最近公共父节点,普通二叉树
+        public static TreeNode findNearstFar(TreeNode root,int a,int b) {
+            if (root == null || root.val == a || root.val == b)
+                return root;
+            TreeNode left = findNearstFar(root.left, a, b);
+            TreeNode right = findNearstFar(root.right, a, b);
+            if (left != null && right != null)
+                return root;
+            else
+                return left == null ? right : left;
+        }
 
         //Given a binary tree and a sum, find all root-to-leaf paths where each path's sum equals the given sum.
         public static IList<IList<int>> PathSum(TreeNode root, int sum)
@@ -161,6 +190,137 @@ namespace LeetCode
 
         #endregion
 
+        #region 20171223
+
+        //找到第一个非重复字符
+        public static int FirstUniqChar(string s)
+        {
+            if (s == null || s == "")
+                return -1;
+            int[] nums = new int[26];
+            for (int i = 0; i < s.Length; i++) {
+                nums[s[i] - 'a']++;
+            }
+            int res = -1;
+            for (int i = 0; i < nums.Length; i++) {
+                if (nums[i] == 1)
+                {
+                    int index = s.IndexOf((char)(i + 'a'));
+                    if (res == -1)
+                    {
+                        res = index;
+                    }
+                    else {
+                        if (index < res)
+                            res = index;
+                    }
+                }
+            }
+            return res;
+        }
+
+        //Find the sum of all left leaves in a given binary tree.
+        public static int SumOfLeftLeaves(TreeNode root)
+        {
+            leftsum = 0;
+            getLeftSum(root);
+            return leftsum;
+        }
+        public static int leftsum = 0;
+        public static void getLeftSum(TreeNode root)
+        {
+            if (root == null)
+                return;
+            if (root.left != null) {
+                if (root.left.left == null && root.left.right == null)
+                    leftsum += root.left.val;
+                getLeftSum(root.left);
+            }
+            if (root.right != null) {
+                getLeftSum(root.right);
+            }
+        }
+        //获得所有最左子树的和
+        public static int SumOfLeftLeaves2(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            int res = 0;
+            if (root.left != null && root.left.left == null && root.left.right == null)
+                res += root.left.val;
+            res += SumOfLeftLeaves2(root.left);
+            res += SumOfLeftLeaves2(root.right);
+            return res;
+        }
+        public static int SumOfLeftLeaves3(TreeNode root) {
+            if (root == null)
+                return 0;
+            int res = 0;
+            Queue<TreeNode> q = new Queue<TreeNode>();
+            q.Enqueue(root);
+            while (q.Count() != 0) {
+                TreeNode curr = q.Dequeue();
+
+                if (curr.left != null && curr.left.left == null && curr.left.right == null)
+                    res += curr.left.val;
+                if (curr.left != null)
+                    q.Enqueue(curr.left);
+                if (curr.right != null)
+                    q.Enqueue(curr.right);
+            }
+            return res;
+        }
+
+        //169. Majority Element 查找数量超过n/2的数据
+        public static int MajorityElement(int[] nums)
+        {
+            if (nums.Length == 1)
+                return nums[0];
+            int temp = nums[0];
+            int count = 0;
+            foreach (int val in nums) {
+                if (count == 0)
+                {
+                    temp = val;
+                }
+                if (val == temp)
+                    count++;
+                else
+                    count--;
+            }
+            return temp;
+        }
+
+        //383. Ransom Note
+        public static bool CanConstruct(string ransomNote, string magazine)
+        {
+            if (ransomNote.Length > magazine.Length)
+                return false;
+            int[] table = new int[26];
+            foreach(char c in ransomNote) {
+                table[c - 'a']++;
+            }
+            foreach (char c in magazine) {
+                table[c - 'a']--;
+            }
+            if (table.Max() > 0)
+                return false;
+            return true;
+        }
+
+        //453. Minimum Moves to Equal Array Elements
+        public static int MinMoves(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            int val = nums.Min();
+            int res = 0;
+            foreach (int v in nums)
+                res += (v - val);
+            return res;
+        }
+
+        #endregion
 
         #region 20171222
 

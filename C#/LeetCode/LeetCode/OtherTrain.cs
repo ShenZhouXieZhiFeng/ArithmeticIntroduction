@@ -14,23 +14,68 @@ namespace LeetCode
 
         //static void Main(string[] args)
         //{
-        //    //Console.Write(checkStr01("awqs f"));
-        //    //Console.Write(reverseStr("12345"));
-        //    //Console.Write(checkStr02("qwer", "rewq"));
-        //    //Console.Write(changeStr_ans01("aaabbbcc"));
-        //    ListNode h1 = new ListNode(4);
-        //    ListNode h2 = new ListNode(5);
-        //    ListNode h3 = new ListNode(2);
-        //    ListNode h4 = new ListNode(1);
-        //    h1.next = h2;
-        //    h2.next = h3;
-        //    h3.next = h4;
-        //    ////removeRepetion(h1);
-        //    //Console.Write(findLastIndexVal2(h1, 2));
-        //    h1 = divisionListNode(h1, 3);
+            //    //Console.Write(checkStr01("awqs f"));
+            //    //Console.Write(reverseStr("12345"));
+            //    //Console.Write(checkStr02("qwer", "rewq"));
+            //    //Console.Write(changeStr_ans01("aaabbbcc"));
+            //    ListNode h1 = new ListNode(4);
+            //    ListNode h2 = new ListNode(5);
+            //    ListNode h3 = new ListNode(2);
+            //    ListNode h4 = new ListNode(1);
+            //    h1.next = h2;
+            //    h2.next = h3;
+            //    h3.next = h4;
+            //    ////removeRepetion(h1);
+            //    //Console.Write(findLastIndexVal2(h1, 2));
+            //    h1 = divisionListNode(h1, 3);
+
+            //int[] nums = { 1, 2, 3 };
+            //ListNode node = ListNode.CreateFromArrays(nums);
+            //node = reversalListnode(node);
 
         //    Console.ReadLine();
         //}
+
+
+
+        // 判断一棵树是否平衡，任意一个节点，其两颗子树的高度差不超过1
+        public static bool checkedTreeBalanced(TreeNode root) {
+            if (root == null) return true;
+            int heightDiff = getHeight(root.left) - getHeight(root.right);
+            if (Math.Abs(heightDiff) > 1)
+                return false;
+            else
+                return checkedTreeBalanced(root.left) && checkedTreeBalanced(root.right);
+        }
+        public static int getHeight(TreeNode root) {
+            if (root == null) return 0;
+            return Math.Max(getHeight(root.left), 
+                getHeight(root.right)) + 1;
+        }
+
+        // 翻转链表
+        public static ListNode reversalListnode(ListNode node) {
+            if (node == null)
+                return node;
+            ListNode res = null;
+            ListNode p = node;
+            while (p != null) {
+                ListNode temp = p.next;
+                p.next = res;
+                res = p;
+                p = temp;
+            }
+            return res;
+        }
+
+        //删除单链表中的某个节点，你只能访问这个节点
+        public static Boolean deleteNode(ListNode node) {
+            if (node == null || node.next == null)
+                return false;
+            node.val = node.next.val;
+            node.next = node.next.next;
+            return true;
+        }
 
         //以val为基准将链表分割成两部分，所有小于x的节点排在大于或等于x的节点之前
         public static ListNode divisionListNode(ListNode head,int val) {
