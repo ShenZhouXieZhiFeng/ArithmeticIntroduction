@@ -198,6 +198,66 @@ namespace LeetCode
 
         #endregion
 
+        #region 20171225
+
+        //507. Perfect Number
+        //超时
+        public bool CheckPerfectNumber(int num)
+        {
+            if (num <= 1)
+                return true;
+            int sum = 0;
+            for (int i = 1; i < num; i++) {
+                if (num % i == 0) {
+                    sum += i;
+                    if (sum == num)
+                        return true;
+                    else if (sum > num)
+                        return false;
+                }
+            }
+            return false;
+        }
+        public bool CheckPerfectNumber2(int num)
+        {
+            if (num == 1)
+                return false;
+            int sum = 1;
+            for (int i = 2; i < Math.Sqrt(num); i++)
+            {
+                if (num % i == 0)
+                {
+                    sum += i + num / i;
+                }
+            }
+            sum++;
+            return sum == num;
+        }
+
+        //53. Maximum Subarray 在一个数组中找到和最大的子数组的和
+        public int MaxSubArray(int[] nums)
+        {
+            if (nums == null)
+                return 0;
+            //maxEndingHere为以当前下标为终点的数组所能达到的最大值
+            int maxEndingHere = nums[0];
+            int maxSoFar = nums[0];
+            for (int i = 1; i < nums.Length; i++)
+            {
+                //如果之前的最大值<0,则抛弃掉，赋值为当前值
+                //否则加上当前值
+                if (maxEndingHere < 0)
+                    maxEndingHere = nums[i];
+                else
+                    maxEndingHere += nums[i];
+                //取最大值
+                maxSoFar = Math.Max(maxSoFar, maxEndingHere);
+            }
+            return maxSoFar;
+        }
+
+        #endregion
+
         #region 20171224
 
         //非递归的形式遍历二叉树,后序遍历
