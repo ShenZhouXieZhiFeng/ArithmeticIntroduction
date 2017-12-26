@@ -136,8 +136,12 @@ namespace LeetCode
             //TreeNode root = TreeNode.CreateTreeByArr(new int[3] { 1, 2, 3});
             //GetMinimumDifference(root);
 
-            TreeNode root = TreeNode.CreateTreeByArr(new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
-            traverseTreeBack(root);
+            //TreeNode root = TreeNode.CreateTreeByArr(new int[10] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 });
+            //traverseTreeBack(root);
+
+            //int[] nums = new int[12] { 20,-2, 1, -3, 4, -1, 2, 1, -5, 4,-10,20 };
+            //MaxSubArray2(nums);
+
             Console.ReadLine();
         }
 
@@ -198,6 +202,89 @@ namespace LeetCode
 
         #endregion
 
+        #region 20171226
+
+        //747. Largest Number Greater Than Twice of Others
+        public int DominantIndex(int[] nums)
+        {
+            if (nums == null)
+                return -1;
+            List<int> list = new List<int>(nums);
+            int max = list.Max();
+            foreach (int val in list)
+            {
+                if (val != max)
+                {
+                    if (max < val * 2)
+                        return -1;
+                }
+            }
+            return list.IndexOf(max);
+        }
+
+        //572. Subtree of Another Tree 暴力法
+        public bool IsSubtree(TreeNode s, TreeNode t)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (s != null || stack.Count != 0)
+            {
+                while (s != null)
+                {
+                    if (s.val == t.val && CheckTheSame(s, t)){
+                            return true;
+                    }
+                    stack.Push(s);
+                    s = s.left;
+                }
+                s = stack.Pop();
+                s = s.right;
+            }
+            return false;
+        }
+        public static bool CheckTheSame(TreeNode s, TreeNode t)
+        {
+            if (s == null && t == null)
+                return true;
+            if (s == null || t == null)
+                return false;
+            if(s.val == t.val)
+                return CheckTheSame(s.left, t.left) && CheckTheSame(s.right, t.right);
+            return false;
+        }
+
+        public bool IsSubtree2(TreeNode s, TreeNode t)
+        {
+            if (s == null)
+                return false;
+            if (CheckTheSame(s, t))
+                return true;
+            return IsSubtree(s.left, t) || IsSubtree(s.right, t);
+        }
+
+        //110. Balanced Binary Tree 判断是否是平衡二叉树
+        public bool IsBalanced(TreeNode root)
+        {
+            if (root == null)
+                return true;
+            //二叉树递归问题只要考虑一个节点的执行情况
+            int leftHeight = GetHeight(root.left);
+            int rightHeight = GetHeight(root.right);
+            if (Math.Abs(leftHeight - rightHeight) > 1)
+                return false;
+            else
+                return IsBalanced(root.left) && IsBalanced(root.right);
+        }
+        public static int GetHeight(TreeNode node)
+        {
+            if (node == null)
+                return 0;
+            int left = GetHeight(node.left);
+            int right = GetHeight(node.right);
+            return 1 + (left > right ? left : right);
+        }
+
+        #endregion
+
         #region 20171225
 
         //507. Perfect Number
@@ -254,6 +341,38 @@ namespace LeetCode
                 maxSoFar = Math.Max(maxSoFar, maxEndingHere);
             }
             return maxSoFar;
+        }
+
+        public static void MaxSubArray2(int[] nums)
+        {
+            int maxEndingHere = nums[0];
+            int maxSoFar = nums[0];
+            int start = 0;
+            int end = 0;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                //如果之前的最大值<0,则抛弃掉，赋值为当前值
+                //否则加上当前值
+                if (maxEndingHere < 0)
+                {
+                    maxEndingHere = nums[i];
+                    start = i;
+                }
+                else
+                {
+                    maxEndingHere += nums[i];
+                }
+                //取最大值
+                int _res = Math.Max(maxEndingHere, maxSoFar);
+                if (_res != maxSoFar)
+                    end = i;
+                maxSoFar = _res;
+            }
+            List<int> res = new List<int>();
+            for (int i = start; i <= end; i++)
+            {
+                Console.Write(nums[i]);
+            }
         }
 
         #endregion
