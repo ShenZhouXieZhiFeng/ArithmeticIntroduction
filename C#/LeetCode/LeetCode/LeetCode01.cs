@@ -202,6 +202,63 @@ namespace LeetCode
 
         #endregion
 
+        #region 20171227
+
+
+        //543. Diameter of Binary Tree
+        public int DiameterOfBinaryTree(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            int ld = DiameterOfBinaryTree(root.left);//左子树的最大直径
+            int rd = DiameterOfBinaryTree(root.right);//右子树的最大直径
+            int lh = GetDepth(root.left);//左子树的最大深度
+            int rh = GetDepth(root.right);//右子树的最大深度
+            int cDia = lh + rh;//左右子树加起来 = 当前节点的最大直径
+            int dm = Math.Max(ld, rd);//左右子树的最大直径
+            return Math.Max(dm, cDia);//此节点的最大深度和左右子树的最大直径比较
+        }
+        public static int GetDepth(TreeNode node)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+            int leftDep = GetDepth(node.left);
+            int rightDep = GetDepth(node.right);
+            return Math.Max(leftDep, rightDep) + 1;
+        }
+
+        public static int max = int.MinValue;
+        public int DiameterOfBinaryTree2(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            Diameter(root);
+            return max;
+        }
+        public int Diameter(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+
+            int curr = 0;
+            int left = Diameter(root.left);
+            int right = Diameter(root.right);
+
+            if (root.left != null)
+                curr = curr + left + 1;
+            if (root.right != null)
+                curr = curr + right + 1;
+            max = Math.Max(curr, max);
+
+            if (root.left != null || root.right != null)
+                return Math.Max(left, right) + 1;
+            return 0;
+        }
+
+        #endregion
+
         #region 20171226
 
         //747. Largest Number Greater Than Twice of Others
