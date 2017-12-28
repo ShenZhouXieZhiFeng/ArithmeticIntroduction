@@ -142,9 +142,17 @@ namespace LeetCode
             //int[] nums = new int[12] { 20,-2, 1, -3, 4, -1, 2, 1, -5, 4,-10,20 };
             //MaxSubArray2(nums);
 
-            int[] nums = { 5, 4, 3, 2, 1 };
-            string[] res = FindRelativeRanks(nums);
+            //int[] nums = { 5, 4, 3, 2, 1 };
+            //string[] res = FindRelativeRanks(nums);
+            //int[] nums = {2,6,4,2,8,9,3 };
+            //Console.Write(FindUnsortedSubarray(nums));
 
+            //int[] nums = { -1, -1, -1, -1, -1, -1 };
+            //Console.Write(PivotIndex(nums));
+
+            ListNode l1 = ListNode.CreateFromArrays(new int[4] { 1,2,3,4 });
+            ListNode l2 = ListNode.CreateFromArrays(new int[2] { 9,9 });
+            ListNode res = AddTwoNumbers2(l1, l2);
             Console.ReadLine();
         }
 
@@ -206,6 +214,175 @@ namespace LeetCode
         #endregion
 
         #region 20171228
+
+        //445. Add Two Numbers II
+        public static ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        {
+            List<int> list1 = new List<int>();
+            ToArr(l1, ref list1);
+            List<int> list2 = new List<int>();
+            ToArr(l2, ref list2);
+            List<int> res = new List<int>();
+            int len = Math.Min(list1.Count, list2.Count);
+            int i = 0;
+            bool isAdd = false;
+            while(i < len)
+            {
+                int add = isAdd ? 1 : 0;
+                int val = list1[i] + list2[i] + add;
+                if (val >= 10) {
+                    val -= 10;
+                    isAdd = true;
+                }
+                else
+                    isAdd = false;
+                res.Add(val);
+                i++;
+            }
+            while (i < list1.Count)
+            {
+                if (isAdd)
+                {
+                    int v = list1[i] + 1;
+                    if (v >= 10)
+                    {
+                        v -= 10;
+                    }
+                    else
+                    {
+                        isAdd = false;
+                    }
+                    res.Add(v);
+                }
+                else {
+                    res.Add(list1[i]);
+                }
+                i++;
+            }
+            while (i < list2.Count)
+            {
+                if (isAdd)
+                {
+                    int v = list2[i] + 1;
+                    if (v >= 10)
+                    {
+                        v -= 10;
+                    }
+                    else {
+                        isAdd = false;
+                    }
+                    res.Add(v);
+                }
+                else
+                {
+                    res.Add(list2[i]);
+                }
+                i++;
+            }
+            if (isAdd)
+            {
+                res.Add(1);
+            }
+            res.Reverse();
+            ListNode resNode = new ListNode(res[0]);
+            ListNode p = resNode;
+            for (int index = 1; index < res.Count; index++)
+            {
+                ListNode temp = new ListNode(res[index]);
+                p.next = temp;
+                p = p.next;
+            }
+            return resNode;
+        }
+        public static void ToArr(ListNode l,ref List<int> list)
+        {
+            ListNode t = l;
+            while (t != null)
+            {
+                list.Add(t.val);
+                t = t.next;
+            }
+            list.Reverse();
+        }
+
+        //未做
+        public static ListNode AddTwoNumbers2(ListNode l1, ListNode l2)
+        {
+            return ReverseListNode(l1);
+        }
+        public static ListNode ReverseListNode(ListNode l1)
+        {
+            ListNode pre = null;
+            while (l1 != null)
+            {
+                ListNode next = l1.next;
+                l1.next = pre;
+                pre = l1;
+                l1 = next;
+            }
+            return pre;
+        }
+
+        //724. Find Pivot Index
+        public static int PivotIndex(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return -1;
+            int leftSum = 0;
+            int rightSum = nums.Sum() - nums[0];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (leftSum == rightSum)
+                {
+                    return i;
+                }
+                else
+                {
+                    leftSum += nums[i];
+                    if (i != (nums.Length - 1))
+                    {
+                        rightSum -= nums[i + 1];
+                    }
+                }
+            }
+            return -1;
+        }
+
+        public static int PivotIndex2(int[] nums)
+        {
+            int sum = nums.Count();
+            int leftSum = 0;
+            int index = 0;
+            while (index < nums.Length)
+            {
+                if(sum - nums[index] == leftSum)
+                    return index;
+                leftSum += nums[index];
+                sum -= nums[index];
+                index++;
+            }
+            return -1;
+        }
+
+        //581. Shortest Unsorted Continuous Subarray
+        public static int FindUnsortedSubarray(int[] nums)
+        {
+            if (nums == null)
+                return 0;
+            int n = nums.Length;
+            int beg = -1;
+            int end = -2;
+            int min = nums[n-1];
+            int max = nums[0];
+            for (int i = 1; i < n; i++)
+            {
+                max = Math.Max(max, nums[i]);
+                min = Math.Min(min, nums[n - 1 - i]);
+                if (nums[i] < max) end = i;
+                if (nums[n - 1 - i] > min) beg = n - 1 - i;
+            }
+            return end - beg + 1;
+        }
 
         //506. Relative Ranks
         public static string[] FindRelativeRanks(int[] nums)
