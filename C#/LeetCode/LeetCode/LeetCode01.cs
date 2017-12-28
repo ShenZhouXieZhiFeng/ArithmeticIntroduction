@@ -142,6 +142,9 @@ namespace LeetCode
             //int[] nums = new int[12] { 20,-2, 1, -3, 4, -1, 2, 1, -5, 4,-10,20 };
             //MaxSubArray2(nums);
 
+            int[] nums = { 5, 4, 3, 2, 1 };
+            string[] res = FindRelativeRanks(nums);
+
             Console.ReadLine();
         }
 
@@ -198,6 +201,106 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171228
+
+        //506. Relative Ranks
+        public static string[] FindRelativeRanks(int[] nums)
+        {
+            List<List<int>> pair = new List<List<int>>();
+ 
+            for (int i = 0; i < nums.Count(); i++)
+            {
+                List<int> l1 = new List<int>();
+                l1.Add(nums[i]);
+                l1.Add(i);
+                pair.Add(l1);
+            }
+            pair.Sort((List<int> x, List<int> y) => { return y[0].CompareTo(x[0]); });
+            string[] res = new string[nums.Length];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (i == 0)
+                    res[pair[i][1]] = "Gold Medal";
+                else if (i == 1)
+                    res[pair[i][1]] = "Silver Medal";
+                else if (i == 2)
+                    res[pair[i][1]] = "Bronze Medal";
+                else
+                    res[pair[i][1]] = (i + 1) + "";
+            }
+            return res;
+        }
+
+        //242. Valid Anagram 暴力法，效率极低
+        public bool IsAnagram(string s, string t)
+        {
+            if (s.Length != t.Length)
+                return false;
+            if (s == t)
+                return true;
+            List<char> ss = new List<char>(s.ToCharArray());
+            List<char> tt = new List<char>(t.ToCharArray());
+            for (int i = 0; i < ss.Count; i++)
+            {
+                if (!tt.Contains(ss[i]))
+                {
+                    return false;
+                }
+                tt.Remove(ss[i]);
+            }
+            return true;
+        }
+        //散列表
+        public bool IsAnagram2(string s, string t)
+        {
+            if (s.Length != t.Length)
+                return false;
+            if (s == t)
+                return true;
+            int[] st = new int[26];
+            foreach (char c in s)
+            {
+                st[c - 'a']++;
+            }
+            foreach (char c in t)
+            {
+                st[c - 'a']--;
+            }
+            foreach (int v in st)
+            {
+                if (v != 0) return false;
+            }
+            return true;
+        }
+
+        //455. Assign Cookies
+        public int FindContentChildren(int[] g, int[] s)
+        {
+            int res = 0;
+            if (g == null || s == null)
+                return res;
+            Array.Sort(g);
+            Array.Sort(s);
+            int index = 0;
+            foreach (int v in g)
+            {
+                if (s.Count() == 0)
+                    return res;
+                for (;index < s.Length;)
+                {
+                    if (s[index++] >= v)
+                    {
+                        res++;
+                        break;
+                    }
+                }
+            }
+            return res;
         }
 
         #endregion
