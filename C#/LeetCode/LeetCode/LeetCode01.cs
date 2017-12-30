@@ -150,9 +150,22 @@ namespace LeetCode
             //int[] nums = { -1, -1, -1, -1, -1, -1 };
             //Console.Write(PivotIndex(nums));
 
-            ListNode l1 = ListNode.CreateFromArrays(new int[4] { 1,2,3,4 });
-            ListNode l2 = ListNode.CreateFromArrays(new int[2] { 9,9 });
-            ListNode res = AddTwoNumbers2(l1, l2);
+            //ListNode l1 = ListNode.CreateFromArrays(new int[4] { 1,2,3,4 });
+            //ListNode l2 = ListNode.CreateFromArrays(new int[2] { 9,9 });
+            //ListNode res = AddTwoNumbers2(l1, l2);
+
+            //int[] nums = { 2, 3, 2, 3, 4 };
+            //Console.Write(CheckPossibility(nums));
+
+            //string msg = "cuppucu";
+            //ValidPalindrome(msg);
+
+            //int[] nums = { 1, 3, 5, 7 };
+            //Console.Write(FindLengthOfLCIS(nums));
+
+            int[] nums = { 1, 12, -5, -6, 50, 3 };
+            Console.Write(FindMaxAverage2(nums, 4));
+
             Console.ReadLine();
         }
 
@@ -209,6 +222,123 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171230
+
+        //643. Maximum Average Subarray I 暴力法，超时
+        public static double FindMaxAverage(int[] nums, int k)
+        {
+            if (nums.Length == k)
+                return (double)nums.Sum() / (double)k;
+            int maxSum = int.MinValue;
+            for (int i = 0; i <= nums.Length-k; i++)
+            {
+                int temp = 0;
+                for (int j = i; j < i+k; j++)
+                {
+                    temp += nums[j];
+                }
+                maxSum = Math.Max(maxSum, temp);
+            }
+            return (double)maxSum / (double)k;
+        }
+        public static double FindMaxAverage2(int[] nums, int k)
+        {
+            //if (nums.Length == k)
+            //    return (double)nums.Sum() / (double)k;
+            //int maxSum = 0;
+            //for (int i = 0; i < k; i++)
+            //{
+            //    maxSum += nums[i];
+            //}
+            //for (int i = k; i < nums.Length; i++)
+            //{
+            //    int temp = maxSum - nums[i - k] + nums[i];
+            //    maxSum = Math.Max(temp, maxSum);
+            //}
+            //return (double)maxSum / (double)k;
+            long sum = 0;
+            for (int i = 0; i < k; i++)
+            {
+                sum += nums[i];
+            }
+            long max = sum;
+            for (int i = k; i < nums.Length; i++)
+            {
+                sum += nums[i] - nums[i - k];
+                max = Math.Max(max, sum);
+            }
+            return max / 1.0 / k;
+        }
+
+        //674. Longest Continuous Increasing Subsequence
+        public static int FindLengthOfLCIS(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            int count = 1;
+            int max = 1;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (nums[i] > nums[i - 1])
+                {
+                    count++;
+                }
+                else {
+                    max = Math.Max(max, count);
+                    count = 1;
+                }
+            }
+            max = Math.Max(max, count);
+            return max;
+        }
+
+        //680. Valid Palindrome II 有效的回文
+        public static bool ValidPalindrome(string s)
+        {
+            int lp = -1;
+            int rp = s.Length;
+            while (++lp < --rp)
+            {
+                if (s[lp] != s[rp])
+                    return ValidPalindromeHelp(s, lp, rp + 1) || ValidPalindromeHelp(s, lp - 1, rp);
+            }
+            return true;
+        }
+        public static bool ValidPalindromeHelp(string s,int l,int r)
+        {
+            while (++l < --r)
+            {
+                if (s[l] != s[r]) return false; 
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region 20171229
+
+        //665. Non-decreasing Array 非递减数列
+        public static bool CheckPossibility(int[] nums)
+        {
+            int cnt = 0;//记录修改的次数
+            for (int i = 1; i < nums.Length && cnt <= 1; i++)
+            {
+                //如果前面一个数大于当前数，假设更前面的数都已经被遍历修改过
+                if (nums[i - 1] > nums[i])
+                {
+                    cnt++;
+                    //如果前2个数<=当前数
+                    if (i - 2 < 0 || nums[i - 2] <= nums[i])
+                        nums[i - 1] = nums[i];
+                    else
+                        nums[i] = nums[i - 1];
+                }
+            }
+            return cnt <= 1;
         }
 
         #endregion
