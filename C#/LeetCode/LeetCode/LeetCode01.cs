@@ -163,8 +163,13 @@ namespace LeetCode
             //int[] nums = { 1, 3, 5, 7 };
             //Console.Write(FindLengthOfLCIS(nums));
 
-            int[] nums = { 1, 12, -5, -6, 50, 3 };
-            Console.Write(FindMaxAverage2(nums, 4));
+            //int[] nums = { 1, 12, -5, -6, 50, 3 };
+            //Console.Write(FindMaxAverage2(nums, 4));
+
+            //Console.Write(ReachNumber(10));
+
+            int[] nums = { 1, 2, 2 };
+            int[] res = FindErrorNums(nums);
 
             Console.ReadLine();
         }
@@ -222,6 +227,31 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20171231
+
+
+
+        //645. Set Mismatch 无法理解
+        public static int[] FindErrorNums(int[] nums)
+        {
+            int[] res = new int[2];
+            foreach (int i in nums)
+            {
+                if (nums[Math.Abs(i) - 1] < 0)
+                    res[0] = Math.Abs(i);
+                else
+                    nums[Math.Abs(i) - 1] *= -1;//重点
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] > 0)
+                    res[1] = i + 1;
+            }
+            return res;
         }
 
         #endregion

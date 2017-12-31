@@ -82,7 +82,7 @@ namespace LeetCode
         //以后每天早上吃前一天剩下的一半另一个.
         //到第10天早上猴子想再吃时发现只剩下一个桃子了问第一天猴子共摘多少个桃子
         //f(1) = 1
-        //f(n) = (f(n) + 1) * 2
+        //f(n) = (f(n-1) + 1) * 2
         public static int taozi(int n) {
             if (n == 1)
                 return 1;
