@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        static void Main(string[] args)
-        {
+        //static void Main(string[] args)
+        //{
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -168,11 +168,11 @@ namespace LeetCode
 
             //Console.Write(ReachNumber(10));
 
-            int[] nums = { 1, 2, 2 };
-            int[] res = FindErrorNums(nums);
+        //    int[] nums = { 1, 2, 2 };
+        //    int[] res = FindErrorNums(nums);
 
-            Console.ReadLine();
-        }
+        //    Console.ReadLine();
+        //}
 
         #region Medium
 
