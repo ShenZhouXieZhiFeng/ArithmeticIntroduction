@@ -9,8 +9,8 @@ namespace LeetCode
     class LeetCode01
     {
 
-        //static void Main(string[] args)
-        //{
+        static void Main(string[] args)
+        {
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -168,16 +168,16 @@ namespace LeetCode
 
             //Console.Write(ReachNumber(10));
 
-        //    int[] nums = { 1, 2, 2 };
-        //    int[] res = FindErrorNums(nums);
+            //    int[] nums = { 1, 2, 2 };
+            //    int[] res = FindErrorNums(nums);
 
-        //    Console.ReadLine();
-        //}
+            Console.ReadLine();
+        }
 
         #region Medium
 
-    // 查找最近公共父节点,二叉树查找树（有序）
-    public static TreeNode findNearstFar2(TreeNode root, int a, int b)
+        // 查找最近公共父节点,二叉树查找树（有序）
+        public static TreeNode findNearstFar2(TreeNode root, int a, int b)
         {
             if (root == null)
                 return root;
@@ -231,8 +231,54 @@ namespace LeetCode
 
         #endregion
 
-        #region 20171231
+        #region 20180101
 
+        //628. Maximum Product of Three Numbers
+        public int MaximumProduct(int[] nums)
+        {
+            if (nums == null || nums.Length < 3)
+                return 0;
+            Array.Sort(nums);
+            int n = nums.Length;
+            return Math.Max(nums[n - 1] * nums[n - 2] * nums[n - 3], nums[n - 1] * nums[0] * nums[1]);
+        }
+
+        //605. Can Place Flowers
+        public static bool CanPlaceFlowers(int[] flowerbed, int n)
+        {
+            int zeroCount = 1;
+            for (int i = 0; i < flowerbed.Length; i++)
+            {
+                if (flowerbed[i] == 0)
+                {
+                    zeroCount++;
+                }
+                else {
+                    zeroCount = 0;
+                }
+                if (zeroCount == 3)
+                {
+                    n--;
+                    if (i < flowerbed.Length - 1 && flowerbed[i + 1] == 0)
+                    {
+                        zeroCount = 1;
+                    }
+                    else
+                    {
+                        zeroCount = 0;
+                    }
+                }
+                if (n <= 0)
+                    return true;
+            }
+            if (zeroCount == 2)
+                n--;
+            return n <= 0;
+        }
+
+        #endregion
+
+        #region 20171231
 
 
         //645. Set Mismatch 无法理解

@@ -11,8 +11,8 @@ namespace LeetCode
     /// </summary>
     class DynamicProgramming
     {
-        static void Main(string[] args)
-        {
+        //static void Main(string[] args)
+        //{
             //hanoi(3,'a','b','c');
             //Console.WriteLine(fibonacci(7));
 
@@ -40,34 +40,42 @@ namespace LeetCode
             //int[] coins = { 1, 3, 4 };
             //int res = changeMaking(6, coins);
 
-            int[,] coins = new int[5, 6] {
-                { 1, 2, 3, 4, 5, 6 },
-                { 1, 2, 3, 4, 5, 6 },
-                { 1, 2, 3, 4, 5, 6 },
-                { 1, 2, 3, 4, 5, 6 },
-                { 1, 2, 3, 4, 5, 6 }};
-            int res = coinsCollections(coins);
+            //int[,] coins = new int[5, 6] {
+            //    { 0, 0, 0, 0, 1, 0 },
+            //    { 0, 1, 0, 1, 0, 0 },
+            //    { 0, 0, 0, 1, 0, 1 },
+            //    { 0, 0, 1, 0, 0, 1 },
+            //    { 1, 0, 0, 0, 1, 0 }};
+            //int res = coinsCollections(coins);
 
-            Console.ReadLine();
-        }
+        //    int[] coins = { 1, 3, 5 };
+        //    int res = changeMaking2(6, coins);
+
+        //    Console.ReadLine();
+        //}
 
         #region DP
+
+
 
         //硬币收集问题
         //再NxM的格子中放有一些硬币，再（0，0）处有一个机械手臂，该手臂可以收集当前格子的硬币
         //机器手臂每次只能向右或向下移动一格，求最后能收集到的最大硬币数是多少
         public static int coinsCollections(int[,] coins)
         {
-            int row = coins.GetLength(0);
-            int col = coins.GetLength(1);
-            int[,] res = new int[row, col];
+            int row = coins.GetLength(0);//行
+            int col = coins.GetLength(1);//列
+            int[,] res = new int[row, col];//构建保存每一步最大情况的数组
             res[0, 0] = coins[0, 0];
+            //第1列，没有左邻，下面的数值为上面的数值+当前数值
             for (int i = 1; i < col; i++)
             {
                 res[1, i] = res[1, i - 1] + coins[1, i];
             }
+            //从第1行开始遍历
             for (int i = 1; i < row; i++)
             {
+                //针对第1行（没有右邻）
                 res[i, 1] = res[i - 1, 1] + coins[i, 1];
                 for (int j = 1; j < col; j++)
                 {
@@ -93,7 +101,32 @@ namespace LeetCode
             return res.Last();
         }
 
-        //找零问题，给定一个目标值和一组硬币的币值，最少需要多少枚硬币可以满足目标值
+        //找零问题，给定一个目标值和一组硬币的币值，最多又多少种方法
+        public static int changeMaking2(int target, int[] coins)
+        {
+            int len = coins.Length;
+            int[,] res = new int[len + 1, target + 1];
+
+            for (int i = 0; i <= len; i++)
+                res[i, 0] = 1;
+            for (int i = 1; i <= target; i++)
+                res[0, i] = 0;
+            for (int i = 1; i <= len; i++)
+            {
+                for (int j = 1; j <= target; j++)
+                {
+                    if (j < coins[i - 1])
+                    {
+                        res[i, j] = res[i - 1, j];
+                        continue;
+                    }
+                    res[i, j] = res[i - 1,j] + res[i, j - coins[i - 1]];
+                }
+            }
+            return res[len,target];
+        }
+
+        //找零问题，给定一个目标值和一组硬币的币值，最少需要多少枚硬币可以满足目标值，返回最大的总值
         public static int changeMaking(int target,int[] coins)
         {
             int[] res = new int[target];
