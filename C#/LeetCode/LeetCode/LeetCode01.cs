@@ -174,7 +174,8 @@ namespace LeetCode
             //int[] nums = { 1, 2, 2, 3, 2, 2, 4, 3, 3 };
             //Console.Write(FindShortestSubArray(nums));
 
-            LongestPalindrome("bbaabccccddacc");
+            //LongestPalindrome("bbaabccccddacc");
+            string res = AddBinary2("11", "11");
 
             Console.ReadLine();
         }
@@ -238,31 +239,101 @@ namespace LeetCode
 
         #region 20180102
 
-        //409. Longest Palindrome 最长回文子串
+        //67. Add Binary
+        public static string AddBinary2(string a, string b)
+        {
+            int len = Math.Min(a.Length, b.Length);
+            string longStr = a.Length >= b.Length ? a : b;
+            string shortStr = a.Length >= b.Length ? b : a;
+            int diff = Math.Abs(a.Length - b.Length);
+            int carr = 0;
+            StringBuilder sb = new StringBuilder();
+            for (int i = len - 1; i >= 0; i--)
+            {
+                int j = i + diff;
+                int c1 = shortStr[i] == '0' ? 0 : 1;
+                int c2 = longStr[j] == '0' ? 0 : 1;
+                int sum = c1 + c2 + carr;
+                if (sum <= 1)
+                {
+                    carr = 0;
+                    sb.Append(sum);
+                }
+                else if (sum == 2)
+                {
+                    carr = 1;
+                    sb.Append(0);
+                }
+                else if (sum == 3)
+                {
+                    carr = 1;
+                    sb.Append(1);
+                }
+            }
+            int index = diff - 1;
+            while (index >= 0)
+            {
+                int c = longStr[index] == '0' ? 0 : 1;
+                int sum = c + carr;
+                if (sum <= 1)
+                {
+                    carr = 0;
+                    sb.Append(sum);
+                }
+                else if (sum == 2)
+                {
+                    carr = 1;
+                    sb.Append(0);
+                }
+                else if (sum == 3)
+                {
+                    carr = 1;
+                    sb.Append(1);
+                }
+                index--;
+            }
+            if (carr != 0)
+                sb.Append(1);
+            char[] chs = sb.ToString().ToCharArray();
+            Array.Reverse(chs);
+            return new string(chs);
+        }
+
+        public static string AddBinary3(string a, string b)
+        {
+            string s = "";
+            int c = 0, i = a.Length - 1, j = b.Length - 1;
+            while (i >= 0 || j >= 0 || c >= 0)
+            {
+                c += i > 0 ? a[i--] - '0' : 0;
+                c += j > 0 ? b[j--] - '0' : 0;
+                s = (char)(c % 2 + '0') + s;
+                c /= 2;
+            }
+            return s;
+        }
+
+        //409. Longest Palindrome 可组成最长回文子串
         public static int LongestPalindrome(string s)
         {
             if (s == "")
                 return 0;
-            int maxCount = 1;
-            for (int i = 0; i < s.Length-1; i++)
+            HashSet<char> hs = new HashSet<char>();
+            int count = 0;
+            for (int i = 0; i < s.Length; i++)
             {
-                for (int j = i + 1; j < s.Length; j++)
+                if (hs.Contains(s[i]))
                 {
-                    int beg = i, end = j;
-                    while (beg < end)
-                    {
-                        if(s[beg] != s[end])
-                            break;
-                        beg++;
-                        end--;
-                    }
-                    if (beg >= end && j-i > maxCount)
-                    {
-                        maxCount = j - i + 1;
-                    }
+                    hs.Remove(s[i]);
+                    count++;
+                }
+                else
+                {
+                    hs.Add(s[i]);
                 }
             }
-            return maxCount;
+            if (hs.Count != 0) return count * 2 + 1;
+            return count * 2;
         }
 
         //599. Minimum Index Sum of Two Lists
