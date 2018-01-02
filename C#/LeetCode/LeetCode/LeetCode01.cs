@@ -171,6 +171,11 @@ namespace LeetCode
             //    int[] nums = { 1, 2, 2 };
             //    int[] res = FindErrorNums(nums);
 
+            //int[] nums = { 1, 2, 2, 3, 2, 2, 4, 3, 3 };
+            //Console.Write(FindShortestSubArray(nums));
+
+            LongestPalindrome("bbaabccccddacc");
+
             Console.ReadLine();
         }
 
@@ -228,6 +233,111 @@ namespace LeetCode
                 stack.Pop();
             }
         }
+
+        #endregion
+
+        #region 20180102
+
+        //409. Longest Palindrome 最长回文子串
+        public static int LongestPalindrome(string s)
+        {
+            if (s == "")
+                return 0;
+            int maxCount = 1;
+            for (int i = 0; i < s.Length-1; i++)
+            {
+                for (int j = i + 1; j < s.Length; j++)
+                {
+                    int beg = i, end = j;
+                    while (beg < end)
+                    {
+                        if(s[beg] != s[end])
+                            break;
+                        beg++;
+                        end--;
+                    }
+                    if (beg >= end && j-i > maxCount)
+                    {
+                        maxCount = j - i + 1;
+                    }
+                }
+            }
+            return maxCount;
+        }
+
+        //599. Minimum Index Sum of Two Lists
+        //暴力，不入流
+        public static string[] FindRestaurant(string[] list1, string[] list2)
+        {
+            Dictionary<string, int> dic = new Dictionary<string, int>();
+            for (int i = 0; i < list1.Length; i++)
+            {
+                int index = FindRestaurantHelp(list2, list1[i]);
+                if (index != -1)
+                {
+                    int sum = index + i;
+                    dic.Add(list1[i], sum);
+                }
+            }
+            int max = int.MaxValue;
+            foreach (int v in dic.Values)
+            {
+                max = Math.Min(v, max);
+            }
+            List<string> res = new List<string>();
+            foreach (string str in dic.Keys)
+            {
+                if (dic[str] == max)
+                    res.Add(str);
+            }
+            return res.ToArray();
+        }
+        public static int FindRestaurantHelp(string[] list,string str)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i] == str)
+                    return i;
+            }
+            return -1;
+        }
+
+        public static string[] FindRestaurant2(string[] list1, string[] list2)
+        {
+            Dictionary<string, int> map = new Dictionary<string, int>();
+
+            for (int i = 0; i < list1.Length; i++)
+            {
+                map.Add(list1[i], i);
+            }
+
+            var res = new List<string>();
+
+            int minSum = int.MaxValue, sum = 0;
+            for (int i = 0; i < list2.Length; i++)
+            {
+                if (map.ContainsKey(list2[i])) {
+                    sum = map[list2[i]] + i;
+                    if (sum < minSum)
+                    {
+                        res.Clear();
+                        res.Add(list2[i]);
+                        minSum = sum;
+                    }
+                    else if (sum == minSum)
+                    {
+                        res.Add(list2[i]);
+                    }
+                }
+            }
+            return res.ToArray();
+        }
+
+        //697. Degree of an Array
+        //public static int FindShortestSubArray(int[] nums)
+        //{
+
+        //}
 
         #endregion
 
@@ -1999,10 +2109,10 @@ namespace LeetCode
 
         //***
         //605. Can Place Flowers
-        public static bool CanPlaceFlowers(int[] flowerbed, int n)
-        {
-            return true;
-        }
+        //public static bool CanPlaceFlowers(int[] flowerbed, int n)
+        //{
+        //    return true;
+        //}
 
         //Say you have an array for which the ith element is the price of a given stock on day i.
         //If you were only permitted to complete at most one transaction(ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
