@@ -175,7 +175,12 @@ namespace LeetCode
             //Console.Write(FindShortestSubArray(nums));
 
             //LongestPalindrome("bbaabccccddacc");
-            string res = AddBinary2("11", "11");
+            //string res = AddBinary2("11", "11");
+
+            //Console.Write('1' - '0');
+
+            //Console.Write(ReverseStr("abcdefgh", 3));
+            Generate(3);
 
             Console.ReadLine();
         }
@@ -233,6 +238,76 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180103
+
+        //118. Pascal's Triangle
+        //对任意的n>0有 
+        //f(i)=1，(n>0) 
+        //f(i)=1，(n=2) 
+        //C(i)=C(ii)+C(i-1)(n > 2)
+        public static IList<IList<int>> Generate(int numRows)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+
+            if (numRows >= 1)
+                res.Add(new List<int>() { 1 });
+            if (numRows >= 2)
+                res.Add(new List<int>() { 1, 1 });
+            if (numRows >= 3)
+            {
+                for (int i = 3; i <= numRows; i++)
+                {
+                    List<int> pre = (List<int>)res[i - 1 - 1];
+                    List<int> temp = new List<int>();
+                    temp.Add(1);
+                    for (int j = 2; j < i; j ++)
+                    {
+                        temp.Add(pre[j - 2] + pre[j-1]);
+                    }
+                    temp.Add(1);
+                    res.Add(temp);
+                }
+            }
+            return res;
+        }
+
+        //101. Symmetric Tree 对称二叉树
+        public static bool IsSymmetric(TreeNode root)
+        {
+            return root == null || isSymmetricHelp(root.left, root.right);
+        }
+        public static bool isSymmetricHelp(TreeNode left,TreeNode right)
+        {
+            if (left == null || right == null)
+                return left == right;
+            if (left.val != right.val)
+                return false;
+            return isSymmetricHelp(left.left, right.right) && isSymmetricHelp(left.right, right.left);
+        }
+
+        //541. Reverse String II
+        public static string ReverseStr(string s, int k)
+        {
+            char[] chs = s.ToCharArray();
+            for (int i = 0; i * k < chs.Length; i +=2 )
+            {
+                int index = i * k;
+                int beg = index;
+                int end = index + k - 1 >= chs.Length ? chs.Length - 1 : index + k - 1;
+                while (beg < end)
+                {
+                    char temp = chs[beg];
+                    chs[beg] = chs[end];
+                    chs[end] = temp;
+                    beg++;
+                    end--;
+                }
+            }
+            return new string(chs);
         }
 
         #endregion
@@ -299,6 +374,7 @@ namespace LeetCode
             return new string(chs);
         }
 
+        //67. Add Binary
         public static string AddBinary3(string a, string b)
         {
             string s = "";
