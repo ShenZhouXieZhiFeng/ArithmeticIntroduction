@@ -180,7 +180,10 @@ namespace LeetCode
             //Console.Write('1' - '0');
 
             //Console.Write(ReverseStr("abcdefgh", 3));
-            Generate(3);
+            //Generate(3);
+
+            int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+            Rotate2(nums,5);
 
             Console.ReadLine();
         }
@@ -238,6 +241,87 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180104
+
+        //189. Rotate Array ****
+        public void Rotate(int[] nums, int k)
+        {
+            int len = nums.Length;
+            if (len <= k)
+                return;
+            int diff = len - k;
+            int[] temp = new int[diff];
+            for (int i = 0; i < diff; i++)
+            {
+                temp[i] = nums[i];
+            }
+            for (int i = diff; i < len; i++)
+            {
+                nums[i - diff] = nums[i];
+            }
+            int index = 0;
+            for (int i = k; i < len; i++)
+            {
+                nums[i] = temp[index++];
+            }
+        }
+
+        public static void Rotate2(int[] nums, int k)
+        {
+            if (nums == null || nums.Length < 2)
+                return;
+            k = k % nums.Length;
+            RotateHelp(nums, 0, nums.Length - k - 1);
+            RotateHelp(nums, nums.Length - k, nums.Length - 1);
+            RotateHelp(nums, 0, nums.Length - 1);
+        }
+        public static void RotateHelp(int[] nums,int i,int j)
+        {
+            int temp = 0;
+            while (i < j)
+            {
+                temp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = temp;
+                i++;
+                j--;
+            }
+        }
+
+        //594. Longest Harmonious Subsequence
+        public int FindLHS(int[] nums)
+        {
+            if (nums == null || nums.Length <= 1)
+                return 0;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            foreach (int v in nums)
+            {
+                if (dic.ContainsKey(v))
+                {
+                    dic[v]++;
+                }
+                else
+                {
+                    dic.Add(v, 1);
+                }
+            }
+            int max = 0;
+            foreach (int v in dic.Keys)
+            {
+                if (dic.ContainsKey(v - 1))
+                {
+                    max = Math.Max(dic[v] + dic[v - 1], max);
+                }
+                if (dic.ContainsKey(v + 1))
+                {
+                    max = Math.Max(dic[v] + dic[v + 1], max);
+                }
+            }
+            return max;
         }
 
         #endregion
