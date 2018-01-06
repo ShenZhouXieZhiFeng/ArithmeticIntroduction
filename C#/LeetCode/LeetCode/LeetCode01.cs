@@ -182,8 +182,18 @@ namespace LeetCode
             //Console.Write(ReverseStr("abcdefgh", 3));
             //Generate(3);
 
-            int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
-            Rotate2(nums,5);
+            //int[] nums = { 1, 2, 3, 4, 5, 6, 7 };
+            //Rotate2(nums,5);
+
+            //int[] nums = { 1, 2, 3, 4, 5 };
+            //int res = Rob2(nums);
+
+            List<int> nums = new List<int>();
+            for (int i = 1; i < 101; i++)
+            {
+                nums.Add(i);
+            }
+            int res = MissingNumber2(nums.ToArray());
 
             Console.ReadLine();
         }
@@ -241,6 +251,107 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180106
+
+        //268. Missing Number
+        public static int MissingNumber(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1 && nums[0] != 0)
+                return 0;
+            Array.Sort(nums);
+            int max = nums[nums.Length - 1];
+            int index = 0;
+            while (index < nums.Length)
+            {
+                if (index == nums[index])
+                    index++;
+                else
+                    return index;
+            }
+            return max + 1;
+        }
+
+        public static int MissingNumber2(int[] nums)
+        {
+            if (nums == null)
+                return 0;
+            int MaxSum = nums.Length * (nums.Length + 1) / 2;
+            int curSum = 0;
+            foreach (int v in nums)
+            {
+                curSum += v;
+            }
+            return MaxSum - curSum;
+        }
+
+        //633. Sum of Square Numbers
+        public static bool JudgeSquareSum(int c)
+        {
+            if (c < 0)
+                return false;
+            int left = 0;
+            int right = (int)Math.Sqrt(c);
+            while (left <= right)
+            {
+                int cur = left * left + right * right;
+                if (cur < c)
+                    left++;
+                else if (cur > c)
+                    right--;
+                else
+                    return true;
+            }
+            return false;
+        }
+
+        //686. Repeated String Match
+        public static int RepeatedStringMatch(string A, string B)
+        {
+            int count = 0;
+            StringBuilder sb = new StringBuilder();
+            while (sb.Length < B.Length)
+            {
+                sb.Append(A);
+                count++;
+            }
+            if (sb.ToString().Contains(B)) return count;
+            if (sb.Append(A).ToString().Contains(B)) return ++count;
+            return -1;
+        }
+
+        //198. House Robber 递归解法
+        public static int Rob(int[] nums)
+        {
+            return RobHelp(nums, nums.Length - 1);
+        }
+        public static int RobHelp(int[] nums, int n)
+        {
+            if (n < 0)
+                return 0;
+            return Math.Max(nums[n] + RobHelp(nums, n - 2), RobHelp(nums, n - 1));
+        }
+
+        //198. House Robber DP解法
+        public static int Rob2(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            if (nums.Length == 1)
+                return nums[0];
+            int[] temp = new int[nums.Length];
+            temp[0] = nums[0];
+            temp[1] = Math.Max(nums[0], nums[1]);
+            for (int i = 2; i < nums.Length; i++)
+            {
+                temp[i] = Math.Max(nums[i] + temp[i - 2], temp[i - 1]);
+            }
+            return temp[nums.Length - 1];
         }
 
         #endregion
