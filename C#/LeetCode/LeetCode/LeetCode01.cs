@@ -188,12 +188,16 @@ namespace LeetCode
             //int[] nums = { 1, 2, 3, 4, 5 };
             //int res = Rob2(nums);
 
-            List<int> nums = new List<int>();
-            for (int i = 1; i < 101; i++)
-            {
-                nums.Add(i);
-            }
-            int res = MissingNumber2(nums.ToArray());
+            //List<int> nums = new List<int>();
+            //for (int i = 1; i < 101; i++)
+            //{
+            //    nums.Add(i);
+            //}
+            //int res = MissingNumber2(nums.ToArray());
+            //int res = MySqrt(8);
+            //TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3,4,5});
+            //IList<IList<int>>  res  = LevelOrderBottom(root);
+
 
             Console.ReadLine();
         }
@@ -251,6 +255,124 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180107
+
+        //112. Path Sum
+        public static bool HasPathSum(TreeNode root, int sum)
+        {
+            if (root == null)
+                return false;
+            return HasPathSumHelp(root, sum, 0);
+        }
+        public static bool HasPathSumHelp(TreeNode root, int sum, int temp)
+        {
+            if (root == null)
+            {
+                return false;
+            }
+            temp += root.val;
+            if (root.left == null && root.right == null)
+            {
+                if (temp == sum)
+                    return true;
+                else
+                    return false;
+            }
+            bool res = false;
+            if (root.left != null)
+            {
+                res |= HasPathSumHelp(root.left, sum, temp);
+            }
+            if (root.right != null)
+            {
+                res |= HasPathSumHelp(root.right, sum, temp);
+            }
+            temp -= root.val;
+            return res;
+        }
+
+        //108. Convert Sorted Array to Binary Search Tree
+        //将数组转换成搜索树
+        public static TreeNode SortedArrayToBST(int[] nums)
+        {
+            return SortedArrayToBSTHelp(nums, 0, nums.Count() - 1);
+        }
+
+        public static TreeNode SortedArrayToBSTHelp(int[] nums,int left,int right)
+        {
+            if (left > right) return null;
+            int mid = (left + right) / 2;
+            TreeNode cur = new TreeNode(nums[mid]);
+            cur.left = SortedArrayToBSTHelp(nums, left, mid - 1);
+            cur.right = SortedArrayToBSTHelp(nums,mid+1,right);
+            return cur;
+        }
+
+        //107. Binary Tree Level Order Traversal II 广度搜索
+        public static IList<IList<int>> LevelOrderBottom(TreeNode root)
+        {
+            IList<IList<int>> res = new List<IList<int>>();
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+
+            if (root == null) return res;
+
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int levelNum = queue.Count;
+                List<int> temp = new List<int>();
+                for (int i = 0; i < levelNum; i++)
+                {
+                    if (queue.Peek().left != null)
+                        queue.Enqueue(queue.Peek().left);
+                    if (queue.Peek().right != null)
+                        queue.Enqueue(queue.Peek().right);
+                    temp.Add(queue.Dequeue().val);
+                }
+                res.Insert(0, temp);
+            }
+            
+            return res;
+        }
+
+        //深度搜索
+        public static IList<IList<int>> LevelOrderBottom2(TreeNode root)
+        {
+            IList<IList<int>> res = new List<IList<int>>();
+
+            levelMaker(res, root, 0);
+
+            return res;
+        }
+        public static void levelMaker(IList<IList<int>> list, TreeNode root, int level)
+        {
+            if (root == null)
+                return;
+            if (level >= list.Count)
+            {
+                list.Insert(0, new List<int>());
+            }
+            levelMaker(list, root.left, level + 1);
+            levelMaker(list, root.right, level + 1);
+            list[list.Count - level - 1].Add(root.val);
+        }
+
+        //69. Sqrt(x) 牛顿法求根
+        public static int MySqrt(int x)
+        {
+            double res = 1;
+            double temp = 1;
+            do
+            {
+                temp = res;
+                res = 0.5f * (res + x / res);
+            }
+            while (Math.Abs(res - temp) > 0.00001);
+            return (int)res;
         }
 
         #endregion
