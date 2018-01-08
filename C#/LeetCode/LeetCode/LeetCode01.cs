@@ -198,6 +198,7 @@ namespace LeetCode
             //TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3,4,5});
             //IList<IList<int>>  res  = LevelOrderBottom(root);
 
+            int res = CountPrimes(5);
 
             Console.ReadLine();
         }
@@ -255,6 +256,56 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180108
+
+        //204. Count Primes 求小于n的2所有素数
+        public static int CountPrimes(int n)
+        {
+            if (n <= 2)
+                return 0;
+            int count = n - 2;
+            for (int i = 2; i < n; i++)
+            {
+                for (int j = 2; j < i; j++)
+                {
+                    if (i % j == 0)
+                    {
+                        count--;
+                        break;
+                    }
+                }
+            }
+            return count;
+        }
+
+        //FirstBadVersion
+        public static int FirstBadVersion(int n)
+        {
+            int left = 1;
+            int right = n;
+            while (left < right)
+            {
+                int mid = left + (right - left) / 2;
+                if (!IsBadVersion(mid))
+                {
+                    left = mid + 1;
+                }
+                else
+                {
+                    right = mid;
+                }
+            }
+            return left;
+        }
+        static bool IsBadVersion(int version)
+        {
+            if (version >= 1)
+                return false;
+            return true;
         }
 
         #endregion
