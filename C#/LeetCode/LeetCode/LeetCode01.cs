@@ -198,7 +198,13 @@ namespace LeetCode
             //TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3,4,5});
             //IList<IList<int>>  res  = LevelOrderBottom(root);
 
-            int res = CountPrimes(5);
+            //int res = CountPrimes(5);
+
+            //char[] cs = { 'a','b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b' };
+            //int res = Compress(cs);
+            
+            string[] strs = { "a","banana", "app", "appl", "ap", "apply", "apple" };
+            string res = LongestWord2(strs);
 
             Console.ReadLine();
         }
@@ -261,6 +267,79 @@ namespace LeetCode
         #endregion
 
         #region 20180108
+
+        //720. Longest Word in Dictionary 失败，没有根据字典序列排序，思路有问题
+        public static string LongestWord(string[] words)
+        {
+            if (words == null || words.Length == 0)
+                return "";
+            List<string> temp = new List<string>(words);
+            for(int index = 0; index < temp.Count ; index ++)
+            {
+                string str = temp[index];
+                for(int i = 1; i < str.Length; i ++)
+                {
+                    string s = str.Substring(0, i);
+                    if (!words.Contains(s))
+                    {
+                        temp.Remove(str);
+                        break;
+                    }
+                }
+            }
+            temp.Sort((string a,string b)=> { return a.Length.CompareTo(b.Length); });
+            for (int i = temp.Count - 1; i >= 0; i --)
+            {
+                if (temp[i].Length < temp.Last().Length)
+                    return temp[i + 1];
+            }
+            return temp[0];
+        }
+
+        //720. Longest Word in Dictionary
+        public static string LongestWord2(string[] words)
+        {
+            //排序,这个排序已经是按照长度优先，字典序其后的方式进行的
+            Array.Sort(words);
+            //temp是关键，将前面满足条件的短字符串先放进去
+            HashSet<string> temp = new HashSet<string>();
+            string res = "";
+            foreach(string s in words)
+            {
+                //判断是长度为1或者在截取n-1位，在前面的较短的temp的查找
+                if (s.Length == 1 || temp.Contains(s.Substring(0, s.Length - 1)))
+                {
+                    res = s.Length > res.Length ? s : res;
+                    temp.Add(s);
+                }
+            }
+            return res;
+        }
+
+        //443. String Compression ** 
+        public static int Compress(char[] chars)
+        {
+            int start = 0;
+            for (int end = 0, count = 0; end < chars.Length; end++)
+            {
+                count++;
+                if (end == chars.Length - 1 || chars[end] != chars[end + 1])
+                {
+                    chars[start] = chars[end];
+                    start++;
+                    if (count != 1)
+                    {
+                        char[] arr = (count + "").ToCharArray();
+                        for (int i = 0; i < arr.Length; i++, start++)
+                        {
+                            chars[start] = arr[i];
+                        }
+                    }
+                    count = 0;
+                }
+            }
+            return start;
+        }
 
         //204. Count Primes 求小于n的2所有素数
         public static int CountPrimes(int n)
