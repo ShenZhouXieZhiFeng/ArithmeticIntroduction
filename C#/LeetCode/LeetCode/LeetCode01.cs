@@ -202,9 +202,11 @@ namespace LeetCode
 
             //char[] cs = { 'a','b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b', 'b' };
             //int res = Compress(cs);
-            
-            string[] strs = { "a","banana", "app", "appl", "ap", "apply", "apple" };
-            string res = LongestWord2(strs);
+
+            //string[] strs = { "a","banana", "app", "appl", "ap", "apply", "apple" };
+            //string res = LongestWord2(strs);
+
+            ConvertToTitle(1000);
 
             Console.ReadLine();
         }
@@ -262,6 +264,168 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180109
+
+        //168. Excel Sheet Column Title 1='A'
+        public static string ConvertToTitle(int n)
+        {
+            StringBuilder sb = new StringBuilder();
+            while (n > 0)
+            {
+                n--;
+                sb.Insert(0, (char)('A' + n % 26));
+                n /= 26;
+            }
+            return sb.ToString();
+        }
+
+        //155. Min Stack
+        public class MinStack
+        {
+            Stack<int> curStack;
+            Stack<int> minSatck;
+            /** initialize your data structure here. */
+            public MinStack()
+            {
+                curStack = new Stack<int>();
+                minSatck = new Stack<int>();
+            }
+
+            public void Push(int x)
+            {
+                int min = minSatck.Count == 0 ? int.MaxValue : minSatck.Peek();
+                min = Math.Min(min, x);
+                minSatck.Push(min);
+                curStack.Push(x);
+            }
+
+            public void Pop()
+            {
+                minSatck.Pop();
+                curStack.Pop();
+            }
+
+            public int Top()
+            {
+                return curStack.Peek();
+            }
+
+            public int GetMin()
+            {
+                return minSatck.Peek();
+            }
+        }
+
+        //111. Minimum Depth of Binary Tree
+        public int MinDepth(TreeNode root)
+        {
+            if (root == null)
+                return 0;
+            if (root.left == null && root.right == null)
+                return 1;
+            if (root.left == null)
+            {
+                return MinDepth(root.right) + 1;
+            }
+            if (root.right == null)
+            {
+                return MinDepth(root.left) + 1;
+            }
+            return Math.Min(MinDepth(root.left), MinDepth(root.right)) + 1;
+        }
+
+        //88. Merge Sorted Array
+        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        {
+            int[] res = new int[m + n];
+            int i1 = 0;
+            int i2 = 0;
+            int index = 0;
+            while (i1 < m && i2 < n)
+            {
+                if (nums1[i1] <= nums2[i2])
+                {
+                    res[index++] = nums1[i1++];
+                }
+                else
+                {
+                    res[index++] = nums2[i2++];
+                }
+            }
+            while (i1 < m)
+            {
+                res[index++] = nums1[i1++];
+            }
+            while (i2 < n)
+            {
+                res[index++] = nums2[i2++];
+            }
+            for (int i = 0; i < res.Length; i++)
+            {
+                nums1[i] = res[i];
+            }
+        }
+
+        //66. Plus One
+        public int[] PlusOne(int[] digits)
+        {
+            if (digits == null || digits.Length == 0)
+                return digits;
+            int plus = 0;
+            List<int> res = new List<int>();
+            for (int i = digits.Length - 1; i >= 0; i--)
+            {
+                int temp = digits[i];
+                if (i == digits.Length - 1)
+                {
+                    temp += 1;
+                }
+                else
+                {
+                    temp += plus;
+                }
+                if (temp >= 10)
+                {
+                    plus = 1;
+                    temp -= 10;
+                }
+                else {
+                    plus = 0;
+                }
+                res.Add(temp);
+            }
+            if (plus == 1)
+                res.Add(1);
+            res.Reverse();
+            return res.ToArray();
+        }
+
+        //58. Length of Last Word
+        public int LengthOfLastWord(string s)
+        {
+            int count = 0;
+            bool flag = false;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                if (s[i] != ' ')
+                {
+                    flag = true;
+                    count++;
+                }
+                if (s[i] == ' ' && flag)
+                {
+                    return count;
+                }
+                if (i == 0 && flag)
+                {
+                    return count;
+                }
+            }
+            return 0;
         }
 
         #endregion
