@@ -206,7 +206,18 @@ namespace LeetCode
             //string[] strs = { "a","banana", "app", "appl", "ap", "apply", "apple" };
             //string res = LongestWord2(strs);
 
-            ConvertToTitle(1000);
+            //ConvertToTitle(1000);
+            //GetRow(5);
+            //IsPalindrome("0PP");
+            //TrailingZeroes(30);
+
+            //reverseBits(5);
+            //IsHappy(2);
+            MyQueue q = new MyQueue();
+            q.Push(1);
+            q.Push(2);
+            q.Push(3);
+            int res = q.Peek();
 
             Console.ReadLine();
         }
@@ -269,6 +280,211 @@ namespace LeetCode
         #endregion
 
         #region 20180110
+
+        //232. Implement Queue using Stacks
+        public class MyQueue
+        {
+            Stack<int> data;
+            /** Initialize your data structure here. */
+            public MyQueue()
+            {
+                data = new Stack<int>();
+            }
+
+            /** Push element x to the back of queue. */
+            public void Push(int x)
+            {
+                List<int> temp = new List<int>(data);
+                data.Clear();
+                data.Push(x);
+                for (int i = temp.Count - 1; i >= 0; i--)
+                {
+                    data.Push(temp[i]);
+                }
+            }
+
+            /** Removes the element from in front of queue and returns that element. */
+            public int Pop()
+            {
+                return data.Pop();
+            }
+
+            /** Get the front element. */
+            public int Peek()
+            {
+                return data.Peek();
+            }
+
+            /** Returns whether the queue is empty. */
+            public bool Empty()
+            {
+                return data.Count == 0;
+            }
+        }
+
+        //225. Implement Stack using Queues
+        public class MyStack
+        {
+            Queue<int> data;
+            /** Initialize your data structure here. */
+            public MyStack()
+            {
+                data = new Queue<int>();
+            }
+
+            /** Push element x onto stack. */
+            public void Push(int x)
+            {
+                List<int> temp = new List<int>(data);
+                data.Clear();
+                data.Enqueue(x);
+                foreach (int v in temp)
+                {
+                    data.Enqueue(v);
+                }
+            }
+
+            /** Removes the element on top of the stack and returns that element. */
+            public int Pop()
+            {
+                return data.Dequeue();
+            }
+
+            /** Get the top element. */
+            public int Top()
+            {
+                return data.First();
+            }
+
+            /** Returns whether the stack is empty. */
+            public bool Empty()
+            {
+                return data.Count == 0;
+            }
+        }
+
+        //205. Isomorphic Strings
+        public static bool IsIsomorphic(string s, string t)
+        {
+            if (s.Length != t.Length)
+                return false;
+            Dictionary<char, char> dic = new Dictionary<char, char>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (!dic.ContainsKey(s[i]))
+                {
+                    if (dic.ContainsValue(t[i]))
+                        return false;
+                    dic.Add(s[i], t[i]);
+                }
+                else
+                {
+                    if (dic[s[i]] != t[i])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        //202. Happy Number
+        public static bool IsHappy(int n)
+        {
+            HashSet<int> set = new HashSet<int>();
+            while (n != 1 || !set.Contains(n))
+            {
+                set.Add(n);
+                int sum = 0;
+                while (n >= 10)
+                {
+                    int t = n % 10;
+                    sum += (t * t);
+                    n /= 10;
+                }
+                sum += (n * n);
+                n = sum;
+            }
+            return n == 1;
+        }
+
+        //191. Number of 1 Bits
+        public int HammingWeight(uint n)
+        {
+            int count = 0;
+            while (n > 0)
+            {
+                if ((n & 1) == 1)
+                    count++;
+                n = n >> 1;
+            }
+            return count;
+        }
+
+        //190. Reverse Bits
+        public static uint reverseBits(uint n)
+        {
+            uint res = 0;
+            int f = 31;
+            while (n > 0)
+            {
+                int v = (n & 1) == 0 ? 0 : 1;
+                if (v == 1)
+                    res += (uint)Math.Pow(2, f);
+                f--;
+                n = n >> 1;
+            }
+            return res;
+        }
+
+        //172. Factorial Trailing Zeroes
+        public static int TrailingZeroes(int n)
+        {
+            return n == 0 ? 0 : n/5 + TrailingZeroes(n / 5);
+        }
+
+        //125. Valid Palindrome
+        public static bool IsPalindrome(string s)
+        {
+            s = s.ToLower();
+            int left = 0;
+            int right = s.Length - 1;
+            while (left < right)
+            {
+                while (!IsNumOrChac(s[left]) && left < right)
+                {
+                    left ++;
+                }
+                while (!IsNumOrChac(s[right]) && left < right)
+                {
+                    right--;
+                }
+                if (s[left] != s[right])
+                    return false;
+                left++;
+                right--;
+            }
+            return true;
+        }
+        public static bool IsNumOrChac(char c)
+        {
+            if ((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))
+                return true;
+            return false;
+        }
+
+        //119. Pascal's Triangle II
+        public static IList<int> GetRow(int rowIndex)
+        {
+            int[] res = new int[rowIndex + 1];
+            res[0] = 1;
+            for (int i = 1; i < rowIndex + 1; i++)
+            {
+                for (int j = i; j >= 1; j--)
+                {
+                    res[j] += res[j - 1];
+                }
+            }
+            return res;
+        }
 
         //231. Power of Two
         public bool IsPowerOfTwo(int n)
