@@ -268,6 +268,92 @@ namespace LeetCode
 
         #endregion
 
+        #region 20180110
+
+        //231. Power of Two
+        public bool IsPowerOfTwo(int n)
+        {
+            if (n <= 0)
+                return false;
+            while (n > 1)
+            {
+                if ((n & 1) == 1)
+                {
+                    return false;
+                }
+                n = n >> 1;
+            }
+            return true;
+        }
+
+        //290. Word Pattern
+        public bool WordPattern(string pattern, string str)
+        {
+            string[] strs = str.Split(' ');
+            if (pattern.Length != strs.Count())
+                return false;
+            Dictionary<char, string> dic = new Dictionary<char, string>(pattern.Length);
+            for (int i = 0; i < pattern.Length; i++)
+            {
+                char c = pattern[i];
+                string cur = strs[i];
+                if (!dic.ContainsKey(c))
+                {
+                    if (dic.ContainsValue(cur))
+                        return false;
+                    dic.Add(c, cur);
+                }
+                else
+                {
+                    if (cur != dic[c])
+                        return false;
+                }
+            }
+            return true;
+        }
+
+        //263. Ugly Number
+        public bool IsUgly(int num)
+        {
+            if (num == 1) return true;
+            if (num == 0) return false;
+            while (num % 2 == 0) num = num / 2;
+            while (num % 3 == 0) num = num / 3;
+            while (num % 5 == 0) num = num / 5;
+            return num == 1;
+        }
+
+        //257. Binary Tree Paths 打印二叉树的所有path
+        public IList<string> BinaryTreePaths(TreeNode root)
+        {
+            string str = "";
+            IList<string> res = new List<string>();
+            BinaryTreePathsHelp(root,str,res);
+            return res;
+        }
+        public void BinaryTreePathsHelp(TreeNode root,string str, IList<string> res)
+        {
+            if (root == null)
+                return;
+            if (root.left == null && root.right == null)
+            {
+                str += root.val + "";
+                res.Add(str);
+                return;
+            }
+            str += root.val + "->";
+            if (root.left != null)
+            {
+                BinaryTreePathsHelp(root.left, str, res);
+            }
+            if (root.right != null)
+            {
+                BinaryTreePathsHelp(root.right, str, res);
+            }
+        }
+
+        #endregion
+
         #region 20180109
 
         //168. Excel Sheet Column Title 1='A'
