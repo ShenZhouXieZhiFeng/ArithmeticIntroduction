@@ -213,14 +213,41 @@ namespace LeetCode
 
             //reverseBits(5);
             //IsHappy(2);
-            MyQueue q = new MyQueue();
-            q.Push(1);
-            q.Push(2);
-            q.Push(3);
-            int res = q.Peek();
+            //MyQueue q = new MyQueue();
+            //q.Push(1);
+            //q.Push(2);
+            //q.Push(3);
+            //int res = q.Peek();
+
+            int[] nums = { 1, 2, 3 };
+            int[] b = new int[2];
+            combine1(nums, nums.Length, 2, b, 2);
 
             Console.ReadLine();
         }
+
+        #region 组合问题
+
+        //求从数组a[1..n]中任选m个元素的所有组合。
+        public static void combine1(int[] inArr, int nLen, int m, int[] outArr, int outLen)
+        {
+            if (m == 0)
+            {
+                for (int i = 0; i < outLen; i++)
+                {
+                    Console.Write(outArr[i]);
+                }
+                Console.WriteLine();
+                return;
+            }
+            for (int i = nLen; i >= m; --i)
+            {
+                outArr[m - 1] = inArr[i-1];
+                combine1(inArr, i - 1, m - 1, outArr, outLen);
+            }
+        }
+
+        #endregion
 
         #region Medium
 
@@ -276,6 +303,12 @@ namespace LeetCode
                 stack.Pop();
             }
         }
+
+        #endregion
+
+        #region 20180111
+
+
 
         #endregion
 
