@@ -11,6 +11,7 @@ namespace LeetCode
 
         static void Main(string[] args)
         {
+            #region old
             //int[,] nums = { { 1, 2 }, { 3, 4 } };
             //MatrixReshape(nums,4,1);
             //Console.WriteLine(1);
@@ -219,14 +220,138 @@ namespace LeetCode
             //q.Push(3);
             //int res = q.Peek();
 
-            int[] nums = { 1, 2, 3 };
-            int[] b = new int[2];
-            combine1(nums, nums.Length, 2, b, 2);
+            #endregion 
+
+            //int[] nums = { 1, 2, 3 };
+            ////int[] b = new int[2];
+            ////combine1(nums, nums.Length, 2, b, 2);
+            //combine2(nums, 0, nums.Length-1);
+
+            //int res = reverseAdd(123, 456);
+            //int t = 321 + 654;
+
+            //dice("RA");
+            bool res = IsPowerOfFour(32);
 
             Console.ReadLine();
         }
 
+        #region 面试题
+
+        //华为-整数反转求和
+        //(123,456) = 321 + 654
+        public static int reverseAdd(int a, int b)
+        {
+            int ta = 0;
+            while (a >= 10)
+            {
+                int temp = a % 10;
+                ta = (ta + temp) * 10;
+                a /= 10;
+            }
+            ta += a;
+            int tb = 0;
+            while (b >= 10)
+            {
+                int temp = b % 10;
+                tb = (tb + temp) * 10;
+                b /= 10;
+            }
+            ta += b;
+            return ta + tb;
+        }
+
+        /// <summary>
+        /// 华为-掷骰子
+        /// </summary>
+        public static void dice(string cmd)
+        {
+            int[] init = { 0, 1, 2, 3, 4, 5, 6 };
+            for (int i = 0; i < cmd.Length; i++)
+            {
+                switch (cmd[i])
+                {
+                    case 'L':
+                        int temp1 = init[1];
+                        init[1] = init[5];
+                        init[5] = init[2];
+                        init[2] = init[6];
+                        init[6] = temp1;
+                        break;
+                    case 'R':
+                        int temp2 = init[1];
+                        init[1] = init[6];
+                        init[6] = init[2];
+                        init[2] = init[5];
+                        init[5] = temp2;
+                        break;
+                    case 'F':
+                        int temp3 = init[3];
+                        init[3] = init[5];
+                        init[5] = init[4];
+                        init[4] = init[6];
+                        init[6] = temp3;
+                        break;
+                    case 'B':
+                        int temp4 = init[3];
+                        init[3] = init[6];
+                        init[6] = init[4];
+                        init[4] = init[5];
+                        init[5] = temp4;
+                        break;
+                    case 'A':
+                        int temp5 = init[1];
+                        init[1] = init[4];
+                        init[4] = init[2];
+                        init[2] = init[3];
+                        init[3] = temp5;
+                        break;
+                    case 'C':
+                        int temp6 = init[1];
+                        init[1] = init[3];
+                        init[3] = init[2];
+                        init[2] = init[4];
+                        init[4] = temp6;
+                        break;
+                }
+            }
+            for (int i = 1; i < init.Length; i++)
+            {
+                Console.Write(init[i]);
+            }
+        }
+
+
+
+        #endregion
+
         #region 组合问题
+
+        //全排列
+        public static void combine2(int[] inArr,int index,int length)
+        {
+            if (index == length)
+            {
+                for (int i = 0; i < length + 1; i++)
+                {
+                    Console.Write(inArr[i]);
+                }
+                Console.WriteLine();
+                return;
+            }
+            for (int i = index; i <= length; i++)
+            {
+                swap(inArr, index, i);
+                combine2(inArr, index + 1, length);
+                swap(inArr, index, i);
+            }
+        }
+        public static void swap(int[] arr,int t1,int t2)
+        {
+            int temp = arr[t1];
+            arr[t1] = arr[t2];
+            arr[t2] = temp;
+        }
 
         //求从数组a[1..n]中任选m个元素的所有组合。
         public static void combine1(int[] inArr, int nLen, int m, int[] outArr, int outLen)
@@ -302,6 +427,97 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180112
+
+        //303. Range Sum Query - Immutable
+        public class NumArray
+        {
+            List<int> sums = new List<int>();
+
+            public NumArray(int[] nums)
+            {
+                int sum = 0;
+                for (int i = 0; i < nums.Length; i++)
+                {
+                    sum += nums[i];
+                    sums.Add(sum);
+                }
+            }
+
+            public int SumRange(int i, int j)
+            {
+                if (i > j || i >= sums.Count || j >= sums.Count)
+                    return 0;
+                if (i == 0)
+                    return sums[j];
+                return (sums[j] - sums[i - 1]);
+            }
+        }
+
+        //350. Intersection of Two Arrays II
+        public int[] Intersect(int[] nums1, int[] nums2)
+        {
+            List<int> n1 = new List<int>(nums1);
+            List<int> n2 = new List<int>(nums2);
+            List<int> res = new List<int>();
+            for (int i = 0; i < n1.Count; i++)
+            {
+                int t = n2.IndexOf(n1[i]);
+                if (t != -1)
+                {
+                    res.Add(n1[i]);
+                    n2.RemoveAt(t);
+                }
+            }
+            return res.ToArray();
+        }
+
+        //345. Reverse Vowels of a String
+        public string ReverseVowels(string s)
+        {
+            HashSet<char> set = new HashSet<char>()
+            {
+                'a','e','i','o', 'u','A', 'E','I', 'O','U'
+            };
+            char[] cs = s.ToCharArray();
+            int left = 0;
+            int right = s.Length - 1;
+            while (left < right)
+            {
+                while (left < right && !set.Contains(cs[left]))
+                {
+                    left++;
+                }
+                while (left < right && !set.Contains(cs[right]))
+                {
+                    right--;
+                }
+                char temp = cs[left];
+                cs[left] = cs[right];
+                cs[right] = temp;
+                left++;
+                right--;
+            }
+            return new string(cs);
+        }
+
+        //342. Power of Four
+        public static bool IsPowerOfFour(int num)
+        {
+            if (num < 1)
+                return false;
+            long sum = 1;
+            while (sum <= num)
+            {
+                if (sum == num)
+                    return true;
+                sum *= 4;
+            }
+            return false;
         }
 
         #endregion
