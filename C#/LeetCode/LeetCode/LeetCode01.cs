@@ -231,7 +231,12 @@ namespace LeetCode
             //int t = 321 + 654;
 
             //dice("RA");
-            bool res = IsPowerOfFour(32);
+            //bool res = IsPowerOfFour(32);
+            //TreeNode root = TreeNode.CreateTreeByArr(new int[7] { 1, -2, -3, 1, 3, -2, -1 });
+            //int res = PathSum3(root, 1); ;
+            //FindAnagrams2("abab", "ab");
+            int[] nums = { 4, 3, 5, 4, 3, 3, 6, 7 };
+            SliderDown(nums, 3);
 
             Console.ReadLine();
         }
@@ -427,6 +432,132 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180113
+
+        //窗口滑动问题
+        public static List<int> SliderDown(int[] nums,int k)
+        {
+            List<int> res = new List<int>();
+            Queue<int> queue = new Queue<int>();
+
+            queue.Enqueue(0);
+            int index = 0;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                if (i - index >= k)
+                {
+                    index++;
+                    res.Add(nums[queue.First()]);
+                }
+                if (i - queue.First() >= k)
+                    queue.Dequeue();
+                int temp = nums[i];
+                if (queue.Count != 0 && temp <= nums[queue.First()])
+                {
+                    queue.Enqueue(i);
+                }
+                else
+                {
+                    queue.Clear();
+                    queue.Enqueue(i);
+                }
+            }
+            res.Add(queue.Dequeue());
+            return res;
+        }
+
+        // //438. Find All Anagrams in a String
+        public static IList<int> FindAnagrams2(string s, string p)
+        {
+            int[] chars = new int[26];
+            List<int> res = new List<int>();
+
+            if (s == null || p == null || s.Length < p.Length)
+                return res;
+            foreach (char c in p)
+            {
+                chars[c - 'a']++;
+            }
+            int start = 0, end = 0, count = p.Length;
+            while (end < s.Length)
+            {
+                if (end - start == p.Length)
+                {
+                    if (chars[s[start] - 'a']++ >= 0)
+                    {
+                        count++;
+                    }
+                    start++;
+                }
+                if (--chars[s[end]-'a'] >= 0)
+                    count--;
+                end++;
+                if (count == 0)
+                    res.Add(start);
+            }
+            return res;
+        }
+
+        //438. Find All Anagrams in a String 超时
+        public static IList<int> FindAnagrams(string s, string p)
+        {
+            List<int> res = new List<int>();
+            for (int i = 0; i < s.Length - p.Length + 1; i++)
+            {
+                string temp = s.Substring(i, p.Length);
+                if (FindAnagramsHelp(temp, p))
+                    res.Add(i);
+            }
+            return res;
+        }
+        public static bool FindAnagramsHelp(string a,string b)
+        {
+            if (a.Length != b.Length)
+                return false;
+            List<char> bs = new List<char>(b);
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (!bs.Contains(a[i]))
+                    return false;
+                else
+                    bs.Remove(a[i]);
+            }
+            return true;
+        }
+
+        //437. Path Sum III
+        public static int PathSum3(TreeNode root, int sum)
+        {
+            Count = 0;
+            Stack<int> temp = new Stack<int>();
+            PathSumHelp(root, temp, sum);
+            return Count;
+        }
+        public static int Count = 0;
+        public static void PathSumHelp(TreeNode node,Stack<int> temp,int sum)
+        {
+            if (node == null)
+                return;
+            temp.Push(node.val);
+            if (node.val == sum)
+                Count++;
+            int tempSum = 0;
+            List<int> tList = new List<int>(temp);
+            for (int i = 0; i < tList.Count; i++)
+            {
+                tempSum += tList[i];
+                if (tempSum == sum && i != 0)
+                {
+                    Count++;
+                }
+            }
+            PathSumHelp(node.left, temp, sum);
+            PathSumHelp(node.right, temp, sum);
+            temp.Pop();
         }
 
         #endregion
