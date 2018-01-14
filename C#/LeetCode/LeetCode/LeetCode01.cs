@@ -235,8 +235,16 @@ namespace LeetCode
             //TreeNode root = TreeNode.CreateTreeByArr(new int[7] { 1, -2, -3, 1, 3, -2, -1 });
             //int res = PathSum3(root, 1); ;
             //FindAnagrams2("abab", "ab");
-            int[] nums = { 4, 3, 5, 4, 3, 3, 6, 7 };
-            SliderDown(nums, 3);
+            //int[] nums = { 4, 3, 5, 4, 3, 3, 6, 7 };
+            //SliderDown(nums, 3);
+            //bool res = RepeatedSubstringPattern("abcabcabc");
+
+            //int[] nums = { 1, 2, 5 };
+            //int[] heat = { 2 };
+            //int res = FindRadius(nums, heat);
+
+            TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3, 4, 5 });
+            FindSecondMinimumValue(root);
 
             Console.ReadLine();
         }
@@ -432,6 +440,122 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180114
+
+        //671. Second Minimum Node In a Binary Tree
+        public static int FindSecondMinimumValue(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (root != null || stack.Count != 0)
+            {
+                while (root != null)
+                {
+                    stack.Push(root);
+                    root = root.left;
+                }
+                root = stack.Pop();
+                res.Add(root.val);
+                root = root.right;
+            }
+            res.Sort();
+            if (res.Count == 0 || res.First() == res.Last())
+                return -1;
+            int temp = res[0];
+            foreach (int v in res)
+            {
+                if (v != temp)
+                {
+                    temp = v;
+                    break;
+                }
+            }
+            return temp;
+        }
+
+        //501. Find Mode in Binary Search Tree
+        //查找一个搜索二叉树中最长出现的几个节点值
+        public int[] FindMode(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            FindModeHelp(root, ref dic);
+            if (dic.Count != 0)
+            {
+                int max = dic.Values.Max();
+                foreach (int key in dic.Keys)
+                {
+                    if (dic[key] == max)
+                        res.Add(key);
+                }
+            }
+            return res.ToArray();
+        }
+        public static void FindModeHelp(TreeNode node,ref Dictionary<int,int> dic)
+        {
+            if (node == null) return;
+            FindModeHelp(node.left, ref dic);
+            if (dic.ContainsKey(node.val))
+            {
+                dic[node.val]++;
+            }
+            else
+            {
+                dic.Add(node.val, 1);
+            }
+            FindModeHelp(node.right, ref dic);
+        }
+
+        //475. Heaters
+        public static int FindRadius(int[] houses, int[] heaters)
+        {
+            Array.Sort(houses);
+            Array.Sort(heaters);
+
+            int res = 0;
+            int j = 0;
+            for (int i = 0; i < houses.Length; i++)
+            {
+                while (j < heaters.Length - 1
+                    && (Math.Abs(heaters[j + 1] - houses[i]) <= Math.Abs(heaters[j] - houses[i])))
+                    {
+                    j++;
+                }
+                res = Math.Max(res, Math.Abs(heaters[j] - houses[i]));
+            }
+            return res;
+        }
+
+        //459. Repeated Substring Pattern
+        public static bool RepeatedSubstringPattern(string s)
+        {
+            char[] cs = s.ToCharArray();
+            for (int i = 1; i < s.Length; i++)
+            {
+                //找到重复节点,并且刚好被总长度除尽,截取判断
+                if (s[i] == s[0] && s.Length % (i) == 0)
+                {
+                    //截取出合适的字符串
+                    string temp = s.Substring(0, i);
+                    int begin = i;
+                    while ((begin + i) <= s.Length)
+                    {
+                        //截取出下一同样长度的字符串
+                        string ss = s.Substring(begin, i);
+                        if (ss != temp)
+                            break;
+                        //比较到了最后，且全部通过，返回true
+                        if (begin + i == s.Length)
+                            return true;
+                        begin += i;
+                    }
+                }
+            }
+            return false;
         }
 
         #endregion
