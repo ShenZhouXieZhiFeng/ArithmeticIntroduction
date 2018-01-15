@@ -220,7 +220,7 @@ namespace LeetCode
             //q.Push(3);
             //int res = q.Peek();
 
-            #endregion 
+            #endregion
 
             //int[] nums = { 1, 2, 3 };
             ////int[] b = new int[2];
@@ -243,8 +243,10 @@ namespace LeetCode
             //int[] heat = { 2 };
             //int res = FindRadius(nums, heat);
 
-            TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3, 4, 5 });
-            FindSecondMinimumValue(root);
+            //TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3, 4, 5 });
+            //FindSecondMinimumValue(root);
+
+            int res = CountPrimeSetBits(6, 10);
 
             Console.ReadLine();
         }
@@ -440,6 +442,80 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180115
+
+        //687. Longest Univalue Path 求最长的相同值路径
+        public int LongestUnivaluePath(TreeNode root)
+        {
+            int[] res = new int[1];
+            if (root != null) LongestUnivaluePathDfs(root, res);
+            return res[0];
+        }
+        public int LongestUnivaluePathDfs(TreeNode node,int[] res)
+        {
+            int l = node.left != null ? LongestUnivaluePathDfs(node.left,res) : 0;
+            int r = node.right != null ? LongestUnivaluePathDfs(node.right,res) : 0;
+            int resl = node.left != null && node.left.val == node.val ? l + 1 : 0;
+            int resr = node.right != null && node.right.val == node.val ? r + 1 : 0;
+            res[0] = Math.Max(res[0], resl + resr);
+            return Math.Max(resl, resr);
+        }
+
+        //760. Find Anagram Mappings
+        public int[] AnagramMappings(int[] A, int[] B)
+        {
+            List<int> res = new List<int>();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            for (int i = B.Length - 1; i >= 0; i--)
+            {
+                if (!dic.ContainsKey(B[i]))
+                {
+                    dic.Add(B[i], i);
+                }
+            }
+            for (int i = 0; i < A.Length; i++)
+            {
+                res.Add(dic[A[i]]);
+            }
+            return res.ToArray();
+        }
+
+        //762. Prime Number of Set Bits in Binary Representation
+        public static int CountPrimeSetBits(int L, int R)
+        {
+            if (L > R)
+                return 0;
+            int res = 0;
+            while (L <= R)
+            {
+                int temp = L;
+                int count = 0;
+                while (temp > 0)
+                {
+                    if ((temp & 1) == 1)
+                        count++;
+                    temp = temp >> 1;
+                }
+                bool isPri = true;
+                for (int i = 2; i <= Math.Sqrt(count); i++)
+                {
+                    if (count % i == 0)
+                    {
+                        isPri = false;
+                        break;
+                    }
+                }
+                if (isPri && count != 1)
+                {
+                    res++;
+                }
+                L++;
+            }
+            return res;
         }
 
         #endregion
