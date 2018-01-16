@@ -248,7 +248,9 @@ namespace LeetCode
 
             //int res = CountPrimeSetBits(6, 10);
 
-            TreeNode node = ConstructMaximumBinaryTree(new int[6] { 3, 2, 1, 6, 0, 5 });
+            //TreeNode node = ConstructMaximumBinaryTree(new int[6] { 3, 2, 1, 6, 0, 5 });
+
+            int[] res = ProductExceptSelf(new int[4] { 1, 2, 3, 4 });
 
             Console.ReadLine();
         }
@@ -341,7 +343,6 @@ namespace LeetCode
 
 
         #endregion
-
         #region 组合问题
 
         //全排列
@@ -390,7 +391,6 @@ namespace LeetCode
         }
 
         #endregion
-
         #region Medium
 
         // 查找最近公共父节点,二叉树查找树（有序）
@@ -450,10 +450,82 @@ namespace LeetCode
 
         #region 20180116
 
-        //763. Partition Labels
-        public IList<int> PartitionLabels(string S)
+        //238. Product of Array Except Self
+        public static int[] ProductExceptSelf(int[] nums)
         {
+            int n = nums.Length;
+            int[] fwd = new int[n];
+            int[] bwd = new int[n];
+            int[] res = new int[n];
+            for (int i = 0; i < n; i++)
+            {
+                fwd[i] = 1;
+                bwd[i] = 1;
+            }
+            for (int i = 0; i < n - 1; i++)
+            {
+                fwd[i + 1] = fwd[i] * nums[i];
+            }
+            for (int i = n - 1; i > 0; i--)
+            {
+                bwd[i - 1] = bwd[i] * nums[i];
+            }
+            for (int i = 0; i < n; i++)
+            {
+                res[i] = fwd[i] * bwd[i];
+            }
+            return res;
+        }
 
+        //442. Find All Duplicates in an Array
+        public IList<int> FindDuplicates(int[] nums)
+        {
+            List<int> res = new List<int>();
+            HashSet<int> set = new HashSet<int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (set.Contains(nums[i]))
+                {
+                    res.Add(nums[i]);
+                }
+                else
+                {
+                    set.Add(nums[i]);
+                }
+            }
+            return res;
+        }
+
+        //338. Counting Bits 暴力法
+        public int[] CountBits(int num)
+        {
+            List<int> res = new List<int>();
+            for (int i = 0; i <= num; i++)
+            {
+                int count = 0;
+                int temp = i;
+                while (temp > 0)
+                {
+                    if ((temp & 1) == 1)
+                        count++;
+                    temp = temp >> 1;
+                }
+                res.Add(count);
+            }
+            return res.ToArray();
+        }
+        //特殊解法 0(n) 计算0-num中每个值对应二进制中1的个数
+        public int[] CountBits2(int num)
+        {
+            int[] res = new int[num + 1];
+            for (int i = 0; i <= num; i++)
+            {
+                if (i % 2 == 0)//偶数
+                    res[i] = res[i / 2];
+                else           //奇数
+                    res[i] = res[i / 2] + 1;
+            }
+            return res;
         }
 
         //654. Maximum Binary Tree
