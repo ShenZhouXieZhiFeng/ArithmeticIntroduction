@@ -246,7 +246,9 @@ namespace LeetCode
             //TreeNode root = TreeNode.CreateTreeByArr(new int[5] { 1, 2, 3, 4, 5 });
             //FindSecondMinimumValue(root);
 
-            int res = CountPrimeSetBits(6, 10);
+            //int res = CountPrimeSetBits(6, 10);
+
+            TreeNode node = ConstructMaximumBinaryTree(new int[6] { 3, 2, 1, 6, 0, 5 });
 
             Console.ReadLine();
         }
@@ -445,6 +447,43 @@ namespace LeetCode
         }
 
         #endregion
+
+        #region 20180116
+
+        //763. Partition Labels
+        public IList<int> PartitionLabels(string S)
+        {
+
+        }
+
+        //654. Maximum Binary Tree
+        public static TreeNode ConstructMaximumBinaryTree(int[] nums)
+        {
+            return ConstructMaximumBinaryTreeHelp(nums, 0, nums.Length - 1);
+        }
+        public static TreeNode ConstructMaximumBinaryTreeHelp(int[] nums,int left,int right)
+        {
+            if (left > right)
+                return null;
+            int max = nums[left];
+            int maxIndex = left;
+            for (int i = left + 1; i <= right; i++)
+            {
+                if (nums[i] > max)
+                {
+                    max = nums[i];
+                    maxIndex = i;
+                }
+            }
+            TreeNode node = new TreeNode(max);
+            node.left = ConstructMaximumBinaryTreeHelp(nums, left, maxIndex - 1);
+            node.right = ConstructMaximumBinaryTreeHelp(nums, maxIndex + 1, right);
+            return node;
+        }
+
+        #endregion
+
+        /*#################################↓Easy ↑Medium #####################################*/
 
         #region 20180115
 
