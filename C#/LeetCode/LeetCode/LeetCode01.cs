@@ -250,7 +250,12 @@ namespace LeetCode
 
             //TreeNode node = ConstructMaximumBinaryTree(new int[6] { 3, 2, 1, 6, 0, 5 });
 
-            int[] res = ProductExceptSelf(new int[4] { 1, 2, 3, 4 });
+            //int[] res = ProductExceptSelf(new int[4] { 1, 2, 3, 4 });
+
+            //int res = ArrayNesting(new int[7] { 5, 4, 0, 3, 1, 6, 2 });
+
+            CombinationSum3(3, 27);
+
 
             Console.ReadLine();
         }
@@ -444,6 +449,59 @@ namespace LeetCode
                 findPath(list, node.right, stack, sum);
                 stack.Pop();
             }
+        }
+
+        #endregion
+
+        #region 20180117
+
+        //216. Combination Sum III 找出1-9之间k个数之和为n的所有组合
+        public static IList<IList<int>> CombinationSum3(int k, int n)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            CombinationSum3Help(res, new List<int>(), k, 1, n);
+            return res;
+        }
+        public static void CombinationSum3Help(List<IList<int>> res, List<int> comb,int k,int start,int n)
+        {
+            if (comb.Count == k && n == 0)
+            {
+                List<int> li = new List<int>(comb);
+                res.Add(li);
+                return;
+            }
+            for (int i = start; i <= 9; i++)
+            {
+                comb.Add(i);
+                CombinationSum3Help(res, comb, k, i + 1, n - i);
+                comb.RemoveAt(comb.Count - 1);
+            }
+        }
+
+        //565. Array Nesting ***
+        public static int ArrayNesting(int[] nums)
+        {
+            int len = nums.Length;
+            int res = 0;
+            for (int i = 0; i < len; i++)
+            {
+                //遇到重复的节点
+                if (nums[i] != len)
+                {
+                    int count = 0;
+                    int t = i;
+                    while (nums[t] != len)
+                    {
+                        count++;
+                        int k = nums[t];
+                        //将计算过的数据节点改变，避免形成环
+                        nums[t] = len;
+                        t = k;
+                    }
+                    res = Math.Max(res, count);
+                }
+            }
+            return res;
         }
 
         #endregion
