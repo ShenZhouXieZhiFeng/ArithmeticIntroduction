@@ -254,12 +254,52 @@ namespace LeetCode
 
             //int res = ArrayNesting(new int[7] { 5, 4, 0, 3, 1, 6, 2 });
 
-            CombinationSum3(3, 27);
-
+            //CombinationSum3(3, 27);
+            int[] ws = { 2, 2, 6, 5, 4 };
+            int[] va = { 6, 3, 5, 4, 6 };
+            int res = package01_2(ws, va, 10);
 
             Console.ReadLine();
         }
 
+        #region 其他
+        #region 背包问题
+
+        //01背包问题 二维数据DP
+        public static int package01(int[] weights,int[] values,int maxWeight)
+        {
+            int[,] mm = new int[weights.Length + 1, maxWeight + 1];
+            
+            for (int i = 1; i <= weights.Length; i++)
+            {
+                for (int j = 1; j <= maxWeight; j++)
+                {
+                    if (j > weights[i-1])
+                        mm[i, j] = Math.Max(mm[i - 1, j], mm[i - 1, j - weights[i-1]] + values[i-1]);
+                    else
+                        mm[i, j] = mm[i - 1, j];
+                }
+            }
+            return mm[weights.Length, maxWeight];
+        }
+
+        //01背包问题 一维数据DP
+        public static int package01_2(int[] weights, int[] values, int maxWeight)
+        {
+            int[] maxVal = new int[maxWeight+1];
+            for (int i = 0; i < weights.Length; i++)
+            {
+                for (int j = maxWeight; j >= weights[i]; j--)
+                {
+                    int t = j - weights[i];
+                    if (maxVal[j - weights[i]] + values[i] > maxVal[j])
+                        maxVal[j] = maxVal[j - weights[i]] + values[i];
+                }
+            }
+            return maxVal[maxWeight];
+        }
+
+        #endregion
         #region 面试题
 
         //华为-整数反转求和
@@ -452,6 +492,43 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180118
+
+        //122. Best Time to Buy and Sell Stock II
+        public int MaxProfit(int[] prices)
+        {
+            int total = 0;
+            for (int i = 0; i < prices.Length - 1; i++)
+            {
+                if (prices[i + 1] > prices[i])
+                    total += prices[i + 1] - prices[i];
+            }
+            return total;
+        }
+        public int MaxProfit2(int[] prices)
+        {
+            if (prices.Length == 0)
+                return 0;
+            int sum = 0;
+            int startIndex = 0;
+            int i = 0;
+            for (i = 1; i < prices.Length; i++)
+            {
+                if (prices[i] < prices[i - 1])
+                {
+                    sum += prices[i - 1] - prices[startIndex];//在i-1处卖出
+                    startIndex = i;//在i处重新买入
+                }
+            }
+            //最后一次计算利润
+            if (prices[i - 1] > prices[startIndex])
+                sum += prices[i - 1] - prices[startIndex];
+            return sum;
+        }
+
+        #endregion
 
         #region 20180117
 
@@ -612,8 +689,6 @@ namespace LeetCode
         }
 
         #endregion
-
-        /*#################################↓Easy ↑Medium #####################################*/
 
         #region 20180115
 
@@ -3925,7 +4000,7 @@ namespace LeetCode
 
         //Say you have an array for which the ith element is the price of a given stock on day i.
         //If you were only permitted to complete at most one transaction(ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
-        public static int MaxProfit(int[] prices)
+        public static int MaxProfit3(int[] prices)
         {
             if (prices == null || prices.Length == 0)
                 return 0;
