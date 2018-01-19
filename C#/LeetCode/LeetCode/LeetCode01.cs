@@ -220,7 +220,6 @@ namespace LeetCode
             //q.Push(3);
             //int res = q.Peek();
 
-            #endregion
 
             //int[] nums = { 1, 2, 3 };
             ////int[] b = new int[2];
@@ -255,9 +254,13 @@ namespace LeetCode
             //int res = ArrayNesting(new int[7] { 5, 4, 0, 3, 1, 6, 2 });
 
             //CombinationSum3(3, 27);
-            int[] ws = { 2, 2, 6, 5, 4 };
-            int[] va = { 6, 3, 5, 4, 6 };
-            int res = package01_2(ws, va, 10);
+            //int[] ws = { 2, 2, 6, 5, 4 };
+            //int[] va = { 6, 3, 5, 4, 6 };
+            //int res = package01_2(ws, va, 10);
+
+            #endregion
+
+            PartitionLabels("abcdea");
 
             Console.ReadLine();
         }
@@ -492,6 +495,35 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180119
+
+        //763. Partition Labels
+        public static IList<int> PartitionLabels(string S)
+        {
+            if (S == null || S.Length == 0)
+                return null;
+            List<int> res = new List<int>();
+            int[] map = new int[26];
+            for (int i = 0; i < S.Length; i++)
+            {
+                map[S[i] - 'a'] = i;
+            }
+            int last = 0;
+            int start = 0;
+            for (int i = 0; i < S.Length; i++)
+            {
+                last = Math.Max(last, map[S[i] - 'a']);
+                if (last == i)
+                {
+                    res.Add(last - start + 1);
+                    start = last + 1;
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180118
