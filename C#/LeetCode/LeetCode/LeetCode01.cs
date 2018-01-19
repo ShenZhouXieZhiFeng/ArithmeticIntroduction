@@ -260,7 +260,28 @@ namespace LeetCode
 
             #endregion
 
-            PartitionLabels("abcdea");
+            //PartitionLabels("abcdea");
+            //Console.ReadLine();
+            //int a = brickTest1("AAA");
+            //int size = int.Parse(Console.ReadLine());
+            //string numStr = Console.ReadLine();
+            //string[] numsStr = numStr.Split(' ');
+            //int[] nums = new int[size];
+            //for (int i = 0; i < size; i++)
+            //{
+            //    nums[i] = int.Parse(numsStr[i]);
+            //}
+            //Console.Write(str01("1010101"));
+            //shulie(nums);
+
+            int[] res = caozuonixu(new int[4] { 1, 2, 3, 4 });
+            for (int i = 0; i < res.Length; i++)
+            {
+                if(i != res.Length - 1)
+                    Console.Write(res[i] + " ");
+                else
+                    Console.Write(res[i]);
+            }
 
             Console.ReadLine();
         }
@@ -304,6 +325,121 @@ namespace LeetCode
 
         #endregion
         #region 面试题
+
+        //小易有一个长度为n的整数序列,a_1,...,a_n。然后考虑在一个空序列b上进行n次以下操作:
+        //1、将a_i放入b序列的末尾
+        //2、逆置b序列
+        //小易需要你计算输出操作n次之后的b序列。 
+        public static int[]  caozuonixu(int[] nums)
+        {
+            int[] res = new int[nums.Length];
+            int[] temp = new int[nums.Length];
+
+            int midFlag = -1;
+            temp[0] = nums.Length;
+            int t = 0;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                t = 0;
+                if (midFlag == -1)//未过中线
+                {
+                    t = temp[i - 1] - 2;
+                } else if(midFlag == 0)//已过中线，
+                {
+                    t = temp[i - 1] + 2;
+                }
+                if (t == 1)//刚好到中线，且之前为3
+                {
+                    temp[i] = 1;
+                    temp[i + 1] = 2;
+                    i++;
+                    midFlag = 0;
+                }
+                else if (t <= 0)//到中线，且之前为2
+                {
+                    temp[i] = 1;
+                    temp[i + 1] = 3;
+                    i++;
+                    midFlag = 0;
+                }
+                else
+                {
+                    temp[i] = t;
+                }
+            }
+            for (int i = 0; i < temp.Length; i++)
+            {
+                res[i] = nums[temp[i]-1];
+            }
+            return res;
+        }
+
+        //最长01交错子串
+        public static int str01(string str)
+        {
+            if (str.Length == 0)
+                return 0;
+            if (str.Length == 1)
+                return 1;
+            int max = 0;
+            int temp = 1;
+            for (int i = 0; i < str.Length-1; i++)
+            {
+                if (str[i] == str[i + 1])
+                {
+                    max = Math.Max(temp, max);
+                    temp = 1;
+                }
+                else
+                {
+                    temp++;
+                }
+            }
+            return Math.Max(max,temp);
+        }
+
+        //能否构成等差数列
+        public static void shulie(int[] nums)
+        {
+            if (nums.Length <= 2)
+            {
+                Console.Write("Possible");
+                return;
+            }
+            Array.Sort(nums);
+            int diff = nums[1] - nums[0];
+            for (int i = 2; i < nums.Length; i++)
+            {
+                if (nums[i] - nums[i - 1] != diff)
+                {
+                    Console.Write("Impossible");
+                    return;
+                }
+            }
+            Console.Write("Possible");
+        }
+
+        //ABAB方块
+        public static int brickTest1(string str)
+        {
+            int count = 0;
+            if (str.Length == 0)
+                return count;
+            int[] map = new int[26];
+            for (int i = 0; i < str.Length; i++)
+            {
+                map[str[i] - 'A'] = 1;
+            }
+            for (int i = 0; i < map.Length; i++)
+            {
+                if (map[i] == 1)
+                    count++;
+            }
+            if (count > 2)
+                return 0;
+            return count;
+        }
+        
 
         //华为-整数反转求和
         //(123,456) = 321 + 654
@@ -387,7 +523,6 @@ namespace LeetCode
                 Console.Write(init[i]);
             }
         }
-
 
 
         #endregion
