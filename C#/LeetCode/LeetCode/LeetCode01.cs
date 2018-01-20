@@ -274,19 +274,100 @@ namespace LeetCode
             //Console.Write(str01("1010101"));
             //shulie(nums);
 
-            int[] res = caozuonixu(new int[4] { 1, 2, 3, 4 });
-            for (int i = 0; i < res.Length; i++)
-            {
-                if(i != res.Length - 1)
-                    Console.Write(res[i] + " ");
-                else
-                    Console.Write(res[i]);
-            }
+            //int[] res = caozuonixu(new int[4] { 1, 2, 3, 4 });
+            //for (int i = 0; i < res.Length; i++)
+            //{
+            //    if(i != res.Length - 1)
+            //        Console.Write(res[i] + " ");
+            //    else
+            //        Console.Write(res[i]);
+            //}
+            int[] nums = { 3, 34, 4, 12, 5, 2 };
+            //int res = maxSum(nums, nums.Length - 1);
+            //int res = maxSum2(nums);
+            bool res = sumEq2(nums, 13);
 
             Console.ReadLine();
         }
 
         #region 其他
+        #region 递归问题
+
+        //nums中是否存在子集，使得子集之和为target，动态规划
+        public static bool sumEq2(int[] nums, int target)
+        {
+            int[,] subset = new int[nums.Length, target+1];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < target + 1; j++)
+                {
+                    if (j == 0 && i != 0)
+                        subset[i, j] = 1;
+                    else
+                        subset[i, j] = 0;
+                }
+            }
+            if (nums[0] <= target)
+            {
+                subset[0,nums[0]] = 1;
+            }
+            for (int i = 1; i < nums.Length; i++)
+            {
+                for (int j = 1; j < target + 1; j++)
+                {
+                    if (nums[i] > j)
+                        subset[i, j] = subset[i - 1, j];
+                    else
+                    {
+                        subset[i, j] = subset[i - 1, j - nums[i]] | subset[i - 1, j];
+                    }
+                }
+            }
+            return subset[nums.Length - 1, target] == 1;
+        }
+
+        //nums中是否存在子集，使得子集之和为target，递归解法
+        public static bool sumEq(int[] nums,int index,int target)
+        {
+            if (target == 0)
+                return true;
+            if (index == 0)
+                return target == nums[index];
+            if (nums[index] > target)
+                return sumEq(nums, index - 1, target);//直接选下一个
+            else
+                //选当前个或选下一个
+                return sumEq(nums, index - 1, target - nums[index]) || sumEq(nums, index - 1, target);
+        }
+
+        //间隔最大和 动态规划
+        public static int maxSum2(int[] nums)
+        {
+            //int[] temp = new int[nums.Length];
+            //temp[0] = nums[0];
+            //temp[1] = Math.Max(nums[0], nums[1]);
+            int temp0 = nums[0];
+            int temp1 = Math.Max(nums[0], nums[1]);
+            for (int i = 2; i < nums.Length; i++)
+            {
+                int t = temp1;
+                temp1 = Math.Max(temp1, temp0 + nums[i]);
+                temp0 = t;
+            }
+            return temp1;
+        }
+
+        //间隔最大和 递归解法
+        public static int maxSum(int[] nums,int index)
+        {
+            if (index == 0)
+                return nums[0];
+            if (index == 1)
+                return Math.Max(nums[0], nums[1]);
+            return Math.Max(maxSum(nums, index - 1), maxSum(nums, index - 2) + nums[index]);
+        }
+
+        #endregion
         #region 背包问题
 
         //01背包问题 二维数据DP
