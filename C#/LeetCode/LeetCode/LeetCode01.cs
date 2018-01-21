@@ -282,10 +282,13 @@ namespace LeetCode
             //    else
             //        Console.Write(res[i]);
             //}
-            int[] nums = { 3, 34, 4, 12, 5, 2 };
+            //int[] nums = { 3, 34, 4, 12, 5, 2 };
             //int res = maxSum(nums, nums.Length - 1);
             //int res = maxSum2(nums);
-            bool res = sumEq2(nums, 13);
+            //bool res = sumEq2(nums, 13);
+
+            int[,] nums = new int[6, 2] { { 7,0 }, { 4,4}, { 7, 1 }, { 5, 0 }, { 6, 1 }, { 5, 2 } };
+            int[,] res = ReconstructQueue(nums);
 
             Console.ReadLine();
         }
@@ -711,6 +714,36 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180121
+
+        //406. Queue Reconstruction by Height
+        public static int[,] ReconstructQueue(int[,] people)
+        {
+            List<Tuple<int, int>> temp = new List<Tuple<int, int>>();
+            List<Tuple<int, int>> temp2 = new List<Tuple<int, int>>(people.GetLength(0));
+            for (int i = 0; i < people.GetLength(0); i++)
+            {
+                temp.Add(new Tuple<int, int>(people[i, 0], people[i, 1]));
+            }
+            temp.Sort((x, y) =>
+            {
+                int result = y.Item1.CompareTo(x.Item1);
+                return result == 0 ? x.Item2.CompareTo(y.Item2) : result;
+            });
+            for (int i = 0; i < temp.Count; i++)
+            {
+                temp2.Insert(temp[i].Item2, temp[i]);
+            }
+            for(int i = 0; i  < people.GetLength(0); i ++)
+            {
+                people[i, 0] = temp2[i].Item1;
+                people[i, 1] = temp2[i].Item2;
+            }
+            return people;
+        }
+
         #endregion
 
         #region 20180119
