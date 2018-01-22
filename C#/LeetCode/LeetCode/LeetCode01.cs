@@ -287,8 +287,9 @@ namespace LeetCode
             //int res = maxSum2(nums);
             //bool res = sumEq2(nums, 13);
 
-            int[,] nums = new int[6, 2] { { 7,0 }, { 4,4}, { 7, 1 }, { 5, 0 }, { 6, 1 }, { 5, 2 } };
-            int[,] res = ReconstructQueue(nums);
+            //int[,] nums = new int[6, 2] { { 7,0 }, { 4,4}, { 7, 1 }, { 5, 0 }, { 6, 1 }, { 5, 2 } };
+            //int[,] res = ReconstructQueue(nums);
+            int res = NumberOfArithmeticSlices(new int[6] { 1, 2, 3, 4, 5, 6 });
 
             Console.ReadLine();
         }
@@ -714,6 +715,51 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180122
+
+        //413. Arithmetic Slices
+        public static int NumberOfArithmeticSlices(int[] A)
+        {
+            int res = 0;
+            int added = 0;
+            for (int i = 2; i < A.Length; i++)
+            {
+                if (A[i - 1] - A[i] == A[i - 2] - A[i - 1])
+                    res += ++added;
+                else
+                    added = 0;
+            }
+            return res;
+        }
+
+        //515. Find Largest Value in Each Tree Row 
+        public IList<int> LargestValues(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            //二叉树广度搜索模版
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            if(root != null)
+                queue.Enqueue(root);
+            while (queue.Count > 0)
+            {
+                int count = queue.Count;
+                int tempMax = int.MinValue;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode node = queue.Dequeue();
+                    if (node.left != null)
+                        queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
+                    tempMax = Math.Max(tempMax, node.val);
+                }
+                res.Add(tempMax);
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180121
