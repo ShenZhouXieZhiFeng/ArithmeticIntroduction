@@ -717,6 +717,88 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180124
+
+        //739. Daily Temperatures 暴力超时
+        public int[] DailyTemperatures(int[] temperatures)
+        {
+            int length = temperatures.Length;
+            int[] res = new int[length];
+            for (int i = 0; i < length; i++)
+            {
+                res[i] = 0;
+            }
+            if (length == 0)
+                return res;
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = i + 1; j < length; j++)
+                {
+                    if (temperatures[j] > temperatures[i])
+                    {
+                        res[i] = j - i;
+                        break;
+                    }
+                }
+            }
+            return res;
+        }
+        //从后往前计算，勉强过
+        public int[] DailyTemperatures2(int[] temperatures)
+        {
+            int length = temperatures.Length;
+            int[] res = new int[length];
+            if (length == 0)
+                return res;
+            res[length - 1] = 0;
+            for (int i = length - 2; i >= 0; i--)
+            {
+                for (int j = i + 1; j < length; j++)
+                {
+                    if (temperatures[j] == temperatures[i])
+                    {
+                        if (res[j] == 0)
+                            res[i] = 0;
+                        else
+                            res[i] = res[j] + j - i;
+                        break;
+                    }
+                    else if (temperatures[j] < temperatures[i])
+                    {
+                        if (res[j] == 0)
+                        {
+                            res[i] = 0;
+                            break;
+                        }
+                    }
+                    else if(temperatures[j] > temperatures[i])
+                    {
+                        res[i] = j - i;
+                        break;
+                    }
+                }
+            }
+            return res;
+        }
+
+        public int[] DailyTemperatures3(int[] temperatures)
+        {
+            Stack<int> stakc = new Stack<int>();
+            int[] res = new int[temperatures.Length];
+            for (int i = 0; i < temperatures.Length; i++)
+            {
+                while (!(stakc.Count == 0) && temperatures[i] > temperatures[stakc.Peek()])
+                {
+                    int idx = stakc.Pop();
+                    res[idx] = i - idx;
+                }
+                stakc.Push(i);
+            }
+            return res;
+        }
+
+        #endregion
+
         #region 20180122
 
         //413. Arithmetic Slices
