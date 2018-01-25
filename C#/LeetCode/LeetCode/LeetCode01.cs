@@ -289,7 +289,7 @@ namespace LeetCode
 
             //int[,] nums = new int[6, 2] { { 7,0 }, { 4,4}, { 7, 1 }, { 5, 0 }, { 6, 1 }, { 5, 2 } };
             //int[,] res = ReconstructQueue(nums);
-            int res = NumberOfArithmeticSlices(new int[6] { 1, 2, 3, 4, 5, 6 });
+            //int res = NumberOfArithmeticSlices(new int[6] { 1, 2, 3, 4, 5, 6 });
 
             Console.ReadLine();
         }
@@ -715,6 +715,66 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180125
+
+        //508. Most Frequent Subtree Sum
+        public int[] FindFrequentTreeSum(TreeNode root)
+        {
+            List<int> sums = new List<int>();
+            if (root == null)
+                return sums.ToArray();
+            FindFrequentTreeSumHelp(root, sums);
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            foreach (int v in sums)
+            {
+                if (dic.ContainsKey(v))
+                    dic[v]++;
+                else
+                    dic.Add(v, 1);
+            }
+            int max = dic.Values.Max();
+            sums.Clear();
+            foreach(KeyValuePair<int,int> item in dic)
+            {
+                if (item.Value == max)
+                    sums.Add(item.Key);
+            }
+            return sums.ToArray();
+        }
+        public static int FindFrequentTreeSumHelp(TreeNode node, List<int> sums)
+        {
+            if (node == null)
+            {
+                return 0;
+            }
+            int sum = node.val + FindFrequentTreeSumHelp(node.left, sums) + FindFrequentTreeSumHelp(node.right, sums);
+            sums.Add(sum);
+            return sum;
+        }
+
+        //260. Single Number III
+        public int[] SingleNumber(int[] nums)
+        { 
+            List<int> res = new List<int>();
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                if (nums[i] == nums[i + 1])
+                {
+                    i++;
+                }
+                else
+                {
+                    res.Add(nums[i]);
+                }
+            }
+            if (nums.Length > 1 && nums[nums.Length - 1] != nums[nums.Length - 2])
+                res.Add(nums[nums.Length - 1]);
+            return res.ToArray();
+        }
+
         #endregion
 
         #region 20180124
