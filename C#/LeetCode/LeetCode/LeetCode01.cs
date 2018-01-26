@@ -290,6 +290,8 @@ namespace LeetCode
             //int[,] nums = new int[6, 2] { { 7,0 }, { 4,4}, { 7, 1 }, { 5, 0 }, { 6, 1 }, { 5, 2 } };
             //int[,] res = ReconstructQueue(nums);
             //int res = NumberOfArithmeticSlices(new int[6] { 1, 2, 3, 4, 5, 6 });
+            //int res = MinMoves2(new int[3] { -5, 3, 3 });
+            string res = FrequencySort2("tree");
 
             Console.ReadLine();
         }
@@ -715,6 +717,84 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180126
+
+        //451. Sort Characters By Frequency
+        List<char> sortTemp = null;
+        public string FrequencySort(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (dict.ContainsKey(s[i]))
+                    dict[s[i]]++;
+                else
+                    dict.Add(s[i], 1);
+            }
+            StringBuilder sb = new StringBuilder();
+            while (dict.Count > 0)
+            {
+                int max = dict.Values.Max();
+                sortTemp = new List<char>(dict.Keys);
+                for (int i = 0; i < sortTemp.Count; i++)
+                {
+                    if (dict[sortTemp[i]].Equals(max))
+                    {
+                        sb.Append(sortTemp[i], max);
+                        dict.Remove(sortTemp[i]);
+                        break;
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+
+        public static string FrequencySort2(string s)
+        {
+            Dictionary<char, int> dict = new Dictionary<char, int>();
+            StringBuilder[] bucket = new StringBuilder[s.Length + 1];
+            StringBuilder res = new StringBuilder();
+            foreach(char c in s)
+            {
+                if (dict.ContainsKey(c))
+                    dict[c]++;
+                else
+                    dict.Add(c, 1);
+            }
+            foreach (KeyValuePair<char, int> item in dict)
+            {
+                if(bucket[item.Value] == null)
+                    bucket[item.Value] = new StringBuilder();
+                bucket[item.Value].Append(item.Key, item.Value);
+            }
+            for (int i = s.Length; i >= 0; i--)
+            {
+                if (bucket[i] != null)
+                {
+                    res.Append(bucket[i]);
+                }
+            }
+            return res.ToString();
+        }
+
+        //462. Minimum Moves to Equal Array Elements II
+        public static int MinMoves2(int[] nums)
+        {
+            Array.Sort(nums);
+            int res = 0;
+            int left = 0;
+            int right = nums.Length-1;
+            while (left < right)
+            {
+                res += nums[right] - nums[left];
+                left++;
+                right--;
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180125
@@ -4201,7 +4281,7 @@ namespace LeetCode
 
         //Given an array of integers, every element appears twice except for one. Find that single one.
         //超时解
-        public static int SingleNumber(int[] nums)
+        public static int SingleNumber2(int[] nums)
         {
             if (nums.Length == 0)
                 return nums[0];
@@ -4219,7 +4299,7 @@ namespace LeetCode
             return 0;
         }
         //两个相同的数进行^（异或操作结果为0）
-        public static int SingleNumber2(int[] nums)
+        public static int SingleNumber3(int[] nums)
         {
             if (nums.Length == 1)
                 return nums[0];
@@ -4230,7 +4310,7 @@ namespace LeetCode
             return res;
         }
         //利用其他数据结构HashSet
-        public static int SingleNumber3(int[] nums)
+        public static int SingleNumber4(int[] nums)
         {
             HashSet<int> set = new HashSet<int>();
             foreach (int v in nums) {
