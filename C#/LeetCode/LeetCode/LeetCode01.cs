@@ -719,6 +719,32 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180127
+
+        //94. Binary Tree Inorder Traversal
+        public IList<int> InorderTraversal(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (root != null || stack.Count != 0)
+            {
+                while (root != null)
+                {
+                    stack.Push(root);
+                    root = root.left;
+                }
+                if (stack.Count != 0)
+                {
+                    root = stack.Pop();
+                    res.Add(root.val);
+                    root = root.right;
+                }
+            }
+            return res;
+        }
+
+        #endregion
+
         #region 20180126
 
         //451. Sort Characters By Frequency
