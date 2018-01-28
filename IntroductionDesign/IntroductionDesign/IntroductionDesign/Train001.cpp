@@ -29,8 +29,28 @@ int main()
 	cin >> n >> d;
 	trans_num(n, d);
 	system("pause");*/
-
+	
+	MyClass s = NULL;
+	
+	system("pause");
 	return 0;
+}
+class MyClass
+{
+public:
+	MyClass();
+	~MyClass();
+
+private:
+
+};
+
+MyClass::MyClass()
+{
+}
+
+MyClass::~MyClass()
+{
 }
 
 int flag = 1;

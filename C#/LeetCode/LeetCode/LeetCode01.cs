@@ -291,7 +291,10 @@ namespace LeetCode
             //int[,] res = ReconstructQueue(nums);
             //int res = NumberOfArithmeticSlices(new int[6] { 1, 2, 3, 4, 5, 6 });
             //int res = MinMoves2(new int[3] { -5, 3, 3 });
-            string res = FrequencySort2("tree");
+            //string res = FrequencySort2("tree");
+
+            ListNode root = ListNode.CreateFromArrays(new int[4] { 0,1,2,3 });
+            ListNode[] res = SplitListToParts(root, 3);
 
             Console.ReadLine();
         }
@@ -717,6 +720,68 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180128
+
+        //725. Split Linked List in Parts
+        public static ListNode[] SplitListToParts(ListNode root, int k)
+        {
+            ListNode[] res = new ListNode[k];
+            if (root == null)
+                return res;
+            int length = 0;
+            ListNode temp = root;
+            while (temp != null)
+            {
+                length++;
+                temp = temp.next;
+            }
+            if (length <= k)
+            {
+                int index = 0;
+                while (root != null)
+                {
+                    res[index++] = new ListNode(root.val);
+                    root = root.next;
+                }
+            }else
+            {
+                int baseLen = length / k;
+                int addLen = length % k;
+                int[] lenNum = new int[k];
+                for (int i = 0; i < k; i++)
+                {
+                    if (i < addLen)
+                        lenNum[i] = baseLen + 1;
+                    else
+                        lenNum[i] = baseLen;
+                }
+                int index = 0;
+                res[index] = root;
+                int add = 0;
+                while (root != null)
+                {
+                    add++;
+                    ListNode next = null;
+                    if (add >= lenNum[index])
+                    {
+                        add = 0;
+                        next = root.next;
+                        root.next = null;
+                        index++;
+                        if(index < k)
+                            res[index] = next;
+                    }
+                    if (next != null)
+                        root = next;
+                    else
+                        root = root.next;
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180127
