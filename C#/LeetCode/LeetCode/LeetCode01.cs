@@ -293,8 +293,10 @@ namespace LeetCode
             //int res = MinMoves2(new int[3] { -5, 3, 3 });
             //string res = FrequencySort2("tree");
 
-            ListNode root = ListNode.CreateFromArrays(new int[4] { 0,1,2,3 });
-            ListNode[] res = SplitListToParts(root, 3);
+            //ListNode root = ListNode.CreateFromArrays(new int[4] { 0,1,2,3 });
+            //ListNode[] res = SplitListToParts(root, 3);
+            int[] A = { 1, 2 }, B = { -2, -1 }, C = { -1, 2 }, D = { 0, 2 };
+            int res = FourSumCount(A, B, C, D);
 
             Console.ReadLine();
         }
@@ -720,6 +722,63 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180129
+
+        //454. 4Sum II 暴力法 超时
+        public static int FourSumCount(int[] A, int[] B, int[] C, int[] D)
+        {
+            int count = 0;
+            int len = A.Length;
+            for (int i = 0; i < len; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    for(int k = 0;k < len; k ++)
+                    {
+                        for (int l = 0; l < len; l++)
+                        {
+                            if (A[i] + B[j] + C[k] + D[l] == 0)
+                                count++;
+                        }
+                    }
+                }
+            }
+            return count;
+        }
+        public static int FourSumCount2(int[] A, int[] B, int[] C, int[] D)
+        {
+            int count = 0;
+            int len = A.Length;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            for (int i = 0; i < len; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    int sum = A[i] + B[j];
+                    if (dic.ContainsKey(sum))
+                    {
+                        dic[sum]++;
+                    }
+                    else
+                    {
+                        dic[sum] = 1;
+                    }
+                }
+            }
+            for (int i = 0; i < len; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    int negateVal = -1 * (C[i] + D[j]);
+                    if (dic.ContainsKey(negateVal))
+                        count += dic[negateVal];
+                }
+            }
+            return count;
+        }
+
         #endregion
 
         #region 20180128
