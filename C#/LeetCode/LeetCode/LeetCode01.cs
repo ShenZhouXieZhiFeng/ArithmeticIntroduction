@@ -220,7 +220,6 @@ namespace LeetCode
             //q.Push(3);
             //int res = q.Peek();
 
-
             //int[] nums = { 1, 2, 3 };
             ////int[] b = new int[2];
             ////combine1(nums, nums.Length, 2, b, 2);
@@ -258,7 +257,6 @@ namespace LeetCode
             //int[] va = { 6, 3, 5, 4, 6 };
             //int res = package01_2(ws, va, 10);
 
-            #endregion
 
             //PartitionLabels("abcdea");
             //Console.ReadLine();
@@ -295,8 +293,13 @@ namespace LeetCode
 
             //ListNode root = ListNode.CreateFromArrays(new int[4] { 0,1,2,3 });
             //ListNode[] res = SplitListToParts(root, 3);
-            int[] A = { 1, 2 }, B = { -2, -1 }, C = { -1, 2 }, D = { 0, 2 };
-            int res = FourSumCount(A, B, C, D);
+            #endregion
+
+            //int[] A = { 1, 2 }, B = { -2, -1 }, C = { -1, 2 }, D = { 0, 2 };
+            //int res = FourSumCount(A, B, C, D);
+            int res = MyAtoi("2147483648");
+
+            int a = int.Parse("-001");
 
             Console.ReadLine();
         }
@@ -722,6 +725,117 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180131
+
+        //513. Find Bottom Left Tree Value 查找最后一行中最左边的数
+        public int FindBottomLeftValue(TreeNode root)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                int left = 0;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode cur = queue.Dequeue();
+                    if (i == 0)
+                        left = cur.val;
+                    if (cur.left != null)
+                        queue.Enqueue(cur.left);
+                    if (cur.right != null)
+                        queue.Enqueue(cur.right);
+                }
+                if (queue.Count == 0)
+                    return left;
+            }
+            return root.val;
+        }
+
+        //查找最后一行中最大的值
+        public int LeftMaxValue(TreeNode root)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                int max = int.MinValue;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode cur = queue.Dequeue();
+                    if (cur.left != null)
+                        queue.Enqueue(cur.left);
+                    if (cur.right != null)
+                        queue.Enqueue(cur.right);
+                    max = Math.Max(max, cur.val);
+                }
+                if (queue.Count == 0)
+                    return max;
+            }
+            return root.val;
+        }
+
+        //查找二叉树所有左子树中的最小节点
+        public int LeftValue(TreeNode root)
+        {
+            if (root.left == null && root.right == null)
+                return root.val;
+            int res = Math.Max(FindBottomLeftValueHelp(root.left, true), FindBottomLeftValueHelp(root.right, false));
+            return res == int.MinValue ? root.val : res;
+        }
+        public int LeftValueHelp(TreeNode root,bool left)
+        {
+            if (root == null)
+                return int.MinValue;
+            int max = Math.Max(FindBottomLeftValueHelp(root.left, true), FindBottomLeftValueHelp(root.right, false));
+            if (left)
+                return Math.Max(root.val, max);
+            else
+                return max;
+        }
+
+        //8. String to Integer (atoi)
+        public static int MyAtoi(string str)
+        {
+            str = str.Trim();
+            int len = str.Length;
+            Double res = 0;
+            if (len == 0)
+                return 0;
+            int end = -1;
+            int i = 0;
+            for (; i < len; i++)
+            {
+                if (i == 0 && (str[i] == '-' || str[i] == '+'))
+                {
+
+                }
+                else if(str[i] < '0' || str[i] > '9')
+                {
+                    end = i;
+                    break;
+                }
+            }
+            if (end == -1)
+            {
+                string ress = str.Substring(0, len);
+                double.TryParse(ress, out res);
+            }
+            else
+            {
+                string ress = str.Substring(0, end);
+                double.TryParse(ress, out res);
+            }
+            if (res > int.MaxValue)
+                return int.MaxValue;
+            if (res < int.MinValue)
+                return int.MinValue;
+            return (int)res;
+        }
+
         #endregion
 
         #region 20180129
