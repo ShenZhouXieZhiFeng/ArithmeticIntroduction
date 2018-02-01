@@ -297,9 +297,9 @@ namespace LeetCode
 
             //int[] A = { 1, 2 }, B = { -2, -1 }, C = { -1, 2 }, D = { 0, 2 };
             //int res = FourSumCount(A, B, C, D);
-            int res = MyAtoi("2147483648");
-
-            int a = int.Parse("-001");
+            //int res = MyAtoi("2147483648");
+            //int a = int.Parse("-001");
+            IsPerfectSquare(16);
 
             Console.ReadLine();
         }
@@ -727,6 +727,51 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180201
+
+        //367. Valid Perfect Square 一个数是否是另一个的数的平方
+        public static bool IsPerfectSquare(int num)
+        {
+            if (num < 1)
+                return false;
+
+            double x = 1;
+            double t = 1;
+            do
+            {
+                t = x;
+                x = 0.5 * (x + num / x);
+            } while (Math.Abs(x - t) > 0.00001);
+
+            return Math.Abs((int)x - x) < 0.00001;
+        }
+        public static bool IsPerfectSquare2(int num)
+        {
+            long l = 1;
+            long r = num;
+            long mid = (l + r) / 2;
+            long n = num;
+
+            if (num == 1)
+                return true;
+
+            while (l < r)
+            {
+                long t = mid * mid;
+                if (t < n)
+                    l = mid + 1;
+                else if (t > n)
+                    r = mid;
+                else if (t == n)
+                    return true;
+
+                mid = (l + r) / 2;
+            }
+            return false;
+        }
+
+        #endregion
+
         #region 20180131
 
         //513. Find Bottom Left Tree Value 查找最后一行中最左边的数
@@ -783,14 +828,14 @@ namespace LeetCode
         {
             if (root.left == null && root.right == null)
                 return root.val;
-            int res = Math.Max(FindBottomLeftValueHelp(root.left, true), FindBottomLeftValueHelp(root.right, false));
+            int res = Math.Max(LeftValueHelp(root.left, true), LeftValueHelp(root.right, false));
             return res == int.MinValue ? root.val : res;
         }
         public int LeftValueHelp(TreeNode root,bool left)
         {
             if (root == null)
                 return int.MinValue;
-            int max = Math.Max(FindBottomLeftValueHelp(root.left, true), FindBottomLeftValueHelp(root.right, false));
+            int max = Math.Max(LeftValueHelp(root.left, true), LeftValueHelp(root.right, false));
             if (left)
                 return Math.Max(root.val, max);
             else
