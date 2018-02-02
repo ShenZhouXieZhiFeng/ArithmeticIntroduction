@@ -299,7 +299,9 @@ namespace LeetCode
             //int res = FourSumCount(A, B, C, D);
             //int res = MyAtoi("2147483648");
             //int a = int.Parse("-001");
-            IsPerfectSquare(16);
+            //IsPerfectSquare(16);
+
+            var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
 
             Console.ReadLine();
         }
@@ -725,6 +727,53 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180202
+
+        //90. Subsets II
+        public static IList<IList<int>> SubsetsWithDup(int[] nums)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            Array.Sort(nums);
+            SubsetsWithDupHelp(nums, 0, new List<int>(), res);
+            return res;
+        }
+        public static void SubsetsWithDupHelp(int[] nums,int index,List<int> path,List<IList<int>> res)
+        {
+            res.Add(path);
+            for (int i = index; i < nums.Length; i++)
+            {
+                if (i > index && nums[i] == nums[i - 1])
+                    continue;
+                List<int> nPath = new List<int>(path);
+                nPath.Add(nums[i]);
+                SubsetsWithDupHelp(nums, i + 1, nPath, res);
+            }
+        }
+
+        //90. Subsets II 回溯
+        public static IList<IList<int>> SubsetsWithDup2(int[] nums)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            Array.Sort(nums);
+            SubsetsWithDup2Help(res, new List<int>(), nums, 0);
+            return res;
+        }
+        static void SubsetsWithDup2Help(List<IList<int>> list,IList<int> temp,int[] nums,int start)
+        {
+            list.Add(new List<int>(temp));
+
+            for (int i = start; i < nums.Length; i++)
+            {
+                if (i > start && nums[i] == nums[i - 1])
+                    continue;
+                temp.Add(nums[i]);
+                SubsetsWithDup2Help(list, temp, nums, i + 1);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
         #endregion
 
         #region 20180201
