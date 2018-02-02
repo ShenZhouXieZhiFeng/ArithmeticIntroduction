@@ -300,13 +300,39 @@ namespace LeetCode
             //int res = MyAtoi("2147483648");
             //int a = int.Parse("-001");
             //IsPerfectSquare(16);
+            //var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
 
-            var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
+            var res = combineNk(3, 2);
 
             Console.ReadLine();
         }
 
         #region 其他
+        #region 回溯法
+
+        //从1-n中选择k个数的组合 回溯
+        public static List<List<int>> combineNk(int n, int k)
+        {
+            List<List<int>> res = new List<List<int>>();
+            combineBackTracking(res, new List<int>(),1, n, k);
+            return res;
+        }
+        static void combineBackTracking(List<List<int>> res,List<int> temp,int start,int n,int k)
+        {
+            if (k == 0)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = start; i <= n; i++)
+            {
+                temp.Add(i);
+                combineBackTracking(res, temp, i + 1, n, k - 1);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
+        #endregion
         #region 递归问题
 
         //nums中是否存在子集，使得子集之和为target，动态规划
