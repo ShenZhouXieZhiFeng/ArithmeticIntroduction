@@ -301,8 +301,9 @@ namespace LeetCode
             //int a = int.Parse("-001");
             //IsPerfectSquare(16);
             //var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
+            //var res = combineNk(3, 2);
 
-            var res = combineNk(3, 2);
+
 
             Console.ReadLine();
         }
@@ -753,6 +754,62 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180203
+
+        //22. Generate Parentheses n组括号
+        public IList<string> GenerateParenthesis(int n)
+        {
+            List<string> res = new List<string>();
+            GenerateParenthesisHelp(res, "", 0, 0, n);
+            return res;
+        }
+        public void GenerateParenthesisHelp(List<string> res,string str,int open,int close,int max)
+        {
+            if (str.Length == max * 2)
+            {
+                res.Add(str);
+                return;
+            }
+            if (open < max)
+            {
+                GenerateParenthesisHelp(res, str + "(", open + 1, close, max);
+            }
+            if (close < open)
+            {
+                GenerateParenthesisHelp(res, str + ")", open, close + 1, max);
+            }
+        }
+
+        //526. Beautiful Arrangement
+        int arrCount = 0;
+        public int CountArrangement(int N)
+        {
+            if (N == 0) return 0;
+            CountArrangementHelp(N, 1, new int[N + 1]);
+            return arrCount;
+        }
+        void CountArrangementHelp(int N,int pos,int[] used)
+        {
+            if (pos > N)
+            {
+                arrCount++;
+                return;
+            }
+            for (int i = 1; i <= N; i++)
+            {
+                //回溯
+                //1-n中满足数被下标整除或者下标被数整除的组合
+                if (used[i] == 0 && (i % pos == 0 || pos % i == 0))
+                {
+                    used[i] = 1;
+                    CountArrangementHelp(N, pos + 1, used);
+                    used[i] = 0;
+                }
+            }
+        }
+
         #endregion
 
         #region 20180202
