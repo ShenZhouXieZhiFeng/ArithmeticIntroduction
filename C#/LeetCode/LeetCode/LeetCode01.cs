@@ -302,8 +302,9 @@ namespace LeetCode
             //IsPerfectSquare(16);
             //var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
             //var res = combineNk(3, 2);
+            //var res = combine3(3);
 
-            var res = combine3(3);
+            var res = Permute(new int[3] { 1, 2, 3 });
 
             Console.ReadLine();
         }
@@ -810,6 +811,81 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180204
+
+        public IList<IList<int>> Subsets2(int[] nums)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            res.Add(new List<int>());
+            foreach (int v in nums)
+            {
+                int cnt = res.Count;
+                for (int i = 0; i < cnt; i++)
+                {
+                    List<int> list = new List<int>(res[i]);
+                    list.Add(v);
+                    res.Add(list);
+                }
+            }
+            return res;
+        }
+
+        //78. Subsets 找出nums数组中所有的子集 包括空集
+        public IList<IList<int>> Subsets(int[] nums)
+        {
+            Array.Sort(nums);
+            List<IList<int>> res = new List<IList<int>>();
+            SubsetsHelp(res, new List<int>(), nums, 0);
+            return res;
+        }
+        static void SubsetsHelp(List<IList<int>> res,List<int> temp,int[] nums,int start)
+        {
+            res.Add(new List<int>(temp));
+            for (int i = start; i < nums.Length; i++)
+            {
+                if (i > start && nums[i] == nums[i - 1])
+                    continue;
+                temp.Add(nums[i]);
+                SubsetsHelp(res, temp, nums, i + 1);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
+        //46. Permutations 全排列 回溯法
+        public static IList<IList<int>> Permute(int[] nums)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            bool[] fs = new bool[nums.Length];
+            int[] temp = new int[nums.Length];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                fs[i] = false;
+                temp[i] = 0;
+            }
+            PermuteHelp(res, nums, temp, fs, 0);
+            return res;
+        }
+        static void PermuteHelp(List<IList<int>> res,int[] nums,int[] temp,bool[] fs,int dep)
+        {
+            if (dep >= nums.Length)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!fs[i])
+                {
+                    fs[i] = true;
+                    temp[dep] = nums[i];
+                    PermuteHelp(res, nums, temp, fs, dep + 1);
+                    fs[i] = false;
+                }
+            }
+        }
+
         #endregion
 
         #region 20180203
