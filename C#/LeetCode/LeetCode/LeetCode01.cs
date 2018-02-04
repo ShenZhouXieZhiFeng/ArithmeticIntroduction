@@ -303,13 +303,69 @@ namespace LeetCode
             //var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
             //var res = combineNk(3, 2);
 
-
+            var res = combine3(3);
 
             Console.ReadLine();
         }
 
         #region 其他
         #region 回溯法
+
+
+        //输出1-n的全排列
+        public static List<List<int>> combine3(int n)
+        {
+            List<List<int>> res = new List<List<int>>();
+            int[] temp = new int[n];
+            bool[] flag = new bool[n];
+            for (int i = 0; i < n; i++)
+            {
+                temp[i] = 0;
+                flag[i] = false;
+            }
+            combine3Help(res, temp, flag, 0);
+            return res;
+        }
+        static void combine3Help(List<List<int>> res,int[] temp,bool[] flag,int dep)
+        {
+            if (dep >= temp.Length)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = 0; i < temp.Length; i++)
+            {
+                if (!flag[i])
+                {
+                    flag[i] = true;
+                    temp[dep] = i + 1;
+                    combine3Help(res, temp, flag, dep + 1);
+                    flag[i] = false;
+                }
+            }
+        }
+
+        //输出1-n可能的所有组合，数字可重复
+        public static List<List<int>> combineN(int n)
+        {
+            List<List<int>> res = new List<List<int>>();
+            int[] temp = new int[n];
+            combineNHelp(res, temp, n, 0);
+            return res;
+        }
+        static void combineNHelp(List<List<int>> res, int[] temp, int n,int dep)
+        {
+            if (dep >= n)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = 1; i <= n; i++)
+            {
+                temp[dep] = i;
+                combineNHelp(res, temp, n, dep + 1);
+            }
+        }
 
         //从1-n中选择k个数的组合 回溯
         public static List<List<int>> combineNk(int n, int k)
