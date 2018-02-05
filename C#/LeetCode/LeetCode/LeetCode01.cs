@@ -303,8 +303,9 @@ namespace LeetCode
             //var res = SubsetsWithDup(new int[3] { 1, 2, 3 });
             //var res = combineNk(3, 2);
             //var res = combine3(3);
-
-            var res = Permute(new int[3] { 1, 2, 3 });
+            //var res = Permute(new int[3] { 1, 2, 3 });
+            //var res = Combine(4, 2);
+            var res = CombinationSum(new int[4] { 2, 3, 6, 7 }, 7);
 
             Console.ReadLine();
         }
@@ -811,6 +812,55 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180205
+
+        //39. Combination Sum
+        public static IList<IList<int>> CombinationSum(int[] candidates, int target)
+        {
+            Array.Sort(candidates);
+            List<IList<int>> res = new List<IList<int>>();
+            CombinationSumHelp(res, new List<int>(), candidates, target, 0);
+            return res;
+        }
+        static void CombinationSumHelp(List<IList<int>> res,List<int> temp,int[] nums,int target,int begin)
+        {
+            if (target == 0)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = begin; i < nums.Length && target >= nums[i]; i++)
+            {
+                temp.Add(nums[i]);
+                CombinationSumHelp(res, temp, nums, target - nums[i], i);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
+        //77. Combinations
+        public static IList<IList<int>> Combine(int n, int k)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            CombineHelp(res, new List<int>(), 1, n, k);
+            return res;
+        }
+        static void CombineHelp(List<IList<int>> res,List<int> temp,int start,int n,int k)
+        {
+            if (k == 0)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = start; i <= n; i++)
+            {
+                temp.Add(i);
+                CombineHelp(res, temp, i + 1, n, k - 1);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
         #endregion
 
         #region 20180204
