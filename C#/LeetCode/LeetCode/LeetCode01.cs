@@ -305,7 +305,9 @@ namespace LeetCode
             //var res = combine3(3);
             //var res = Permute(new int[3] { 1, 2, 3 });
             //var res = Combine(4, 2);
-            var res = CombinationSum(new int[4] { 2, 3, 6, 7 }, 7);
+            //var res = CombinationSum(new int[4] { 2, 3, 6, 7 }, 7);
+
+            var res = Partition("abba");
 
             Console.ReadLine();
         }
@@ -812,6 +814,69 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180206
+
+        //131. Palindrome Partitioning 查找字符串中所有可能的回文子chuang
+        public static IList<IList<string>> Partition(string s)
+        {
+            List<IList<string>> res = new List<IList<string>>();
+            PartitionHelp(res, new List<string>(), s, 0);
+            return res;
+        }
+        static void PartitionHelp(List<IList<string>> res,List<string> temp,string s,int pos)
+        {
+            if (pos == s.Length)
+            {
+                res.Add(new List<string>(temp));
+                return;
+            }
+            for (int i = pos; i < s.Length; i++)
+            {
+                if (IsPal(s, pos, i))
+                {
+                    temp.Add(s.Substring(pos, i - pos + 1));
+                    PartitionHelp(res, temp, s, i + 1);
+                    temp.RemoveAt(temp.Count - 1);
+                }
+            }
+        }
+        static bool IsPal(string s,int begin,int end)
+        {
+            while (begin < end)
+            {
+                if (s[begin++] != s[end--])
+                    return false;
+            }
+            return true;
+        }
+
+        //40. Combination Sum II
+        public IList<IList<int>> CombinationSum2(int[] candidates, int target)
+        {
+            Array.Sort(candidates);
+            List<IList<int>> res = new List<IList<int>>();
+            CombinationSum2Help(res, new List<int>(), candidates, target, 0);
+            return res;
+        }
+        static void CombinationSum2Help(List<IList<int>> res,List<int> temp,int[] nums,int target,int start)
+        {
+            if (target == 0)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = start; i < nums.Length && nums[i] <= target; i++)
+            {
+                if (i > start && nums[i] == nums[i - 1])
+                    continue;
+                temp.Add(nums[i]);
+                CombinationSum2Help(res, temp, nums, target - nums[i], i + 1);
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
         #endregion
 
         #region 20180205
