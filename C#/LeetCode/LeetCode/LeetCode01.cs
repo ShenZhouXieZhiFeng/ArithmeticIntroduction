@@ -307,7 +307,9 @@ namespace LeetCode
             //var res = Combine(4, 2);
             //var res = CombinationSum(new int[4] { 2, 3, 6, 7 }, 7);
 
-            var res = Partition("abba");
+            //var res = Partition("abba");
+            //combine2(new int[3] { 1, 2, 3 }, 0, 2);
+            PermuteUnique(new int[3] { 1, 2, 3 });
 
             Console.ReadLine();
         }
@@ -814,6 +816,37 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180207
+
+        //47. Permutations II
+        public static IList<IList<int>> PermuteUnique(int[] nums)
+        {
+            Array.Sort(nums);
+            List<IList<int>> res = new List<IList<int>>();
+            PermuteUniqueHelp(res, new List<int>(), new bool[nums.Length], nums);
+            return res;
+        }
+        static void PermuteUniqueHelp(List<IList<int>> res,List<int> temp,bool[] used,int[] nums)
+        {
+            if (temp.Count == nums.Length)
+            {
+                res.Add(new List<int>(temp));
+                return;
+            }
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (used[i]) continue;
+                if (i > 0 && nums[i - 1] == nums[i] && !used[i - 1]) continue;
+                used[i] = true;
+                temp.Add(nums[i]);
+                PermuteUniqueHelp(res, temp, used, nums);
+                used[i] = false;
+                temp.RemoveAt(temp.Count - 1);
+            }
+        }
+
         #endregion
 
         #region 20180206
