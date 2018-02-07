@@ -309,7 +309,8 @@ namespace LeetCode
 
             //var res = Partition("abba");
             //combine2(new int[3] { 1, 2, 3 }, 0, 2);
-            PermuteUnique(new int[3] { 1, 2, 3 });
+            //PermuteUnique(new int[3] { 1, 2, 3 });
+            
 
             Console.ReadLine();
         }
@@ -819,6 +820,68 @@ namespace LeetCode
         #endregion
 
         #region 20180207
+
+        //648. Replace Words
+        public string ReplaceWords(IList<string> dict, string sentence)
+        {
+            Dictionary<string, bool> dicts = new Dictionary<string, bool>();
+            HashSet<int> set = new HashSet<int>();
+            for (int i = 0; i < dict.Count; i++)
+            {
+                string str = dict[i];
+                if (!dicts.ContainsKey(str))
+                {
+                    dicts.Add(str, true);
+                    set.Add(str.Length);
+                }
+            }
+            string[] sens = sentence.Split(' ');
+            for (int i = 0; i < sens.Length; i++)
+            {
+                foreach (int len in set)
+                {
+                    if (sens[i].Length >= len)
+                    {
+                        string tmp = sens[i].Substring(0, len);
+                        if (dicts.ContainsKey(tmp))
+                        {
+                            sens[i] = tmp;
+                        }
+                    }
+                }
+            }
+            StringBuilder res = new StringBuilder();
+            for (int i = 0; i < sens.Length; i++)
+            {
+                if (i == 0)
+                {
+                    res.Append(sens[i]);
+                }
+                else
+                {
+                    res.Append(" " + sens[i]);
+                }
+            }
+            return res.ToString();
+        }
+
+        //771. Jewels and Stones
+        public int NumJewelsInStones(string J, string S)
+        {
+            Dictionary<char, int> dics = new Dictionary<char, int>();
+            for (int i = 0; i < J.Length; i++)
+            {
+                if (!dics.ContainsKey(J[i]))
+                    dics.Add(J[i], 1);
+            }
+            int res = 0;
+            for (int i = 0; i < S.Length; i++)
+            {
+                if (dics.ContainsKey(S[i])) 
+                    res++;
+            }
+            return res;
+        }
 
         //47. Permutations II
         public static IList<IList<int>> PermuteUnique(int[] nums)
