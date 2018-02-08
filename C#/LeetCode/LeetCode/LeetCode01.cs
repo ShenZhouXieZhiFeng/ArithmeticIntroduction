@@ -309,7 +309,9 @@ namespace LeetCode
             //var res = Partition("abba");
             //combine2(new int[3] { 1, 2, 3 }, 0, 2);
             //PermuteUnique(new int[3] { 1, 2, 3 });
-            var res = TopKFrequent(new int[6] { 1, 1, 1, 2, 2, 3 }, 2);
+            //var res = TopKFrequent(new int[6] { 1, 1, 1, 2, 2, 3 }, 2);
+            ListNode head = ListNode.CreateFromArrays(new int[1] { 1 });
+            var res = OddEvenList(head);
 
             Console.ReadLine();
         }
@@ -820,7 +822,84 @@ namespace LeetCode
 
         #region 20180208
 
+        //328. Odd Even Linked List
+        public static ListNode OddEvenList(ListNode head)
+        {
+            if (head == null)
+                return head;
+            ListNode l1 = null;
+            ListNode l1Tmp = null;
+            ListNode l2 = null;
+            ListNode l2Tmp = null;
+            while (head != null)
+            {
+                ListNode next = head.next;
+                if (head.val % 2 == 0)
+                {
+                    if (l1 == null)
+                    {
+                        l1 = head;
+                        l1Tmp = l1;
+                    }
+                    else
+                    {
+                        l1Tmp.next = head;
+                        l1Tmp = head;
+                    }
+                }
+                else
+                {
+                    if (l2 == null)
+                    {
+                        l2 = head;
+                        l2Tmp = l2;
+                    }
+                    else
+                    {
+                        l2Tmp.next = head;
+                        l2Tmp = head;
+                    }
+                }
+                head = next;
+            }
+            if (l2Tmp != null)
+            {
+                l2Tmp.next = null;
+            }
+            if (l1Tmp != null)
+            {
+                l1Tmp.next = null;
+            }
+            if (l1 != null && l2 != null)
+            {
+                l2Tmp.next = l1;
+            }
+            else if (l1 != null && l2 == null)
+            {
+                l2 = l1;
+            }
+            return l2;
+        }
 
+        //328. Odd Even Linked List  链表奇偶分离合并
+        public static ListNode OddEvenList2(ListNode head)
+        {
+            if (head == null)
+                return head;
+            ListNode odd = head;
+            ListNode even = head.next;
+            ListNode evenHead = even;
+
+            while (even != null && even.next != null)
+            {
+                odd.next = odd.next.next;
+                even.next = even.next.next;
+                odd = odd.next;
+                even = even.next;
+            }
+            odd.next = evenHead;
+            return head;
+        }
 
         //347. Top K Frequent Elements
         public static IList<int> TopKFrequent(int[] nums, int k)
