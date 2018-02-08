@@ -306,11 +306,10 @@ namespace LeetCode
             //var res = Permute(new int[3] { 1, 2, 3 });
             //var res = Combine(4, 2);
             //var res = CombinationSum(new int[4] { 2, 3, 6, 7 }, 7);
-
             //var res = Partition("abba");
             //combine2(new int[3] { 1, 2, 3 }, 0, 2);
             //PermuteUnique(new int[3] { 1, 2, 3 });
-            
+            var res = TopKFrequent(new int[6] { 1, 1, 1, 2, 2, 3 }, 2);
 
             Console.ReadLine();
         }
@@ -817,6 +816,44 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180208
+
+
+
+        //347. Top K Frequent Elements
+        public static IList<int> TopKFrequent(int[] nums, int k)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dict.ContainsKey(nums[i]))
+                    dict[nums[i]]++;
+                else
+                    dict.Add(nums[i], 1);
+            }
+            List<int>[] temp = new List<int>[nums.Length + 1];
+            foreach (int key in dict.Keys)
+            {
+                int freq = dict[key];
+                if (temp[freq] == null)
+                    temp[freq] = new List<int>();
+                temp[freq].Add(key);
+            }
+            List<int> res = new List<int>();
+            for (int i = temp.Length - 1; i > 0 && k > 0; i--)
+            {
+                if (temp[i] != null)
+                {
+                    List<int> list = temp[i];
+                    res.AddRange(list);
+                    k -= list.Count;
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180207
