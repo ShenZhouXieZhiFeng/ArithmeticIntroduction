@@ -824,7 +824,47 @@ namespace LeetCode
 
         #region 20180209
 
+        //109. Convert Sorted List to Binary Search Tree
+        public TreeNode SortedListToBST2(ListNode head)
+        {
+            if (head == null) return null;
+            ListNode slow = head, fast = head, slowPre = null;
+            while (fast.next != null && fast.next.next != null)
+            {
+                slowPre = slow;
+                slow = slow.next;
+                fast = fast.next.next;
+            }
 
+            if (slowPre != null) slowPre.next = null;
+            if (slow == null) return null;
+            TreeNode node = new TreeNode(slow.val);
+            if (head != slow) node.left = SortedListToBST2(head);
+            node.right = SortedListToBST2(slow.next);
+            return node;
+        }
+
+        //109. Convert Sorted List to Binary Search Tree
+        public TreeNode SortedListToBST(ListNode head)
+        {
+            if (head == null) return null;
+            return SortedListToBSTHelp(head, null);
+        }
+        static TreeNode SortedListToBSTHelp(ListNode head,ListNode tail)
+        {
+            ListNode slow = head;
+            ListNode fast = head;
+            if (head == tail) return null;
+            while (fast != tail && fast.next != tail)
+            {
+                fast = fast.next.next;//走两步
+                slow = slow.next;//走一步
+            }
+            TreeNode thead = new TreeNode(slow.val);
+            thead.left = SortedListToBSTHelp(head, slow);
+            thead.right = SortedListToBSTHelp(slow.next, tail);
+            return thead;
+        }
 
         //24. Swap Nodes in Pairs 迭代
         public static ListNode SwapPairs(ListNode head)
