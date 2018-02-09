@@ -310,8 +310,10 @@ namespace LeetCode
             //combine2(new int[3] { 1, 2, 3 }, 0, 2);
             //PermuteUnique(new int[3] { 1, 2, 3 });
             //var res = TopKFrequent(new int[6] { 1, 1, 1, 2, 2, 3 }, 2);
-            ListNode head = ListNode.CreateFromArrays(new int[1] { 1 });
-            var res = OddEvenList(head);
+            //ListNode head = ListNode.CreateFromArrays(new int[1] { 1 });
+            //var res = OddEvenList(head);
+            //ListNode head = ListNode.CreateFromArrays(new int[5] { 1, 2, 3, 4, 5 });
+            //var res = SwapPairs2(head);
 
             Console.ReadLine();
         }
@@ -818,6 +820,53 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180209
+
+
+
+        //24. Swap Nodes in Pairs 迭代
+        public static ListNode SwapPairs(ListNode head)
+        {
+            if (head == null)
+                return head;
+            ListNode t1 = head;
+            ListNode t2 = head.next;
+            if (t2 != null)
+            {
+                ListNode next = t2.next;
+                head = t2;
+                t2.next = t1;
+                t1.next = next;
+            }
+            while (t1.next != null && t1.next.next != null)
+            {
+                ListNode next1 = t1.next;
+                ListNode next2 = t1.next.next.next;
+                t1.next = t1.next.next;
+                t1.next.next = next1;
+                next1.next = next2;
+                t1 = next1;
+            }
+            return head;
+        }
+
+        ////24. Swap Nodes in Pairs 链表中两两节点互换 递归
+        public static ListNode SwapPairs2(ListNode head)
+        {
+            if (head == null || head.next == null)
+            {
+                return head;
+            }
+            var sec = head.next;
+            var third = sec.next;
+            sec.next = head;
+            head.next = SwapPairs2(third);
+
+            return sec;
+        }
+
         #endregion
 
         #region 20180208
