@@ -314,13 +314,57 @@ namespace LeetCode
             //var res = OddEvenList(head);
             //ListNode head = ListNode.CreateFromArrays(new int[5] { 1, 2, 3, 4, 5 });
             //var res = SwapPairs2(head);
-
-            var res = CountSubstrings2("aaa");
+            //var res = CountSubstrings2("aaa");
+            //TreeNode head = TreeNode.CreateTreeByArr(new int[6] { 1, 2, 3, 4, 5, 6 });
+            //depthTraverseTree(head);
+            //Console.WriteLine();
+            //widthTreverseTree(head);
 
             Console.ReadLine();
         }
 
         #region 其他
+        #region 树图
+
+        //树深度优先遍历
+        static void depthTraverseTree(TreeNode head)
+        {
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (head != null || stack.Count != 0)
+            {
+                while (head != null)
+                {
+                    Console.Write(head.val);
+                    stack.Push(head);
+                    head = head.left;
+                }
+                TreeNode tmp = stack.Pop();
+                if (tmp.right != null)
+                    head = tmp.right;
+            }
+        }
+
+        //树广度优先遍历
+        static void widthTreverseTree(TreeNode head)
+        {
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(head);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                for(int i = 0; i < count; i ++)
+                {
+                    TreeNode tmp = queue.Dequeue();
+                    Console.Write(tmp.val);
+                    if (tmp.left != null)
+                        queue.Enqueue(tmp.left);
+                    if (tmp.right != null)
+                        queue.Enqueue(tmp.right);
+                }
+            }
+        }
+
+        #endregion
         #region 回溯法
 
 
