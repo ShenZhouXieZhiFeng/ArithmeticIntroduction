@@ -315,6 +315,8 @@ namespace LeetCode
             //ListNode head = ListNode.CreateFromArrays(new int[5] { 1, 2, 3, 4, 5 });
             //var res = SwapPairs2(head);
 
+            var res = CountSubstrings2("aaa");
+
             Console.ReadLine();
         }
 
@@ -820,6 +822,62 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180210
+
+        //647. Palindromic Substrings 回文子串
+        public static int CountSubstrings2(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return 0;
+            int res = 0;
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                res += ExpandFromChar(s, i, i);
+                res += ExpandFromChar(s, i, i + 1);
+            }
+
+            return res;
+        }
+        static int ExpandFromChar(string s,int i,int j)
+        {
+            int count = 0;
+            //以当前节点向两边扩展
+            while(i >= 0 && j < s.Length && s[i] == s[j])
+            {
+                count++;
+                i--;
+                j++;
+            }
+            return count;
+        }
+
+        //647. Palindromic Substrings 回文子串
+        public static int CountSubstrings(string s)
+        {
+            int res = 0;
+            for (int i = s.Length - 1; i >= 0; i--)
+            {
+                for(int j = 0; j <= i; j++)
+                {
+                    if (CountSubstringsHelp(s, j, i))
+                        res++;
+                }
+            }
+            return res;
+        }
+        static bool CountSubstringsHelp(string s,int left,int right)
+        {
+            while (left < right)
+            {
+                if (s[left++] != s[right--])
+                    return false;
+            }
+            return true;
+        }
+
         #endregion
 
         #region 20180209
