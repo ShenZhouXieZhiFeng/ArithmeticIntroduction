@@ -8,7 +8,6 @@ namespace LeetCode
 {
     class LeetCode01
     {
-
         static void Main(string[] args)
         {
             #region old
@@ -319,6 +318,13 @@ namespace LeetCode
             //depthTraverseTree(head);
             //Console.WriteLine();
             //widthTreverseTree(head);
+
+            int[,] m = new int[3, 3] {
+                { 1,1,0},
+                { 1,1,0},
+                { 0,0,1}
+            };
+            var res = FindCircleNum(m);
 
             Console.ReadLine();
         }
@@ -866,6 +872,167 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180211
+
+        //287. Find the Duplicate Number 找到重复的元素(n2内)
+        public int FindDuplicate2(int[] nums)
+        {
+            if (nums == null || nums.Length <= 1)
+                return -1;
+            int slow = nums[0];
+            int fast = nums[nums[0]];
+            while (slow != fast)
+            {
+                slow = nums[slow];
+                fast = nums[nums[fast]];
+            }
+            fast = 0;
+            while (slow != fast)
+            {
+                slow = nums[slow];
+                fast = nums[fast];
+            }
+            return slow;
+        }
+
+        //287. Find the Duplicate Number
+        public int FindDuplicate(int[] nums)
+        {
+            if (nums == null)
+                return 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (nums[i] == nums[j])
+                        return nums[i];
+                }
+            }
+            return 0;
+        }
+
+        //337. House Robber III dfs 小偷3
+        public int Rob(TreeNode root)
+        {
+            int[] nums = tobHelp(root);
+            return Math.Max(nums[0], nums[1]);
+        }
+        static int[] tobHelp(TreeNode node)
+        {
+            if (node == null) return new int[2];
+            int[] left = tobHelp(node.left);
+            int[] right = tobHelp(node.right);
+            int[] res = new int[2];
+            res[0] = left[1] + right[1] + node.val;
+            res[1] = Math.Max(left[0], left[1]) + Math.Max(right[0], right[1]);
+            return res;
+        }
+
+        //337. House Robber III 递归 超时
+        public int Rob2(TreeNode root)
+        {
+            if (root == null) return 0;
+            int val = 0;
+            if (root.left != null)
+                val += Rob2(root.left.left) + Rob2(root.left.right);
+            if (root.right != null)
+                val += Rob2(root.right.left) + Rob2(root.right.right);
+            return Math.Max(val + root.val, Rob2(root.left) + Rob2(root.right));
+        }
+
+        //337. House Robber III 理解错误
+        public int Rob3(TreeNode root)
+        {
+            if(root == null)
+                return 0;
+            List<int> sums = new List<int>();
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                int tmp = 0;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode node = queue.Dequeue();
+                    tmp += node.val;
+                    if (node.left != null)
+                        queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
+                }
+                sums.Add(tmp);
+            }
+            return RobHelp(sums,sums.Count - 1);
+        }
+        static int RobHelp(List<int> sums,int index)
+        {
+            if (index == 0)
+                return sums[0];
+            if (index == 1)
+                return Math.Max(sums[0], sums[1]);
+            return Math.Max(sums[index] + RobHelp(sums, index - 2), RobHelp(sums, index - 1));
+        }
+
+        //547. Friend Circles dfs 朋友圈
+        public static int FindCircleNum2(int[,] M)
+        {
+            int[] visited = new int[M.GetLength(0)];
+            int count = 0;
+            for (int i = 0; i < M.GetLength(0); i++)
+            {
+                if (visited[i] == 0)
+                {
+                    FindCircleNum2Dfs(M, visited, i);
+                    count++;
+                }
+            }
+            return count;
+        }
+        static void FindCircleNum2Dfs(int[,] m,int[] visited,int i)
+        {
+            for (int j = 0; j < m.GetLength(0); j++)
+            {
+                if (m[i, j] == 1 && visited[j] == 0)
+                {
+                    visited[j] = 1;
+                    FindCircleNum2Dfs(m, visited, j);
+                }
+            }
+        }
+
+        //547. Friend Circles
+        public static int FindCircleNum(int[,] M)
+        {
+            if (M == null && M.Length == 0)
+                return 0;
+            int n = M.GetLength(0);
+            bool[] visited = new bool[n];
+            int count = 0;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (FindCircleNumHelp(M, i, visited) > 0)
+                    count++;
+            }
+            return count;
+        }
+        static int FindCircleNumHelp(int[,] m,int i,bool[] visited)
+        {
+            if (visited[i])
+                return 0;
+            visited[i] = true;
+            int count = 1;
+            for (int j = 0; j < visited.Length; j++)
+            {
+                if (i != j && m[i, j] == 1)
+                    count += FindCircleNumHelp(m, j, visited);
+            }
+            return count;
+        }
+
         #endregion
 
         #region 20180210
