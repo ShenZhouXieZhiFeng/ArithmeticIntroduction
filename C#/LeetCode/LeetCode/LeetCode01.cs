@@ -318,13 +318,13 @@ namespace LeetCode
             //depthTraverseTree(head);
             //Console.WriteLine();
             //widthTreverseTree(head);
-
-            int[,] m = new int[3, 3] {
-                { 1,1,0},
-                { 1,1,0},
-                { 0,0,1}
-            };
-            var res = FindCircleNum(m);
+            //int[,] m = new int[3, 3] {
+            //    { 1,1,0},
+            //    { 1,1,0},
+            //    { 0,0,1}
+            //};
+            //var res = FindCircleNum(m);
+            var res = FindTargetSumWays(new int[5] { 1, 1, 1, 1, 1 }, 3);
 
             Console.ReadLine();
         }
@@ -872,6 +872,82 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180212
+
+        //62. Unique Paths 机器人走棋盘，到对角的可能性数量
+        public int UniquePaths(int m, int n)
+        {
+            int[,] arr = new int[m, n];
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    arr[i, j] = 1;
+                }
+            }
+            for (int i = 1; i < m; i++)
+            {
+                for (int j = 1; j < n; j++)
+                {
+                    arr[i, j] = arr[i - 1, j] + arr[i, j - 1];
+                }
+            }
+            return arr[m - 1,n - 1];
+        }
+
+        //494. Target Sum +/-组合=S的个数
+        public static int FindTargetSumWays2(int[] nums, int S)
+        {
+            int sum = nums.Sum();
+            if (S > sum || S < -sum) return 0;
+            int[] dp = new int[2 * sum + 1];
+            dp[0 + sum] = 1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int[] next = new int[2 * sum + 1];
+                for (int j = 0; j < 2 * sum + 1; j++)
+                {
+                    if (dp[j] != 0)
+                    {
+                        next[j + nums[i]] += dp[j];
+                        next[j - nums[i]] += dp[j];
+                    }
+                }
+                dp = next;
+            }
+            return dp[sum + S];
+        }
+
+        //494. Target Sum 超时
+        public static int FindTargetSumWays(int[] nums, int S)
+        {
+            int count = 0;
+            if (nums == null || nums.Sum() < S)
+                return count;
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(nums[0]);
+            queue.Enqueue(-nums[0]);
+            for (int i = 1; i < nums.Length; i++)
+            {
+                int len = queue.Count;
+                for (int j = 0; j < len; j++)
+                {
+                    int t = queue.Dequeue();
+                    queue.Enqueue(t + nums[i]);
+                    queue.Enqueue(t - nums[i]);
+                }
+            }
+            int resLen = queue.Count;
+            for (int i = 0; i < resLen; i++)
+            {
+                if (queue.Dequeue() == S)
+                    count++;
+            }
+            return count;
+        }
+
         #endregion
 
         #region 20180211
