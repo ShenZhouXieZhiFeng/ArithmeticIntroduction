@@ -292,8 +292,6 @@ namespace LeetCode
 
             //ListNode root = ListNode.CreateFromArrays(new int[4] { 0,1,2,3 });
             //ListNode[] res = SplitListToParts(root, 3);
-            #endregion
-
             //int[] A = { 1, 2 }, B = { -2, -1 }, C = { -1, 2 }, D = { 0, 2 };
             //int res = FourSumCount(A, B, C, D);
             //int res = MyAtoi("2147483648");
@@ -326,6 +324,7 @@ namespace LeetCode
             //var res = FindCircleNum(m);
             //var res = FindTargetSumWays(new int[5] { 1, 1, 1, 1, 1 }, 3);
             //var res = DecodeString("100[leetcode]");
+            #endregion
 
             Console.ReadLine();
         }
@@ -880,7 +879,18 @@ namespace LeetCode
         //309. Best Time to Buy and Sell Stock with Cooldown
         public int MaxProfit(int[] prices)
         {
-
+            int sell = 0;
+            int prev_sell = 0;
+            int buy = int.MinValue;
+            int prev_buy;
+            for (int i = 0; i < prices.Length; i++)
+            {
+                prev_buy = buy;
+                buy = Math.Max(prev_sell - prices[i], prev_buy);
+                prev_sell = sell;
+                sell = Math.Max(prev_buy + prices[i], prev_sell);
+            }
+            return sell;
         }
 
         //102. Binary Tree Level Order Traversal
