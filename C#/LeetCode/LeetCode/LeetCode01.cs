@@ -324,7 +324,8 @@ namespace LeetCode
             //    { 0,0,1}
             //};
             //var res = FindCircleNum(m);
-            var res = FindTargetSumWays(new int[5] { 1, 1, 1, 1, 1 }, 3);
+            //var res = FindTargetSumWays(new int[5] { 1, 1, 1, 1, 1 }, 3);
+            //var res = DecodeString("100[leetcode]");
 
             Console.ReadLine();
         }
@@ -872,6 +873,88 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180213
+
+        //309. Best Time to Buy and Sell Stock with Cooldown
+        public int MaxProfit(int[] prices)
+        {
+
+        }
+
+        //102. Binary Tree Level Order Traversal
+        public IList<IList<int>> LevelOrder(TreeNode root)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            if (root == null)
+                return res;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                List<int> tmp = new List<int>();
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode node = queue.Dequeue();
+                    tmp.Add(node.val);
+                    if (node.left != null)
+                        queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
+                }
+                res.Add(tmp);
+            }
+            return res;
+        }
+
+        //394. Decode String s = "3[a]2[bc]", return "aaabcbc".
+        public static string DecodeString(string s)
+        {
+            if (string.IsNullOrEmpty(s))
+                return s;
+            string res = "";
+            Stack<int> countStack = new Stack<int>();
+            Stack<string> strStack = new Stack<string>();
+            int idx = 0;
+            while (idx < s.Length)
+            {
+                if (char.IsDigit(s[idx]))
+                {
+                    int count = 0;
+                    while (char.IsDigit(s[idx]))
+                    {
+                        count = 10 * count + (s[idx] - '0');
+                        idx++;
+                    }
+                    countStack.Push(count);
+                }
+                else if (s[idx] == '[')
+                {
+                    strStack.Push(res);
+                    res = "";
+                    idx++;
+                }
+                else if (s[idx] == ']')
+                {
+                    StringBuilder tmp = new StringBuilder(strStack.Pop());
+                    int repeat = countStack.Pop();
+                    for (int i = 0; i < repeat; i++)
+                    {
+                        tmp.Append(res);
+                    }
+                    res = tmp.ToString();
+                    idx++;
+                }
+                else
+                {
+                    res += s[idx++];
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180212
