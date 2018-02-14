@@ -326,6 +326,16 @@ namespace LeetCode
             //var res = DecodeString("100[leetcode]");
             #endregion
 
+            //int[,] ma = new int[,] {
+            //    { 1,2,3},
+            //    { 4,5,6},
+            //    { 7,8,9}
+            //};
+            //Rotate(ma);
+
+            int[] nums = new int[2] { 1,0 };
+            SortColors(nums);
+
             Console.ReadLine();
         }
 
@@ -872,6 +882,97 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180214
+
+        //75. Sort Colors (2,0,1,0,1)=>(0,0,1,1,2)
+        public static void SortColors(int[] nums)
+        {
+            if (nums == null || nums.Length < 2) return;
+            int low = 0;
+            int high = nums.Length - 1;
+            for (int i = low; i <= high;)
+            {
+                if (nums[i] == 0)
+                {
+                    int tmp = nums[i];
+                    nums[i] = nums[low];
+                    nums[low] = tmp;
+                    i++; low++;
+                }
+                else if (nums[i] == 2)
+                {
+                    int tmp = nums[i];
+                    nums[i] = nums[high];
+                    nums[high] = tmp;
+                    high--;
+                }
+                else i++;
+            }
+        }
+
+        //48. Rotate Image
+        public static void Rotate(int[,] matrix)
+        {
+            int len = matrix.GetLength(0);
+            for (int i = 0; i < len; i++)
+            {
+                for (int j = 0; j < len / 2; j++)
+                {
+                    int tmp = matrix[j, i];
+                    matrix[j, i] = matrix[len - j - 1, i];
+                    matrix[len - j - 1, i] = tmp;
+                }
+            }
+            for (int i = 0; i < len; i++)
+            {
+                for (int j = i + 1; j < len; j++)
+                {
+                    int tmp = matrix[i, j];
+                    matrix[i, j] = matrix[j, i];
+                    matrix[j, i] = tmp;
+                }
+            }
+        }
+
+        //旋转矩阵
+        public static void Rotate2(int[,] matrix)
+        {
+            int x = 0;
+            int y = matrix.GetLength(0) - 1;
+            while (x < y)
+            {
+                for (int i = 0; i < y - x; i++)
+                {
+                    int tmp = matrix[x, x + i];
+                    matrix[x, x + i] = matrix[y - i, x];
+                    matrix[y - i, x] = matrix[y, y - i];
+                    matrix[y, y - i] = matrix[x + i, y];
+                    matrix[x + i, y] = tmp;
+                }
+                x++;
+                y--;
+            }
+        }
+
+        //96. Unique Binary Search Trees
+        public int NumTrees(int n)
+        {
+            //dp(n) = f(1,n) + f(2,n) +...+f(n,n)
+            //f(i,n) = dp(i-1) * dp(n-i)
+            int[] dp = new int[n + 1];
+            dp[0] = dp[1] = 1;
+            for (int i = 2; i <= n; i++)
+            {
+                for (int j = 1; j <= i; j++)
+                {
+                    dp[i] += dp[j - 1] * dp[i - j];
+                }
+            }
+            return dp[n];
+        }
+
         #endregion
 
         #region 20180213
@@ -2473,7 +2574,7 @@ namespace LeetCode
         #region 20180118
 
         //122. Best Time to Buy and Sell Stock II
-        public int MaxProfit(int[] prices)
+        public int MaxProfit2(int[] prices)
         {
             int total = 0;
             for (int i = 0; i < prices.Length - 1; i++)
@@ -2483,7 +2584,7 @@ namespace LeetCode
             }
             return total;
         }
-        public int MaxProfit2(int[] prices)
+        public int MaxProfit3(int[] prices)
         {
             if (prices.Length == 0)
                 return 0;
@@ -5976,7 +6077,7 @@ namespace LeetCode
 
         //Say you have an array for which the ith element is the price of a given stock on day i.
         //If you were only permitted to complete at most one transaction(ie, buy one and sell one share of the stock), design an algorithm to find the maximum profit.
-        public static int MaxProfit3(int[] prices)
+        public static int MaxProfit4(int[] prices)
         {
             if (prices == null || prices.Length == 0)
                 return 0;
