@@ -332,9 +332,10 @@ namespace LeetCode
             //    { 7,8,9}
             //};
             //Rotate(ma);
+            //int[] nums = new int[2] { 1,0 };
+            //SortColors(nums);
 
-            int[] nums = new int[2] { 1,0 };
-            SortColors(nums);
+            var res = GroupAnagrams(new string[3] { "", "", "a" });
 
             Console.ReadLine();
         }
@@ -882,6 +883,91 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180215
+
+        //49. Group Anagrams
+        public static IList<IList<string>> GroupAnagrams2(string[] strs)
+        {
+            if (strs == null || strs.Length == 0)
+                return new List<IList<string>>();
+            Dictionary<string, List<string>> map = new Dictionary<string, List<string>>();
+            foreach(string str in strs)
+            {
+                char[] ca = str.ToCharArray();
+                Array.Sort(ca);
+                string keyStr = new string(ca);
+                if (!map.ContainsKey(keyStr))
+                    map.Add(keyStr, new List<string>());
+                map[keyStr].Add(str);
+            }
+            return new List<IList<string>>(map.Values);
+        }
+
+        //49. Group Anagrams 错误
+        public static IList<IList<string>> GroupAnagrams(string[] strs)
+        {
+            List<IList<string>> res = new List<IList<string>>();
+            List<List<int>> ht = new List<List<int>>();
+            foreach (string str in strs)
+            {
+                List<int> temp = new List<int>();
+                int len = str.Length;
+                if (len == 0)
+                {
+                    if (res.Count != 0 && res[0][0] == "")
+                    {
+                        res[0].Add("");
+                    }else
+                    {
+                        res.Insert(0, new List<string>() { str });
+                        ht.Insert(0, new List<int>());
+                    }
+                }
+                for (int i = 0; i < len; i++)
+                {
+                    temp.Add(str[i]);
+                }
+                bool con = false;
+                int index = -1;
+                if (temp.Count != 0)
+                {
+                    for (int i = 0; i < ht.Count; i++)
+                    {
+                        if (ht[i].Count == temp.Count && ht[i].Sum() == temp.Sum())
+                        {
+                            for (int j = 0; j < temp.Count; j++)
+                            {
+                                if (!ht[i].Contains(temp[j]))
+                                {
+                                    break;
+                                }
+                                if (j == temp.Count - 1)
+                                {
+                                    con = true;
+                                    index = i;
+                                    break;
+                                }
+                            }
+                        }
+                        if (con)
+                            break;
+                    }
+                }
+                if (con)
+                {
+                    res[index].Add(str);
+                }
+                else if(len != 0)
+                {
+                    res.Add(new List<string>() { str });
+                    ht.Add(temp);
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180214
