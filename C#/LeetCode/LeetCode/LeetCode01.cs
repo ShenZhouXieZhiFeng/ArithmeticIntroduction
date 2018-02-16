@@ -335,7 +335,9 @@ namespace LeetCode
             //int[] nums = new int[2] { 1,0 };
             //SortColors(nums);
 
-            var res = GroupAnagrams(new string[3] { "", "", "a" });
+            //var res = GroupAnagrams(new string[3] { "", "", "a" });
+
+            var res = NumSquares(12);
 
             Console.ReadLine();
         }
@@ -883,6 +885,31 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180216
+
+        //279. Perfect Squares dp 1 4 9 16
+        public static int NumSquares(int n)
+        {
+            if (n <= 0)
+                return 0;
+            int[] temp = new int[n + 1];
+            temp[0] = 0;
+            for (int i = 1; i < temp.Length; i++)
+            {
+                temp[i] = int.MaxValue;
+            }
+            for (int i = 1; i <= n; i++)
+            {
+                for (int j = 1; j * j <= i; j++)
+                {
+                    temp[i] = Math.Min(temp[i], temp[i - j * j] + 1);
+                }
+            }
+            return temp[n];
+        }
+
         #endregion
 
         #region 20180215
