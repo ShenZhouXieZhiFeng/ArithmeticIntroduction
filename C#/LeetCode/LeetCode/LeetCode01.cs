@@ -887,7 +887,44 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180217
+
+        //215. Kth Largest Element in an Array
+        public int FindKthLargest(int[] nums, int k)
+        {
+            int n = nums.Length;
+            int p = FindKthLargestHelp(nums, 0, n - 1, n - k + 1);
+            return nums[p];
+        }
+        int FindKthLargestHelp(int[] a,int lo,int hi,int k)
+        {
+            int i = lo;
+            int j = hi;
+            int pivot = a[hi];
+            while (i < j)
+            {
+                if (a[i++] > pivot)
+                {
+                    FindKthLargestSwap(a, --i, --j);
+                }
+            }
+            FindKthLargestSwap(a, i, hi);
+            int mid = i - lo + 1;
+            if (mid == k) return i;
+            else if (mid > k) return FindKthLargestHelp(a, lo, i - 1, k);
+            else return FindKthLargestHelp(a, i + 1, hi, k - mid);
+        }
+        void FindKthLargestSwap(int[] nums,int i,int j)
+        {
+            int tmp = nums[i];
+            nums[i] = nums[j];
+            nums[j] = tmp;
+        }
+
+        #endregion
+
         #region 20180216
+
 
         //279. Perfect Squares dp 1 4 9 16
         public static int NumSquares(int n)
