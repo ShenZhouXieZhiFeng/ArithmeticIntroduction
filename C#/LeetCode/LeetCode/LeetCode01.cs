@@ -337,7 +337,8 @@ namespace LeetCode
 
             //var res = GroupAnagrams(new string[3] { "", "", "a" });
 
-            var res = NumSquares(12);
+            //var res = NumSquares(12);
+            var res = SubarraySum(new int[3] { 1, 1, 1 }, 2);
 
             Console.ReadLine();
         }
@@ -885,6 +886,49 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180218
+
+        //560. Subarray Sum Equals K
+        public static int SubarraySum2(int[] nums, int k)
+        {
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            dict[0] = 1;
+            int sum = 0;
+            int res = 0;
+            foreach (int v in nums)
+            {
+                int cnt;
+                sum += v;
+                dict.TryGetValue(sum - k, out cnt);
+                res += cnt;
+                dict.TryGetValue(sum, out cnt);
+                dict[sum] = cnt + 1;
+            }
+            return res;
+        }
+
+        //560. Subarray Sum Equals K 暴力解法
+        public static int SubarraySum(int[] nums, int k)
+        {
+            int count = 0;
+
+            int sum = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                sum = 0;
+                for (int j = i; j < nums.Length; j++)
+                {
+                    sum += nums[j];
+                    if (sum == k)
+                        count++;
+                }
+            }
+
+            return count;
+        }
+
         #endregion
 
         #region 20180217
