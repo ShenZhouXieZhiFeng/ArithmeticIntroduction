@@ -888,6 +888,31 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180219
+
+        //532. 逆序对
+        public int reversePairs(int[] A)
+        {
+            int count = 0;
+            if (A == null || A.Length == 0)
+                return count;
+
+            for (int i = 0; i < A.Length; i++)
+            {
+                for (int j = i + i; j < A.Length; j++)
+                {
+                    if (A[j] < A[i])
+                    {
+                        count++;
+                    }
+                }
+            }
+
+            return count;
+        }
+
+        #endregion
+
         #region 20180218
 
         //560. Subarray Sum Equals K
