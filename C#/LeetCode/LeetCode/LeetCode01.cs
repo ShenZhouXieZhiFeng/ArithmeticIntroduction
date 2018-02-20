@@ -334,11 +334,18 @@ namespace LeetCode
             //Rotate(ma);
             //int[] nums = new int[2] { 1,0 };
             //SortColors(nums);
-
             //var res = GroupAnagrams(new string[3] { "", "", "a" });
-
             //var res = NumSquares(12);
-            var res = SubarraySum(new int[3] { 1, 1, 1 }, 2);
+            //var res = SubarraySum(new int[3] { 1, 1, 1 }, 2);
+
+            int[,] ma = new int[,] {
+                {1,4,7,11,15 },
+                { 2,5,8,12,19},
+                { 3,6,9,16,22},
+                { 10,13,14,17,24},
+                { 18,21,23,26,30}
+            };
+            var res = SearchMatrix2(ma, 5);
 
             Console.ReadLine();
         }
@@ -886,6 +893,54 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180220
+
+        ///240. Search a 2D Matrix II
+        public static bool SearchMatrix2(int[,] matrix, int target)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+
+            int row = m - 1;
+            int col = 0;
+            while (row >= 0 && col <= (n - 1))
+            {
+                int tmp = matrix[row, col];
+                if (tmp == target)
+                {
+                    return true;
+                }
+                else if (tmp > target)
+                {
+                    row--;
+                }
+                else
+                {
+                    col++;
+                }
+            }
+            return false;
+        }
+
+        //240. Search a 2D Matrix II
+        public static bool SearchMatrix(int[,] matrix, int target)
+        {
+            int m = matrix.GetLength(0);
+            int n = matrix.GetLength(1);
+
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (matrix[i, j] == target)
+                        return true;
+                }
+            }
+            return false;
+        }
+
         #endregion
 
         #region 20180219
