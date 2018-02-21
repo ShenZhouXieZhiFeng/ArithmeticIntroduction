@@ -337,15 +337,15 @@ namespace LeetCode
             //var res = GroupAnagrams(new string[3] { "", "", "a" });
             //var res = NumSquares(12);
             //var res = SubarraySum(new int[3] { 1, 1, 1 }, 2);
-
-            int[,] ma = new int[,] {
-                {1,4,7,11,15 },
-                { 2,5,8,12,19},
-                { 3,6,9,16,22},
-                { 10,13,14,17,24},
-                { 18,21,23,26,30}
-            };
-            var res = SearchMatrix2(ma, 5);
+            //int[,] ma = new int[,] {
+            //    {1,4,7,11,15 },
+            //    { 2,5,8,12,19},
+            //    { 3,6,9,16,22},
+            //    { 10,13,14,17,24},
+            //    { 18,21,23,26,30}
+            //};
+            //var res = SearchMatrix2(ma, 5);
+            var res = CanPartition(new int[4] { 1, 2, 3, 8 });
 
             Console.ReadLine();
         }
@@ -893,6 +893,32 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180221
+
+        //416. Partition Equal Subset Sum
+        public static bool CanPartition(int[] nums)
+        {
+            if (nums == null || nums.Length < 2)
+                return false;
+            int sum = nums.Sum();
+            if (sum % 2 != 0)//如果满足条件，那么原数组必定可以被2整除
+                return false;
+            int half = nums.Sum() / 2;//题目变成是否存在一个子集，和为half
+            bool[] dp = new bool[half + 1];
+            dp[0] = true;
+            foreach (int num in nums)
+            {
+                for (int i = half; i >= num; i--)
+                {
+                    if (dp[i - num])
+                        dp[i] = true;
+                }
+            }
+            return dp[half];
+        }
+
         #endregion
 
         #region 20180220
