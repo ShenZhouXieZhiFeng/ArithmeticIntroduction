@@ -345,7 +345,8 @@ namespace LeetCode
             //    { 18,21,23,26,30}
             //};
             //var res = SearchMatrix2(ma, 5);
-            var res = CanPartition(new int[4] { 1, 2, 3, 8 });
+            //var res = CanPartition(new int[4] { 3, 2, 3, 8 });
+            var res = LengthOfLIS(new int[] { 1, 3, 2 });
 
             Console.ReadLine();
         }
@@ -895,6 +896,39 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180222
+
+        //200. Number of Islands
+        public int NumIslands(char[,] grid)
+        {
+
+        }
+
+        //300. Longest Increasing Subsequence 最长递增子序列
+        public static int LengthOfLIS(int[] nums)
+        {
+            if (nums == null || nums.Length == 0)
+                return 0;
+            int[] dp = new int[nums.Length];
+            for (int i = 0; i < dp.Length; i++)
+            {
+                dp[i] = 1;
+            }
+            int max = 1;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < i; j++)
+                {
+                    if (nums[j] < nums[i])
+                        dp[i] = Math.Max(dp[i], dp[j] + 1);
+                }
+                max = Math.Max(max, dp[i]);
+            }
+            return max;
+        }
+
+        #endregion
+
         #region 20180221
 
         //416. Partition Equal Subset Sum
@@ -905,13 +939,14 @@ namespace LeetCode
             int sum = nums.Sum();
             if (sum % 2 != 0)//如果满足条件，那么原数组必定可以被2整除
                 return false;
-            int half = nums.Sum() / 2;//题目变成是否存在一个子集，和为half
+            int half = nums.Sum() / 2;//题目变成是否存在一个子集，其和为half
             bool[] dp = new bool[half + 1];
             dp[0] = true;
             foreach (int num in nums)
             {
                 for (int i = half; i >= num; i--)
                 {
+                    //dp[i] = dp[i]||dp[i-num]
                     if (dp[i - num])
                         dp[i] = true;
                 }
