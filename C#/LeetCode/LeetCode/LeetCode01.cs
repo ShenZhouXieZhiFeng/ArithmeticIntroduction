@@ -898,10 +898,92 @@ namespace LeetCode
 
         #region 20180222
 
-        //200. Number of Islands
-        public int NumIslands(char[,] grid)
+        //200. Number of Islands 递归
+        public static int NumIslands2(char[,] grid)
         {
+            int count = 0;
+            for (int i = 0; i < grid.GetLength(0); i++)
+            {
+                for (int j = 0; j < grid.GetLength(1); j++)
+                {
+                    if (grid[i, j] == '1')
+                    {
+                        NumIslands2Search(grid, i, j);
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+        static void NumIslands2Search(char[,] grid,int x,int y)
+        {
+            if (x < 0 | x >= grid.GetLength(0) 
+                || y < 0 || y >= grid.GetLength(1)
+                || grid[x,y] != '1')
+            {
+                return;
+            }
+            grid[x, y] = '0';
+            NumIslands2Search(grid, x - 1, y);
+            NumIslands2Search(grid, x + 1, y);
+            NumIslands2Search(grid, x, y - 1);
+            NumIslands2Search(grid, x, y + 1);
+        }
 
+        //200. Number of Islands 超时
+        public static int NumIslands(char[,] grid)
+        {
+            if (grid == null)
+                return 0;
+            int count = 0;
+            int m = grid.GetLength(0);
+            int n = grid.GetLength(1);
+            for (int i = 0; i < m; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (grid[i, j] == '1')
+                    {
+                        NumIslandsDfs(grid, i, j, m, n);
+                        count++;
+                    }
+                }
+            }
+            return count;
+        }
+        static void NumIslandsDfs(char[,] grid,int i, int j,int m,int n)
+        {
+            Stack<int[]> stack = new Stack<int[]>();
+            stack.Push(new int[] { i, j });
+            while (stack.Count != 0)
+            {
+                int[] cur = stack.Peek();
+                int x = cur[0], y = cur[1];
+                if (x > 0 && grid[x - 1, y] == '1')
+                {
+                    grid[x - 1, y] = '0';
+                    stack.Push(new int[] { x - 1, y });
+                    continue;
+                }
+                if (x < m - 1 && grid[x + 1, y] == '1')
+                {
+                    grid[x + 1, y] = '0';
+                    stack.Push(new int[] { x + 1, y });
+                    continue;
+                }
+                if (y > 0 && grid[x, y - 1] == '1')
+                {
+                    grid[x, y - 1] = '0';
+                    stack.Push(new int[] { x, y - 1 });
+                    continue;
+                }
+                if (y < n - 1 && grid[x, y + 1] == '1')
+                {
+                    grid[x, y + 1] = '0';
+                    stack.Push(new int[] { x, y + 1 });
+                    continue;
+                }
+            }
         }
 
         //300. Longest Increasing Subsequence 最长递增子序列
