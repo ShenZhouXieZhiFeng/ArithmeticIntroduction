@@ -346,7 +346,9 @@ namespace LeetCode
             //};
             //var res = SearchMatrix2(ma, 5);
             //var res = CanPartition(new int[4] { 3, 2, 3, 8 });
-            var res = LengthOfLIS(new int[] { 1, 3, 2 });
+            //var res = LengthOfLIS(new int[] { 1, 3, 2 });
+
+            var res = RemoveInvalidParentheses("()())()");
 
             Console.ReadLine();
         }
@@ -896,6 +898,60 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180223
+
+
+        //301. Remove Invalid Parentheses dfs ####
+        public static IList<string> RemoveInvalidParentheses(string s)
+        {
+            int rml = 0, rmr = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                if (s[i] == '(')
+                {
+                    rml++;
+                }
+                else if (s[i] == ')')
+                {
+                    if (rml != 0)
+                        rml--;
+                    else
+                        rmr++;
+                }
+            }
+            List<string> res = new List<string>();
+            RemoveInvalidParenthesesHelp(s, 0, res, new StringBuilder(), rml, rmr, 0);
+            return res;
+        }
+        static void RemoveInvalidParenthesesHelp(string s,int i,List<string> res,StringBuilder sb,int rml,int rmr,int open)
+        {
+            if (rml < 0 || rmr < 0 || open < 0)
+                return;
+            if (i == s.Length)
+            {
+                if (rml == 0 && rmr == 0 && open == 0 && !res.Contains(sb.ToString()))
+                    res.Add(sb.ToString());
+                return;
+            }
+            char c = s[i];
+            int len = sb.Length;
+            if (c == '(')
+            {
+                RemoveInvalidParenthesesHelp(s, i + 1, res, sb, rml - 1, rmr, open);
+                RemoveInvalidParenthesesHelp(s, i + 1, res, sb.Append(c), rml, rmr, open + 1);
+            }
+            else if (c == ')')
+            {
+                RemoveInvalidParenthesesHelp(s, i + 1, res, sb, rml, rmr - 1, open);
+                RemoveInvalidParenthesesHelp(s, i + 1, res, sb.Append(c), rml, rmr, open - 1);
+            }
+            else
+                RemoveInvalidParenthesesHelp(s, i + 1, res, sb.Append(c), rml, rmr, open);
+            sb.Length = len;
+        }
+
+        #endregion
+
         #region 20180222
 
         //200. Number of Islands 递归
@@ -930,7 +986,7 @@ namespace LeetCode
             NumIslands2Search(grid, x, y + 1);
         }
 
-        //200. Number of Islands 超时
+        //200. Number of Islands dfs 超时
         public static int NumIslands(char[,] grid)
         {
             if (grid == null)
