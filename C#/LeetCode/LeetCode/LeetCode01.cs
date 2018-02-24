@@ -348,7 +348,11 @@ namespace LeetCode
             //var res = CanPartition(new int[4] { 3, 2, 3, 8 });
             //var res = LengthOfLIS(new int[] { 1, 3, 2 });
 
-            var res = RemoveInvalidParentheses("()())()");
+            //var res = RemoveInvalidParentheses("()())()");
+
+            TreeNode head = TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5 });
+            //var res = RightSideView(head);
+            SumNumbers(head);
 
             Console.ReadLine();
         }
@@ -896,6 +900,52 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180224
+
+        //129. Sum Root to Leaf Numbers 
+        public static int SumNumbers(TreeNode root)
+        {
+            return SumNumbersHelp(root, 0);
+        }
+        static int SumNumbersHelp(TreeNode node,int s)
+        {
+            if (node == null)
+                return 0;
+            if (node.right == null && node.left == null)
+                return s * 10 + node.val;
+            return SumNumbersHelp(node.left, s * 10 + node.val)
+                + SumNumbersHelp(node.right, s * 10 + node.val);
+        }
+
+        //199. Binary Tree Right Side View
+        public static IList<int> RightSideView(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            if (root == null)
+                return res;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                for (int i = 0; i < count; i++)
+                {
+                    TreeNode node = queue.Dequeue();
+                    if (i == (count - 1))
+                    {
+                        res.Add(node.val);
+                    }
+                    if (node.left != null)
+                        queue.Enqueue(node.left);
+                    if (node.right != null)
+                        queue.Enqueue(node.right);
+                }
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180223
