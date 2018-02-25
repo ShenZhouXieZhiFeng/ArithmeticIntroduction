@@ -902,6 +902,60 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180225
+
+        //86. Partition List
+        public ListNode Partition(ListNode head, int x)
+        {
+            if (head == null)
+                return head;
+            ListNode t1 = new ListNode(0);
+            ListNode t2 = new ListNode(0);
+            ListNode p1 = t1;
+            ListNode p2 = t2;
+            while (head != null)
+            {
+                if (head.val < x)
+                {
+                    p1 = p1.next = head;
+                }
+                else
+                {
+                    p2 = p2.next = head;
+                }
+                head = head.next;
+            }
+            p2.next = null;
+            p1.next = t2.next;
+            return t1.next;
+        }
+
+        //147. Insertion Sort List
+        public ListNode InsertionSortList(ListNode head)
+        {
+            if (head == null)
+                return head;
+            ListNode helper = new ListNode(0);
+            ListNode cur = head;
+            ListNode pre = helper;
+            ListNode next = null;
+            while (cur != null)
+            {
+                next = cur.next;
+                while (pre.next != null && pre.next.val < cur.val)
+                {
+                    pre = pre.next;
+                }
+                cur.next = pre.next;
+                pre.next = cur;
+                pre = helper;
+                cur = next;
+            }
+            return helper.next;
+        }
+
+        #endregion
+
         #region 20180224
 
         //129. Sum Root to Leaf Numbers 
