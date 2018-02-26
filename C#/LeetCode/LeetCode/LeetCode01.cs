@@ -350,9 +350,11 @@ namespace LeetCode
 
             //var res = RemoveInvalidParentheses("()())()");
 
-            TreeNode head = TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5 });
-            //var res = RightSideView(head);
-            SumNumbers(head);
+            //TreeNode head = TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5 });
+            ////var res = RightSideView(head);
+            //SumNumbers(head);
+            int[] nums = new int[] { 2, 4, 1, 6, 5, 3 };
+            paixu2(nums);
 
             Console.ReadLine();
         }
@@ -900,6 +902,67 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180226
+
+        //简单选择排序,从小到大
+        static void paixu1(int[] nums)
+        {
+            for (int i = 0; i < nums.Length -1; i++)
+            {
+                int min = i;//将未排序的数据中的最小值进行记录
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (nums[j] < nums[min])
+                        min = j;
+                }
+                if (min != i)
+                {
+                    int t = nums[min];
+                    nums[min] = nums[i];
+                    nums[i] = t;
+                }
+            }
+        }
+
+        //插入排序
+        static void paixu2(int[] nums)
+        {
+            for (int i = 1; i < nums.Length; i++)
+            {
+                int j = i;
+                while (j > 0 && nums[j] < nums[j - 1])
+                {
+                    int t = nums[j];
+                    nums[j] = nums[j - 1];
+                    nums[j - 1] = t;
+                    j--;
+                }
+            }
+        }
+
+        //冒泡排序
+        static void paixu3(int[] nums)
+        {
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                bool flag = true;
+                for (int j = 0; j < nums.Length - i - 1; j++)
+                {
+                    if (nums[j] > nums[j + 1])
+                    {
+                        int t = nums[j];
+                        nums[j] = nums[j + 1];
+                        nums[j + 1] = t;
+                        flag = false;
+                    }
+                }
+                if (flag)
+                    break;
+            }
+        }
+
         #endregion
 
         #region 20180225
