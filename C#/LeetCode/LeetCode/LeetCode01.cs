@@ -353,8 +353,11 @@ namespace LeetCode
             //TreeNode head = TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5 });
             ////var res = RightSideView(head);
             //SumNumbers(head);
-            int[] nums = new int[] { 2, 4, 1, 6, 5, 3 };
-            paixu2(nums);
+            //int[] nums = new int[] { 2, 4, 1, 6, 5, 3 };
+            //paixu2(nums);
+            //var res = FindLongestWord("bab", new List<string>() { "ba", "ab", "a", "b" });
+
+            var res = SortList(ListNode.CreateFromArrays(new int[] { 1, 4, 5, 2, 3 }));
 
             Console.ReadLine();
         }
@@ -905,6 +908,128 @@ namespace LeetCode
         #endregion
 
         #region 20180226
+
+        //148. Sort List 归并
+        public static ListNode SortList(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return head;
+            ListNode middle = getMiddleOhList(head);
+            ListNode next = middle.next;
+            middle.next = null;
+            return mergeTowList(SortList(head), SortList(next));
+        }
+        static ListNode getMiddleOhList(ListNode head)
+        {
+            ListNode slow = head;
+            ListNode fast = head;
+            while (fast.next != null && fast.next.next != null)
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+            return slow;
+        }
+        static ListNode mergeTowList(ListNode headA,ListNode headB)
+        {
+            ListNode fakeNode = new ListNode(-1);
+            ListNode cur = fakeNode;
+            while (headA != null && headB != null)
+            {
+                if (headA.val < headB.val)
+                {
+                    cur.next = headA;
+                    headA = headA.next;
+                }
+                else
+                {
+                    cur.next = headB;
+                    headB = headB.next;
+                }
+                cur = cur.next;
+            }
+            cur.next = headA == null ? headB : headA;
+            return fakeNode.next;
+        }
+
+        //524. Longest Word in Dictionary through Deleting
+        public static string FindLongestWord2(string s, IList<string> d)
+        {
+            foreach (string x in d.OrderByDescending(x => x.Length).ThenBy(x => x))
+            {
+                int i1 = 0;
+                int i2 = 0;
+                while (i1 < x.Length && i2 < s.Length)
+                {
+                    if (x[i1] == s[i2])
+                    {
+                        i1++; i2++;
+                    }
+                    else
+                        i2++;
+                }
+                if (i1 == x.Length)
+                    return x;
+            }
+            return "";
+        }
+
+        //524. Longest Word in Dictionary through Deleting
+        public static string FindLongestWord(string s, IList<string> d)
+        {
+            if (d == null || d.Count == 0)
+                return null;
+            int res = -1;
+            for (int i = 0; i < d.Count; i++)
+            {
+                string str = d[i];
+                int i1 = 0;
+                int i2 = 0;
+                while ((s.Length - i1) >= (str.Length - i2) 
+                    && i2 < str.Length && i1 < s.Length)
+                {
+                    if (s[i1] == str[i2])
+                    {
+                        i1++;
+                        i2++;
+                    }
+                    else
+                    {
+                        i1++;
+                    }
+                }
+                if (i2 == str.Length)
+                {
+                    if (res == -1)
+                        res = i;
+                    else
+                    {
+                        if (d[res].Length < str.Length)
+                            res = i;
+                        else if (d[res].Length == str.Length)
+                        {
+                            double sum1 = 0;
+                            double sum2 = 0;
+                            int pow = 0;
+                            for (int s1 = d[res].Length - 1; s1 >=0; s1--)
+                            {
+                                sum1 += (d[res][s1] - 'a' + 1) * Math.Pow(10, pow++);
+                            }
+                            pow = 0;
+                            for (int s2 = str.Length - 1; s2 >= 0; s2--)
+                            {
+                                sum2 += (str[s2] - 'a' + 1) * Math.Pow(10, pow++);
+                            }
+                            if (sum1 > sum2)
+                                res = i;
+                        }
+                    }
+                }
+            }
+            if (res == -1)
+                return "";
+            return d[res];
+        }
 
         //简单选择排序,从小到大
         static void paixu1(int[] nums)
