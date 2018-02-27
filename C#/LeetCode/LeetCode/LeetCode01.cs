@@ -907,9 +907,51 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180227
+
+
+
+        //数组 归并排序
+        public static void guibingsort(int[] nums)
+        {
+            guibingHelp(nums, 0, nums.Length - 1, new int[nums.Length]);
+        }
+        static void guibingHelp(int[] nums,int left,int right,int[] temp)
+        {
+            if (left < right)
+            {
+                int mid = (left + right) / 2;
+                guibingHelp(nums, left, mid, temp);
+                guibingHelp(nums, mid + 1, right, temp);
+                guibingMerge(nums, left, mid, right, temp);
+            }
+        }
+        static void guibingMerge(int[] nums,int left,int mid,int right,int[] temp)
+        {
+            int i = left;
+            int j = mid + 1;
+            int t = 0;
+            while (i <= mid && j <= right)
+            {
+                if (nums[i] <= nums[j])
+                    temp[t++] = nums[i++];
+                else
+                    temp[t++] = nums[j++];
+            }
+            while (i <= mid)
+                temp[t++] = nums[i++];
+            while (j <= right)
+                temp[t++] = nums[j++];
+            t = 0;
+            while (left <= right)
+                nums[left++] = temp[t++];
+        }
+
+        #endregion
+
         #region 20180226
 
-        //148. Sort List 归并
+        //148. Sort List 链表归并
         public static ListNode SortList(ListNode head)
         {
             if (head == null || head.next == null)
