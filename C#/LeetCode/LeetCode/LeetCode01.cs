@@ -909,7 +909,50 @@ namespace LeetCode
 
         #region 20180227
 
+        //230. Kth Smallest Element in a BST
+        public int KthSmallest(TreeNode root, int k)
+        {
+            if (root == null)
+                return -1;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (root != null || stack.Count != 0)
+            {
+                while(root != null)
+                {
+                    stack.Push(root);
+                    root = root.left;
+                }
+                TreeNode node = stack.Pop();
+                k--;
+                if (k == 0)
+                    return node.val;
+                if (node.right != null)
+                    root = node.right;
+            }
+            return -1;
+        }
 
+        //144. Binary Tree Preorder Traversal
+        public IList<int> PreorderTraversal(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            if (root == null)
+                return res;
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+            while (root != null || stack.Count != 0)
+            {
+                while (root != null)
+                {
+                    res.Add(root.val);
+                    stack.Push(root);
+                    root = root.left;
+                }
+                TreeNode node = stack.Pop();
+                if (node.right != null)
+                    root = node.right;
+            }
+            return res;
+        }
 
         //数组 归并排序
         public static void guibingsort(int[] nums)
