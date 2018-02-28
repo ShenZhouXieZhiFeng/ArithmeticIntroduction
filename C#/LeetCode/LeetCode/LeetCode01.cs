@@ -907,6 +907,69 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180228
+
+        //235. Lowest Common Ancestor of a Binary Search Tree
+        public TreeNode LowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q)
+        {
+            if (root == null || p == null || q == null)
+                return null;
+            if (Math.Max(p.val, q.val) < root.val)
+            {
+                return LowestCommonAncestor(root.left, p, q);
+            }
+            else if (Math.Min(p.val, q.val) > root.val)
+            {
+                return LowestCommonAncestor(root.right, p, q);
+            }
+            else
+            {
+                return root;
+            }
+        }
+
+        //145. Binary Tree Postorder Traversal 后续遍历 非递归
+        public IList<int> PostorderTraversal2(TreeNode root)
+        {
+            Stack<int> res = new Stack<int>();
+            if (root == null) return new List<int>(res);
+
+            Stack<TreeNode> stack = new Stack<TreeNode>();
+
+            while (root != null)
+            {
+                while (root != null)
+                {
+                    stack.Push(root);
+                    res.Push(root.val);
+                    root = root.right;
+                }
+                while (stack.Count > 0 && root == null)
+                {
+                    root = stack.Pop().left;
+                }
+            }
+            return res.ToList();
+        }
+
+        //145. Binary Tree Postorder Traversal 后续遍历 递归
+        public IList<int> PostorderTraversal(TreeNode root)
+        {
+            List<int> res = new List<int>();
+            PostorderTraversalHelp(res, root);
+            return res;
+        }
+        static void PostorderTraversalHelp(List<int> res,TreeNode node)
+        {
+            if (node == null)
+                return;
+            PostorderTraversalHelp(res, node.left);
+            PostorderTraversalHelp(res, node.right);
+            res.Add(node.val);
+        }
+
+        #endregion
+
         #region 20180227
 
         //230. Kth Smallest Element in a BST
