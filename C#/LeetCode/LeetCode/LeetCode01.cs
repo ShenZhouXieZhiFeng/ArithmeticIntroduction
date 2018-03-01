@@ -357,7 +357,9 @@ namespace LeetCode
             //paixu2(nums);
             //var res = FindLongestWord("bab", new List<string>() { "ba", "ab", "a", "b" });
 
-            var res = SortList(ListNode.CreateFromArrays(new int[] { 1, 4, 5, 2, 3 }));
+            //var res = SortList(ListNode.CreateFromArrays(new int[] { 1, 4, 5, 2, 3 }));
+
+            var res = ZigzagLevelOrder(TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5, 6 }));
 
             Console.ReadLine();
         }
@@ -905,6 +907,53 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180301
+
+        //103. Binary Tree Zigzag Level Order Traversal
+        public static IList<IList<int>> ZigzagLevelOrder(TreeNode root)
+        {
+            List<IList<int>> res = new List<IList<int>>();
+            if (root == null)
+                return res;
+            Queue<TreeNode> queue = new Queue<TreeNode>();
+            queue.Enqueue(root);
+            bool order = true;
+            while (queue.Count != 0)
+            {
+                int count = queue.Count;
+                int[] tmp = new int[count];
+                if (order)
+                {
+                    for (int i = 0; i < count; i++)
+                    {
+                        TreeNode node = queue.Dequeue();
+                        tmp[i] = node.val;
+                        if (node.left != null)
+                            queue.Enqueue(node.left);
+                        if (node.right != null)
+                            queue.Enqueue(node.right);
+                    }
+                }
+                else
+                {
+                    for (int i = count - 1; i >= 0; i--)
+                    {
+                        TreeNode node = queue.Dequeue();
+                        tmp[i] = node.val;
+                        if (node.left != null)
+                            queue.Enqueue(node.left);
+                        if (node.right != null)
+                            queue.Enqueue(node.right);
+                    }
+                }
+                order = !order;
+                res.Add(new List<int>(tmp));
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180228
