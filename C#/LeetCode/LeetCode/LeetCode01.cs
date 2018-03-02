@@ -359,7 +359,11 @@ namespace LeetCode
 
             //var res = SortList(ListNode.CreateFromArrays(new int[] { 1, 4, 5, 2, 3 }));
 
-            var res = ZigzagLevelOrder(TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5, 6 }));
+            //var res = ZigzagLevelOrder(TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5, 6 }));
+
+            int[] weis = new int[] { 1, 2, 5, 6, 7 };
+            int[] vals = new int[] { 1, 6, 18, 22, 28 };
+            var res = ques01(weis, vals, 11);
 
             Console.ReadLine();
         }
@@ -907,6 +911,32 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180302
+
+        //0-1背包问题
+        public static int ques01(int[] weis,int[] vals,int w)
+        {
+            int[,] m = new int[weis.Length + 1, w + 1];
+            for (int i = 0; i <= w; i++)
+                m[0, i] = 0;
+            for (int i = 1; i <= weis.Length; i++)
+                m[i, 0] = 0;
+            for (int i = 1; i <= weis.Length; i++)
+            {
+                for (int j = 1; j <= w; j++)
+                {
+                    if (weis[i-1] > j)
+                        m[i, j] = m[i - 1, j];
+                    else
+                        m[i, j] = Math.Max(m[i - 1, j], vals[i - 1] + m[i - 1, j - weis[i - 1]]);
+                }
+            }
+            return m[weis.Length, w];
+        }
+
+
         #endregion
 
         #region 20180301
