@@ -361,9 +361,11 @@ namespace LeetCode
 
             //var res = ZigzagLevelOrder(TreeNode.CreateTreeByArr(new int[] { 1, 2, 3, 4, 5, 6 }));
 
-            int[] weis = new int[] { 1, 2, 5, 6, 7 };
-            int[] vals = new int[] { 1, 6, 18, 22, 28 };
-            var res = ques01(weis, vals, 11);
+            //int[] weis = new int[] { 1, 2, 5, 6, 7 };
+            //int[] vals = new int[] { 1, 6, 18, 22, 28 };
+            //var res = ques01(weis, vals, 11);
+
+            var res = ReverseKGroup(ListNode.CreateFromArrays(new int[] { 1, 2, 3, 4, 5 }), 2);
 
             Console.ReadLine();
         }
@@ -911,6 +913,57 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180303
+
+        //翻转链表
+        public static ListNode reverseListNode(ListNode head)
+        {
+            if (head == null)
+                return null;
+            ListNode pHead = null;
+            ListNode pNode = head;
+            ListNode pPrev = null;
+            while (pNode != null)
+            {
+                ListNode next = pNode.next;
+                if (next == null)
+                    pHead = pNode;
+
+                pNode.next = pPrev;
+
+                pPrev = pNode;
+                pNode = next;
+            }
+
+            return pHead;
+        }
+
+        //25. Reverse Nodes in k-Group k个节点为一组进行反转
+        public static ListNode ReverseKGroup(ListNode head, int k)
+        {
+            Stack<ListNode> st = new Stack<ListNode>();
+            ListNode tmp = head;
+            for (int i = 0; i < k; i++)
+            {
+                if (head != null)
+                    st.Push(head);
+                else
+                    return tmp;
+                head = head.next;
+            }
+            ListNode first = st.Pop();
+            ListNode res = first;
+            for (int i = 0; i < k - 1; i++)
+            {
+                first.next = st.Pop();
+                first = first.next;
+            }
+            first.next = ReverseKGroup(head, k);
+            return res;
+        }
+
         #endregion
 
         #region 20180302
