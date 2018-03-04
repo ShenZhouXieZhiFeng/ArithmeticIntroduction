@@ -365,7 +365,9 @@ namespace LeetCode
             //int[] vals = new int[] { 1, 6, 18, 22, 28 };
             //var res = ques01(weis, vals, 11);
 
-            var res = ReverseKGroup(ListNode.CreateFromArrays(new int[] { 1, 2, 3, 4, 5 }), 2);
+            //var res = ReverseKGroup(ListNode.CreateFromArrays(new int[] { 1, 2, 3, 4, 5 }), 2);
+
+            var res = RemoveNthFromEnd2(ListNode.CreateFromArrays(new int[] { 1, 2 }), 1);
 
             Console.ReadLine();
         }
@@ -913,6 +915,81 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180304
+
+        ////19. Remove Nth Node From End of List 双指针法
+        public static ListNode RemoveNthFromEnd2(ListNode head, int n)
+        {
+            if (head == null || head.next == null)
+                return null;
+            ListNode start = new ListNode(0);
+            ListNode fast = start;
+            ListNode slow = start;
+            slow.next = head;
+
+            for (int i = 1; i <= n + 1; i++)
+            {
+                fast = fast.next;
+            }
+            while (fast != null)
+            {
+                slow = slow.next;
+                fast = fast.next;
+            }
+            slow.next = slow.next.next;
+            return start.next;
+        }
+
+        //19. Remove Nth Node From End of List 删除倒数第几个节点
+        public static ListNode RemoveNthFromEnd(ListNode head, int n)
+        {
+            if (head == null || head.next == null)
+                return null;
+            List<ListNode> list = new List<ListNode>();
+            ListNode tmp = head;
+            int length = 0;
+            while (tmp != null)
+            {
+                list.Add(tmp);
+                length++;
+                tmp = tmp.next;
+            }
+            if (length == n)
+                return list[1];
+            if ((length - n + 1) >= length)
+            {
+                list[length - n - 1].next = null;
+            } else
+            {
+                list[length - n - 1].next = list[length - n + 1];
+
+            }
+            return head;
+        }
+
+        //链表操作1：翻转
+        public static ListNode lnTest1(ListNode head)
+        {
+            ListNode res = null;
+            ListNode prev = null;//前一节点的备份
+            ListNode cur = head;
+            while (cur != null)
+            {
+                ListNode next = cur.next;//保存下一节点
+                if (next == null)
+                {
+                    res = cur;
+                    break;
+                }
+                cur.next = prev;//设置当前节点的下一节点为之前的备份
+                prev = cur;//设置当前节点的备份
+                cur = next;//节点下移一位
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180303
