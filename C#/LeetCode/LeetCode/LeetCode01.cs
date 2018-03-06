@@ -367,7 +367,9 @@ namespace LeetCode
 
             //var res = ReverseKGroup(ListNode.CreateFromArrays(new int[] { 1, 2, 3, 4, 5 }), 2);
 
-            var res = RemoveNthFromEnd2(ListNode.CreateFromArrays(new int[] { 1, 2 }), 1);
+            //var res = RemoveNthFromEnd2(ListNode.CreateFromArrays(new int[] { 1, 2 }), 1);
+
+            var res = sort2(new int[] { 5, 4, 2, 1, 3, 9 });
 
             Console.ReadLine();
         }
@@ -915,6 +917,72 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180306
+
+        //插入
+        static int[] sort1(int[] nums)
+        {
+            if (nums == null)
+                return null;
+            for (int i = 1; i < nums.Length; i++)
+            {
+                int j = i;
+                while (j > 0 && nums[j] > nums[j-1])
+                {
+                    int tmp = nums[j];
+                    nums[j] = nums[j-1];
+                    nums[j - 1] = tmp;
+                    j--;
+                }
+            }
+            return nums;
+        }
+
+        //选择
+        static int[] sort2(int[] nums)
+        {
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                int min = i;
+                for (int j = i + 1; j < nums.Length; j++)
+                {
+                    if (nums[j] < nums[min])
+                    {
+                        min = j;
+                    }
+                }
+                if (min != i)
+                {
+                    int tmp = nums[min];
+                    nums[min] = nums[i];
+                    nums[i] = tmp;
+                }
+            }
+            return nums;
+        }
+
+        //冒泡
+        static int[] sort3(int[] nums)
+        {
+            for (int i = 0; i < nums.Length - 1; i++)
+            {
+                bool flag = true;
+                for (int j = 0; j < nums.Length - 1 - i; j++)
+                {
+                    if (nums[j] > nums[j + 1])
+                    {
+                        swap(nums, j, j + 1);
+                        flag = false;
+                    }
+                }
+                if (flag)
+                    break;
+            }
+            return nums;
+        }
+
         #endregion
 
         #region 20180304
