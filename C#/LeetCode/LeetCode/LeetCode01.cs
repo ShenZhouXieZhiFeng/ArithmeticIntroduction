@@ -919,6 +919,25 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180307
+
+        //783. Minimum Distance Between BST Nodes
+        int res = int.MaxValue;
+        int pre = -1;
+        public int MinDiffInBST(TreeNode root)
+        {
+            if (root.left != null)
+                MinDiffInBST(root.left);
+            if (pre >= 0)
+                res = Math.Min(res, root.val - pre);
+            pre = root.val;
+            if (root.right != null)
+                MinDiffInBST(root.right);
+            return res;
+        }
+
+        #endregion
+
         #region 20180306
 
         //插入
