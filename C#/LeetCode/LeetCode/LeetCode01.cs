@@ -919,6 +919,25 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180310
+
+        //662. Maximum Width of Binary Tree
+        public int WidthOfBinaryTree(TreeNode root)
+        {
+            List<int> lefts = new List<int>();
+            return WidthOfBinaryTreeHelp(root, 1, 0, lefts);
+        }
+        static int WidthOfBinaryTreeHelp(TreeNode node,int id ,int d,List<int> lefts)
+        {
+            if (node == null) return 0;
+            if (d >= lefts.Count) lefts.Add(id);
+            return Math.Max(id + 1 - lefts[d],
+                Math.Max(WidthOfBinaryTreeHelp(node.left, id * 2, d + 1, lefts),
+                WidthOfBinaryTreeHelp(node.right, id * 2 + 1, d + 1, lefts)));
+        }
+
+        #endregion
+
         #region 20180307
 
         //783. Minimum Distance Between BST Nodes
