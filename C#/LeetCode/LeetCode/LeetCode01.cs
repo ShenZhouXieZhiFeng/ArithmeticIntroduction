@@ -919,6 +919,44 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180311
+
+        //153. Find Minimum in Rotated Sorted Array
+        public int FindMin(int[] nums)
+        {
+            int start = 0, end = nums.Length - 1;
+            while (start < end)
+            {
+                if (nums[start] < nums[end])
+                    return nums[start];
+                int mid = (start + end) / 2;
+                if (nums[mid] >= nums[start])
+                    start = mid + 1;
+                else
+                    end = mid;
+            }
+            return nums[start];
+        }
+
+        //334. Increasing Triplet Subsequence 是否存在递增子序列的长度=3
+        public bool IncreasingTriplet(int[] nums)
+        {
+            int t1 = int.MaxValue, t2 = int.MaxValue;
+            foreach (int v in nums)
+            {
+                if (v <= t1)
+                    t1 = v;       //查找目前为止的最小值
+                else if (v <= t2)   //倒数第二小的值
+                    t2 = v;
+                else
+                    return true;   
+
+            }
+            return false;
+        }
+
+        #endregion
+
         #region 20180310
 
         //662. Maximum Width of Binary Tree
