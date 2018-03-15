@@ -919,6 +919,16 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180315   
+
+        //137. Single Number II
+        public int SingleNumber(int[] nums)
+        {
+            
+        }
+
+        #endregion
+
         #region 20180311
 
         //153. Find Minimum in Rotated Sorted Array
