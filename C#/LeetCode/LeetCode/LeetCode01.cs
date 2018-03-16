@@ -924,7 +924,22 @@ namespace LeetCode
         //137. Single Number II
         public int SingleNumber(int[] nums)
         {
-            
+            if (nums == null || nums.Length == 0)
+                return -1;
+            Dictionary<int, int> dict = new Dictionary<int, int>();
+            foreach (var v in nums)
+            {
+                if (dict.ContainsKey(v))
+                    dict[v]++;
+                else
+                    dict.Add(v, 1);
+            }
+            foreach (var k in dict.Keys)
+            {
+                if (dict[k] == 1)
+                    return k;
+            }
+            return -1;
         }
 
         #endregion
