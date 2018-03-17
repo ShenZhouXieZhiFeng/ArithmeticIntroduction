@@ -919,6 +919,32 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180317
+
+        //16. 3Sum Closest
+        public int ThreeSumClosest(int[] nums, int target)
+        {
+            int res = nums[0] + nums[1] + nums.Last();
+            Array.Sort(nums);
+            for (int i = 0; i < nums.Length - 2; i++)
+            {
+                int start = i + 1, end = nums.Length - 1;
+                while (start < end)
+                {
+                    int sum = nums[i] + nums[start] + nums[end];
+                    if (sum > target)
+                        end--;
+                    else
+                        start++;
+                    if (Math.Abs(sum - target) < Math.Abs(res - target))
+                        res = sum;
+                }
+            }
+            return res;
+        }
+
+        #endregion
+
         #region 20180315   
 
         //137. Single Number II
