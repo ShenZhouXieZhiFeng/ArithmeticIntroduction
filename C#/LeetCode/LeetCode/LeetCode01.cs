@@ -919,6 +919,34 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180320
+
+        //525. Contiguous Array
+        public int FindMaxLength(int[] nums)
+        {
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            dic.Add(0, -1);
+
+            int zero = 0;
+            int one = 0;
+            int len = 0;
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (nums[i] == 0)
+                    zero++;
+                else
+                    one++;
+
+                if (dic.ContainsKey(zero - one))
+                    len = Math.Max(len, i - dic[zero - one]);
+                else
+                    dic.Add(zero - one, i);
+            }
+            return len;
+        }
+
+        #endregion
+
         #region 20180317
 
         //16. 3Sum Closest
