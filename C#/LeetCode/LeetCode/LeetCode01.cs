@@ -919,6 +919,21 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180321
+
+        //55. Jump Game
+        public bool CanJump(int[] nums)
+        {
+            int i = 0;
+            for (int reach = 0; i < nums.Length && i <= reach; i++)
+            {
+                reach = Math.Max(i + nums[i], reach);
+            }
+            return i == nums.Length;
+        }
+
+        #endregion
+
         #region 20180320
 
         //525. Contiguous Array
