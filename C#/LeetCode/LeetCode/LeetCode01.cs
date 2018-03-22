@@ -919,6 +919,37 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180322
+
+        //60. Permutation Sequence rong
+        public string GetPermutation(int n, int k)
+        {
+            List<int> list = new List<int>();
+            StringBuilder sb = new StringBuilder();
+            int fac = 1;
+            for (int i = 2; i <= n - 1; i++)
+                fac *= i;
+            for (int i = 1; i < n; i++)
+                list.Add(i);
+            k--;
+            int round = n - 1;
+            while (round >= 0)
+            {
+                int num = list[k / fac];
+                sb.Append(num);
+                list.Remove(k / fac);
+                if (round > 0)
+                {
+                    k = k % fac;
+                    fac /= round;
+                }
+                round--;
+            }
+            return sb.ToString();
+        }
+
+        #endregion
+
         #region 20180321
 
         //55. Jump Game
