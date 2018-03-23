@@ -369,7 +369,9 @@ namespace LeetCode
 
             //var res = RemoveNthFromEnd2(ListNode.CreateFromArrays(new int[] { 1, 2 }), 1);
 
-            var res = sort2(new int[] { 5, 4, 2, 1, 3, 9 });
+            //var res = sort2(new int[] { 5, 4, 2, 1, 3, 9 });
+
+            var res = MajorityElement2(new int[3] { 1, 2, 3 });
 
             Console.ReadLine();
         }
@@ -917,6 +919,33 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180323
+
+        //229. Majority Element II
+        public static IList<int> MajorityElement2(int[] nums)
+        {
+            List<int> res = new List<int>();
+            if (nums == null || nums.Length == 0)
+                return res;
+            int leng = nums.Length / 3;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (dic.ContainsKey(nums[i]))
+                    dic[nums[i]]++;
+                else
+                    dic[nums[i]] = 1;
+            }
+            foreach (int k in dic.Keys)
+            {
+                if (dic[k] > leng)
+                    res.Add(k);
+            }
+            return res;
+        }
+
         #endregion
 
         #region 20180322
@@ -3754,7 +3783,7 @@ namespace LeetCode
         }
 
         //260. Single Number III
-        public int[] SingleNumber(int[] nums)
+        public int[] SingleNumber3(int[] nums)
         { 
             List<int> res = new List<int>();
             Array.Sort(nums);
@@ -7218,7 +7247,7 @@ namespace LeetCode
             return 0;
         }
         //两个相同的数进行^（异或操作结果为0）
-        public static int SingleNumber3(int[] nums)
+        public static int SingleNumber4(int[] nums)
         {
             if (nums.Length == 1)
                 return nums[0];
@@ -7229,7 +7258,7 @@ namespace LeetCode
             return res;
         }
         //利用其他数据结构HashSet
-        public static int SingleNumber4(int[] nums)
+        public static int SingleNumber666(int[] nums)
         {
             HashSet<int> set = new HashSet<int>();
             foreach (int v in nums) {
