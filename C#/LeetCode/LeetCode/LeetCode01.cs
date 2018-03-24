@@ -921,6 +921,37 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180324
+
+        //307. Range Sum Query - Mutable
+        public class NumArray
+        {
+            private int[] nums;
+
+            public NumArray(int[] nums)
+            {
+                this.nums = nums;
+            }
+
+            public void Update(int i, int val)
+            {
+                nums[i] = val;
+            }
+
+            public int SumRange(int i, int j)
+            {
+                int res = 0;
+                while (i <= j)
+                {
+                    res += nums[i];
+                }
+                return res;
+            }
+        }
+
+
+        #endregion
+
         #region 20180323
 
         //229. Majority Element II
