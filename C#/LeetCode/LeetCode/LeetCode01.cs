@@ -921,6 +921,45 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180325
+
+        //143. Reorder List
+        public void ReorderList(ListNode head)
+        {
+            if (head == null || head.next == null)
+                return;
+            ListNode p1 = head;
+            ListNode p2 = head;
+            while (p2.next != null && p2.next.next != null)
+            {
+                p1 = p1.next;
+                p2 = p2.next.next;
+            }
+
+            ListNode preMiddle = p1;
+            ListNode preCur = p1.next;
+            while (preCur.next != null)
+            {
+                ListNode cur = preCur.next;
+                preCur.next = cur.next;
+                cur.next = preMiddle.next;
+                preMiddle.next = cur;
+            }
+
+            p1 = head;
+            p2 = preMiddle.next;
+            while (p1 != preMiddle)
+            {
+                preMiddle.next = p2.next;
+                p2.next = p1.next;
+                p1.next = p2;
+                p1 = p2.next;
+                p2 = preMiddle.next;
+            }
+        }
+
+        #endregion
+
         #region 20180324
 
         //307. Range Sum Query - Mutable
