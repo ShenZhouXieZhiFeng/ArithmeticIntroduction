@@ -371,7 +371,9 @@ namespace LeetCode
 
             //var res = sort2(new int[] { 5, 4, 2, 1, 3, 9 });
 
-            var res = MajorityElement2(new int[3] { 1, 2, 3 });
+            //var res = MajorityElement2(new int[3] { 1, 2, 3 });
+
+            var res = sort0326(new int[] { 9, 1, 4, 5, 3, 5, 7 });
 
             Console.ReadLine();
         }
@@ -919,6 +921,27 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 20180326
+
+        public static int[] sort0326(int[] nums)
+        {
+            for (int i = 0; i < nums.Length; i++)
+            {
+                for (int j = 0; j < nums.Length - i - 1; j++)
+                {
+                    if (nums[j] > nums[j + 1])
+                    {
+                        int t = nums[j];
+                        nums[j] = nums[j + 1];
+                        nums[j + 1] = t;
+                    }
+                }
+            }
+            return nums;
+        }
+
         #endregion
 
         #region 20180325
@@ -4576,29 +4599,29 @@ namespace LeetCode
         #region 20180112
 
         //303. Range Sum Query - Immutable
-        public class NumArray
-        {
-            List<int> sums = new List<int>();
+        //public class NumArray
+        //{
+        //    List<int> sums = new List<int>();
 
-            public NumArray(int[] nums)
-            {
-                int sum = 0;
-                for (int i = 0; i < nums.Length; i++)
-                {
-                    sum += nums[i];
-                    sums.Add(sum);
-                }
-            }
+        //    public NumArray(int[] nums)
+        //    {
+        //        int sum = 0;
+        //        for (int i = 0; i < nums.Length; i++)
+        //        {
+        //            sum += nums[i];
+        //            sums.Add(sum);
+        //        }
+        //    }
 
-            public int SumRange(int i, int j)
-            {
-                if (i > j || i >= sums.Count || j >= sums.Count)
-                    return 0;
-                if (i == 0)
-                    return sums[j];
-                return (sums[j] - sums[i - 1]);
-            }
-        }
+        //    public int SumRange(int i, int j)
+        //    {
+        //        if (i > j || i >= sums.Count || j >= sums.Count)
+        //            return 0;
+        //        if (i == 0)
+        //            return sums[j];
+        //        return (sums[j] - sums[i - 1]);
+        //    }
+        //}
 
         //350. Intersection of Two Arrays II
         public int[] Intersect(int[] nums1, int[] nums2)
