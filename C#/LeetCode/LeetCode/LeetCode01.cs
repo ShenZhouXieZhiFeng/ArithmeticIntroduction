@@ -923,6 +923,29 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180328
+
+        //204. Count Primes
+        public int CountPrimes(int n)
+        {
+            bool[] not = new bool[n];
+            int count = 0;
+            for (int i = 2; i < n; i++)
+            {
+                if (not[i] == false)
+                {
+                    count++;
+                    for (int j = 2; i * j < n; j++)
+                    {
+                        not[i * j] = true;
+                    }
+                }
+            }
+            return count;
+        }
+
+        #endregion
+
         #region 20180326
 
         public static int[] sort0326(int[] nums)
