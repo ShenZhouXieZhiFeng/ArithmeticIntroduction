@@ -373,7 +373,9 @@ namespace LeetCode
 
             //var res = MajorityElement2(new int[3] { 1, 2, 3 });
 
-            var res = sort0326(new int[] { 9, 1, 4, 5, 3, 5, 7 });
+            //var res = sort0326(new int[] { 9, 1, 4, 5, 3, 5, 7 });
+
+            var res = 5 ^ 25;
 
             Console.ReadLine();
         }
@@ -921,6 +923,42 @@ namespace LeetCode
         }
 
         #endregion
+        #endregion
+
+        #region 
+
+        //670. Maximum Swap
+        public int MaximumSwap(int num)
+        {
+            char[] digits = (num + "").ToCharArray();
+            int[] buckets = new int[10];
+            for (int i = 0; i < digits.Length; i++)
+            {
+                buckets[digits[i] - '0'] = i;
+            }
+
+            for (int i = 0; i < digits.Length; i++)
+            {
+                for (int k = 9; k > digits[i] - '0'; k--)
+                {
+                    if (buckets[k] > i)
+                    {
+                        char tmp = digits[i];
+                        digits[i] = digits[buckets[k]];
+                        digits[buckets[k]] = tmp;
+                        return int.Parse(new string(digits));
+                    }
+                }
+            }
+            return num;
+        }
+
+        //421. Maximum XOR of Two Numbers in an Array
+        //public int FindMaximumXOR(int[] nums)
+        //{
+
+        //}
+
         #endregion
 
         #region 20180328
@@ -5245,7 +5283,7 @@ namespace LeetCode
         }
 
         //204. Count Primes 求小于n的2所有素数
-        public static int CountPrimes(int n)
+        public static int CountPrimes7(int n)
         {
             if (n <= 2)
                 return 0;
