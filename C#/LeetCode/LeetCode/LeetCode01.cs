@@ -925,7 +925,53 @@ namespace LeetCode
         #endregion
         #endregion
 
-        #region 
+        #region 20180330
+
+        //551. Student Attendance Record I
+        public bool CheckRecord(string s)
+        {
+            char pre = ' ';
+            int length = 0;
+            int lenA = 0;
+            for (int i = 0; i < s.Length; i++)
+            {
+                char cur = s[i];
+                if (cur == 'A')
+                {
+                    if (lenA == 1)
+                        return false;
+                    else
+                        lenA++;
+                    pre = ' ';
+                    length = 0;
+                }
+                else if (cur == 'L')
+                {
+                    if (pre == 'L')
+                    {
+                        if (length == 2)
+                            return false;
+                        else
+                            length++;
+                    }
+                    else
+                    {
+                        pre = 'L';
+                        length = 1;
+                    }
+                }
+                else if (cur == 'P')
+                {
+                    pre = ' ';
+                    length = 0;
+                }
+            }
+            return true;
+        }
+
+        #endregion
+
+        #region 20180329
 
         //670. Maximum Swap
         public int MaximumSwap(int num)
