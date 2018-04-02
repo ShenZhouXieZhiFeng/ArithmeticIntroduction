@@ -925,6 +925,37 @@ namespace LeetCode
         #endregion
         #endregion
 
+        #region 20180402
+
+        //228. Summary Ranges
+        public IList<string> SummaryRanges(int[] nums)
+        {
+            List<string> res = new List<string>();
+            if (nums == null || nums.Length == 0)
+                return res;
+
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < nums.Length; i++)
+            {
+                int a = nums[i];
+                while (i + 1 < nums.Length && (nums[i + 1] - nums[i]) == 1)
+                {
+                    i++;
+                }
+                if (a != nums[i])
+                {
+                    res.Add(a + "->" + nums[i]);
+                }
+                else
+                {
+                    res.Add(a + "");
+                }
+            }
+            return res;
+        }
+
+        #endregion
+
         #region 20180330
 
         //551. Student Attendance Record I
